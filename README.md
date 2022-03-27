@@ -1,3 +1,6 @@
+composer config repositories.survos_admin_bundle '{"type": "vcs", "url": "git@github.com:survos/SurvosAdminBundle.git"}'
+composer req survos/admin-bundle
+
 @TODO:
 
 * Extend from Umbrella
@@ -140,6 +143,7 @@ composer config prefer-stable true
 composer config repositories.knp_markdown '{"type": "vcs", "url": "git@github.com:tacman/KnpMarkdownBundle.git"}'
 composer req knplabs/knp-markdown-bundle:dev-symfony6
 
+composer config repositories.survos_admin_bundle '{"type": "vcs", "url": "git@github.com:survos/SurvosAdminBundle.git"}'
 composer config repositories.survos_base_bundle '{"type": "vcs", "url": "git@github.com:survos/BaseBundle.git"}'
 composer config repositories.ux-datatable '{"type": "vcs", "url": "git@github.com:tacman/ux-datatable.git"}'
 composer req tacman/ux-datatable
