@@ -74,6 +74,6 @@ class SurvosBaseExtension extends Extension
 
     public function getAlias(): string
     {
-        return 'survos_base';
+        return 'survos_admin';
     }
 }
