@@ -3,10 +3,10 @@
                                 'menu_code'     : menuCode,
                             }) %}
 
-                            {{ debug ? 'DEBUG' }}
+                            {{ debug|default(false) ? 'DEBUG' }}
 {#                            todo: OptionsResolver for the theme #}
                             {% set menuHtml = knp_menu_render(menuItem, {
-                                "template"      : "@SurvosBase/tabler/knp_menu.html.twig",
+                                "template"      : "@SurvosTabler/knp_menu.html.twig",
                                 "debug": debug|default(false),
                                 currentAsLink: true,
                                 firstClass: 'f',

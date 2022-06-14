@@ -7,24 +7,6 @@
 "attributes"    : "mt-2 navbar whereisthisfrom navbar-dark knp_collapse_menu",
 #}
 
-{% if theme is not defined %}
-{% set theme = 'adminkit' %}
-{% endif %}
-
-{% if theme == 'volt' %}
-{{ knp_menu_render(menuCode, {
-    'menu_code'     : menuCode,
-    "template"      : "@SurvosBase/knp_menu_volt.html.twig",
-    "currentClass"  : "active show",
-    "ancestorClass" : "ancestor-active current_ancestor",
-    "branch_class"  : "multi-level nav-item justify-content-between",
-    'firstClass'    : 'first-class',
-    'lastClass'     : 'last-class',
-    'leaf_class'    : 'leaf_class nav-link',
-    "allow_safe_labels": true,
-})
-}}
-{% endif %}
 
 theme {{ theme }}
 {% if theme == 'mmenu' %}

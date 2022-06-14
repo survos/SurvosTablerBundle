@@ -7,10 +7,10 @@
  * file that was distributed with this source code.
  */
 
-namespace Survos\BaseBundle\Menu;
+namespace Survos\TablerBundle\Menu;
 
 use Knp\Menu\ItemInterface;
-use Survos\BaseBundle\Event\KnpMenuEvent;
+use Survos\TablerBundle\Event\KnpMenuEvent;
 use Knp\Menu\FactoryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 

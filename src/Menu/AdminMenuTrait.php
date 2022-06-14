@@ -1,14 +1,14 @@
 <?php
 
-namespace Survos\BaseBundle\Menu;
+namespace Survos\TablerBundle\Menu;
 
+use Knp\Menu\ItemInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Umbrella\CoreBundle\Menu\Builder\MenuItemBuilder;
 use function Symfony\Component\String\u;
 
 trait AdminMenuTrait
 {
-    public function addMenuItem(MenuItemBuilder $menu, $options): MenuItemBuilder
+    public function addMenuItem(ItemInterface $menu, $options): ItemInterface
     {
         $options = $this->menuOptions($options);
 

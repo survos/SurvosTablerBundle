@@ -1,10 +1,11 @@
 <?php
 
-namespace Survos\BaseBundle\Menu;
+namespace Survos\TablerBundle\Menu;
+use Knp\Menu\FactoryInterface;
+use Knp\Menu\ItemInterface;
 
-use Umbrella\CoreBundle\Menu\Builder\MenuItemBuilder;
 
 interface AdminMenuInterface
 {
-    public function addMenuItem(MenuItemBuilder $menu, $options): MenuItemBuilder;
+    public function addMenuItem(ItemInterface $menu, $options): ItemInterface;
 }
