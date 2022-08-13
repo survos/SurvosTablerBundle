@@ -1,8 +1,4 @@
-{#  \Survos\BaseBundle\SurvosBaseBundle base.html.twig #}
-{#
-Copied from '@SurvosBaseBundle/layout/default-layout.html.twig' and adjusted for Survos
 
-#}
 <!DOCTYPE html{% block html_start %}{% endblock %}>
 <html lang="{{ app.request.locale }}">
 <head>
@@ -23,6 +19,7 @@ Copied from '@SurvosBaseBundle/layout/default-layout.html.twig' and adjusted for
     {% endblock %}
 
     {% block javascripts %}
+
         {{ encore_entry_script_tags('app') }}
     {% endblock %}
 
@@ -81,22 +78,9 @@ fixed, layout-boxed, layout-top-nav, sidebar-collapse, sidebar-mini
 
                 {% block navbar_start %}{% endblock %}
 
-                @todo: refactor navbar
-                {#
 
-                {% block navbar_actions %}
-                    Use HInclude here!
-                    {#
-                {% block navbar_messages %}
-                    {{ render(controller('KevinPapst\\AdminLTEBundle\\Controller\\NavbarController::messagesAction')) }}
-                {% endblock %}
-                {% block navbar_notifications %}
-                    {{ render(controller('KevinPapst\\AdminLTEBundle\\Controller\\NavbarController::notificationsAction')) }}
-                {% endblock %}
-                {% block navbar_tasks %}
-                    {{ render(controller('KevinPapst\\AdminLTEBundle\\Controller\\NavbarController::tasksAction')) }}
-                {% endblock %}
-                #}
+
+                @todo: refactor navbar {{ _self }}
 
                 {% block navbar_user %}
                     {% if not is_granted('ROLE_USER') %}
@@ -144,6 +128,7 @@ fixed, layout-boxed, layout-top-nav, sidebar-collapse, sidebar-mini
 
                 {% block sidebar_nav %}
                     BASE
+
                     {% include '@SurvosTabler/render_sidebar_menu.html.twig' with {menuCode: 'survos_sidebar_menu'} %}
                 {% endblock %}
             </div>

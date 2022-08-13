@@ -1,4 +1,4 @@
-<?php
+<?php // this uses the KevinPapst Tabler Menu
 
 namespace Survos\TablerBundle\Menu;
 

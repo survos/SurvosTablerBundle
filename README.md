@@ -1,3 +1,4 @@
+
 composer config repositories.survos_admin_bundle '{"type": "vcs", "url": "git@github.com:survos/SurvosAdminBundle.git"}'
 composer req survos/admin-bundle
 
