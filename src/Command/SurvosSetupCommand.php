@@ -86,7 +86,7 @@ class SurvosSetupCommand extends Command
                 if (!is_dir($dir)) {
                     mkdir($dir);
                 }
-                $php = $this->twig->render("@SurvosBase/SidebarMenuSubscriber.php.twig", []);
+                $php = $this->twig->render("@SurvosBase/MenuSubscriber.php.twig", []);
 
                 // $yaml =  Yaml::dump($config);
                 file_put_contents($output = $fn, $php);
