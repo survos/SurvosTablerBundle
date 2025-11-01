@@ -1,0 +1,51 @@
+{# @SurvosBootstrap/components/tabler/header.html.twig #}
+{# Minimal Tabler-styled page header, powered by Twig Component props. #}
+<div class="page-header d-print-none{{ dark or overlap ? ' text-white' : '' }}">
+  <div class="container-xl">
+    <div class="row align-items-center">
+      <div class="col">
+        {% if pretitle %}
+          <div class="page-pretitle">{{ pretitle }}</div>
+        {% endif %}
+
+        <h2 class="page-title">{{ title }}</h2>
+
+        {% if subtitle %}
+          <div class="text-body-secondary mt-1{% if dark or overlap %} text-white-50{% endif %}">
+            {{ subtitle }}
+          </div>
+        {% endif %}
+
+        {# For visibility during bring-up—lets you see "where am I?" #}
+        <div class="small mt-2 opacity-50">
+          <code>{{ _self }}</code>
+        </div>
+
+        {% if debug %}
+          <div class="card card-sm mt-3">
+            <div class="card-body">
+              <div class="subheader mb-2">Header props (debug)</div>
+              <pre class="m-0">{{ {
+                title: title,
+                pretitle: pretitle,
+                subtitle: subtitle,
+                dark: dark,
+                overlap: overlap,
+                showActions: showActions
+              }|json_encode(constant('JSON_PRETTY_PRINT')) }}</pre>
+            </div>
+          </div>
+        {% endif %}
+      </div>
+
+      {% if showActions %}
+        <div class="col-12 col-md-auto ms-auto d-print-none">
+          <div class="btn-list">
+            <a href="#" class="btn btn-white">New view</a>
+            <a href="#" class="btn btn-primary d-none d-sm-inline-block">Create new report</a>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>

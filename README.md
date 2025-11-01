@@ -1,10 +1,9 @@
 
-composer config repositories.survos_admin_bundle '{"type": "vcs", "url": "git@github.com:survos/SurvosAdminBundle.git"}'
-composer req survos/admin-bundle
+composer config repositories.survos_admin_bundle '{"type": "vcs", "url": "git@github.com:survos/SurvosTablerBundle.git"}'
+composer req survos/tabler-bundle
 
 @TODO:
 
-* Extend from Umbrella
 * Add DataTableBundle (ux component)
 * Add #[RouteParameter] to Entity Properties.
 * Make ParamConverter listen via Attributes
@@ -16,10 +15,7 @@ composer req survos/admin-bundle
 A moderately-opinionated bundle that provides a quick way to get up and running with Symfony.  
 In particular, it sets up and uses the following:
 
-* AdminLTE4 (Bootstrap 5)
 * Knp Menu for sidebar and top nagivation
-* webpack encore 
-* optional jQuery (for js-tree and datatables)
 
 ## Assumptions
 
