@@ -1,0 +1,67 @@
+{# @SurvosTabler/components/tabler/demo_page.html.twig #}
+{# Simplified page wrapper for Tabler demo pages #}
+{% set showNavbar = showNavbar|default(true) %}
+{% set showFooter = showFooter|default(true) %}
+{% set layout = layout|default('content') %}
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>{{ title|default('Tabler Demo') }}</title>
+    {{ importmap('app') }}
+</head>
+<body class="layout-fluid">
+    <div class="page">
+        {% if showNavbar %}
+        <header class="navbar navbar-expand-md d-print-none">
+            <div class="container-xl">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <h1 class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
+                    <a href="{{ path('app_homepage') }}">Tabler Demo</a>
+                </h1>
+                <div class="collapse navbar-collapse" id="navbar-menu">
+                    {{ tabler_menu(MenuSlot.Navbar) }}
+                </div>
+            </div>
+        </header>
+        {% endif %}
+
+        <div class="page-wrapper">
+            <div class="page-header d-print-none">
+                <div class="container-xl">
+                    <div class="row g-2 align-items-center">
+                        <div class="col">
+                            {% if pretitle|default(false) %}
+                            <div class="page-pretitle">{{ pretitle }}</div>
+                            {% endif %}
+                            <h2 class="page-title">{{ title|default('') }}</h2>
+                            {% if subtitle|default(false) %}
+                            <div class="text-secondary mt-1">{{ subtitle }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-body">
+                <div class="container-xl">
+                    {% block content %}{{ content|default('')|raw }}{% endblock %}
+                </div>
+            </div>
+
+            {% if showFooter %}
+            <footer class="footer footer-transparent d-print-none">
+                <div class="container-xl">
+                    {{ tabler_menu(MenuSlot.Footer) }}
+                </div>
+            </footer>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

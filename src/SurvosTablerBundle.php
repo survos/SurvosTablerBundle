@@ -3,11 +3,6 @@
 namespace Survos\TablerBundle;
 
 use Survos\TablerBundle\Components\AccordionComponent;
-use Survos\TablerBundle\Components\LocaleSwitcherDropdown;
-use Survos\TablerBundle\Components\TablerFooter;
-use Survos\TablerBundle\Components\TablerHeader;
-use Survos\TablerBundle\Components\TablerPage;
-use Survos\TablerBundle\Components\TabsComponent;
 use Survos\TablerBundle\Components\AlertComponent;
 use Survos\TablerBundle\Components\BadgeComponent;
 use Survos\TablerBundle\Components\BrandComponent;
@@ -17,24 +12,30 @@ use Survos\TablerBundle\Components\CarouselComponent;
 use Survos\TablerBundle\Components\DividerComponent;
 use Survos\TablerBundle\Components\DropdownComponent;
 use Survos\TablerBundle\Components\LinkComponent;
+use Survos\TablerBundle\Components\LocaleSwitcherDropdown;
 use Survos\TablerBundle\Components\MenuBreadcrumbComponent;
 use Survos\TablerBundle\Components\MenuComponent;
-use Survos\TablerBundle\Event\KnpMenuEvent;
+use Survos\TablerBundle\Components\TablerFooter;
+use Survos\TablerBundle\Components\TablerHeader;
+use Survos\TablerBundle\Components\TablerPage;
+use Survos\TablerBundle\Components\TabsComponent;
 use Survos\TablerBundle\Menu\DemoMenu;
+use Survos\TablerBundle\Menu\MenuSlot;
 use Survos\TablerBundle\Service\ContextService;
-use Survos\TablerBundle\Service\IconAliasService;
+use Survos\TablerBundle\Service\IconService;
 use Survos\TablerBundle\Service\MenuDispatcher;
 use Survos\TablerBundle\Service\MenuRenderer;
 use Survos\TablerBundle\Service\MenuService;
+use Survos\TablerBundle\Service\RouteAliasService;
+use Survos\TablerBundle\Translation\RoutesTranslationLoader;
 use Survos\TablerBundle\Twig\Components\MiniCard;
 use Survos\TablerBundle\Twig\Components\TablerHead;
 use Survos\TablerBundle\Twig\Components\TablerIcon;
 use Survos\TablerBundle\Twig\Components\TablerPageHeader;
-//use Survos\TablerBundle\Twig\TablerExtension;
-//use Survos\TablerBundle\Twig\TablerRuntimeExtension;
-use Survos\TablerBundle\Twig\IconAliasExtension;
+use Survos\TablerBundle\Twig\IconExtension;
 use Survos\TablerBundle\Twig\MenuExtension;
 use Survos\TablerBundle\Twig\MenuGlobalsExtension;
+use Survos\TablerBundle\Twig\RouteAliasExtension;
 use Survos\TablerBundle\Twig\TwigExtension;
 use Survos\CoreBundle\HasAssetMapperInterface;
 use Survos\CoreBundle\Traits\HasAssetMapperTrait;
@@ -49,273 +50,365 @@ use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
-use Survos\TablerBundle\Translation\RoutesTranslationLoader;
 
 class SurvosTablerBundle extends AbstractBundle implements CompilerPassInterface, HasAssetMapperInterface
 {
     use HasAssetMapperTrait;
 
-    // protected string $extensionAlias = 'survos_bootstrap';
-
     public function build(ContainerBuilder $container): void
     {
         parent::build($container);
-
-        // Register this class as a pass, to eliminate the need for the extra DI class
-        // https://stackoverflow.com/questions/73814467/how-do-i-add-a-twig-global-from-a-bundle-config
         $container->addCompilerPass($this);
     }
 
-    private function getCachedDataFilename(ContainerBuilder $container): string
-    {
-        $kernelCacheDir = $container->getParameter('kernel.cache_dir');
-        return $kernelCacheDir . '/route_requirements.json';
-    }
-
-    // During the compiler pass, find the IsGranted routes so the menu can exclude them if not authorized.
     public function process(ContainerBuilder $container): void
     {
-        $isGranted = [];
+        // Collect route security requirements from IsGranted attributes
+        $routeRequirements = $this->collectRouteRequirements($container);
+        $container->setParameter('survos_tabler.route_requirements', $routeRequirements);
+
+        // Set up Twig globals
+        $this->configureTwigGlobals($container);
+    }
+
+    private function collectRouteRequirements(ContainerBuilder $container): array
+    {
+        $requirements = [];
         $taggedServices = $container->findTaggedServiceIds('container.service_subscriber');
 
-        // set the route requirements.  Translations are different, but could perhaps someday be combined.
         foreach (array_keys($taggedServices) as $controllerClass) {
             if (!class_exists($controllerClass)) {
                 continue;
             }
+
             $reflectionClass = new \ReflectionClass($controllerClass);
-            $requirements = [];
-            // these are at the controller level, so they apply to all methods
+            
+            // Controller-level IsGranted attributes
+            $controllerRequirements = [];
             foreach ($reflectionClass->getAttributes(IsGranted::class) as $attribute) {
-                $args = $attribute->getArguments();
-                $requirements = $args; // array of ROLE_...
+                $controllerRequirements = $attribute->getArguments();
             }
+
+            // Method-level attributes
             foreach ($reflectionClass->getMethods() as $method) {
                 $methodRequirements = [];
                 foreach ($method->getAttributes(IsGranted::class) as $attribute) {
-                    $args = $attribute->getArguments();
-                    $methodRequirements = $args;
+                    $methodRequirements = $attribute->getArguments();
                 }
 
-                // now get the route name(s) and associated the requirements by name.
+                // Get route name(s) and associate requirements
                 foreach ($method->getAttributes(Route::class) as $attribute) {
                     $args = $attribute->getArguments();
-                    $name = $args['name'] ?? $method->getName();
-                    $isGranted[$name] = array_merge($methodRequirements, $requirements);
+                    $routeName = $args['name'] ?? $method->getName();
+                    $requirements[$routeName] = array_merge($methodRequirements, $controllerRequirements);
                 }
             }
         }
 
-//        dd($isGranted);
-
-        file_put_contents($fn = $this->getCachedDataFilename($container), json_encode($isGranted));
-
-        if (false === $container->hasDefinition('twig')) {
-            return;
-        }
-        $def = $container->getDefinition('twig');
-
-        $eventClass = (new \ReflectionClass(KnpMenuEvent::class));
-        foreach ($eventClass->getConstants() as $name => $value) {
-            $def->addMethodCall('addGlobal', [$name, $value]);
-        }
-        //
-//        dd($def);
-
-        $theme = $container->getParameter('my.theme');
-        // I think we did this before we added ContextService, so use the twig function to get what we want, e.g. theme_option('theme')
-        $def->addMethodCall('addGlobal', ['theme', $theme]);
+        return $requirements;
     }
 
-    /**
-     * @param array<mixed> $config
-     */
+    private function configureTwigGlobals(ContainerBuilder $container): void
+    {
+        if (!$container->hasDefinition('twig')) {
+            return;
+        }
+
+        $twigDef = $container->getDefinition('twig');
+
+        // MenuSlot constants (legacy support for old templates)
+        $menuSlotReflection = new \ReflectionEnum(MenuSlot::class);
+        foreach ($menuSlotReflection->getConstants() as $name => $value) {
+            if (is_string($value)) {
+                $twigDef->addMethodCall('addGlobal', [$name, $value]);
+            }
+        }
+
+        // Theme from config
+        if ($container->hasParameter('survos_tabler.theme')) {
+            $twigDef->addMethodCall('addGlobal', ['theme', $container->getParameter('survos_tabler.theme')]);
+        }
+    }
+
     public function loadExtension(array $config, ContainerConfigurator $container, ContainerBuilder $builder): void
     {
+        // === Parameters ===
+        $builder->setParameter('survos_tabler.config', $config);
+        $builder->setParameter('survos_tabler.routes', $config['routes']);
+        $builder->setParameter('survos_tabler.theme', $config['options']['theme']);
+        $builder->setParameter('survos_tabler.route_requirements', []); // Populated in compiler pass
 
-        // IconAliasService
-        $builder->register(IconAliasService::class)
-            ->setArguments([
-                $config['icons'] ?? [],
-            ]);
+        // === Core Services ===
 
-// Icon alias twig extension
-        $builder->register(IconAliasExtension::class)
-            ->setArguments([
-                new Reference(IconAliasService::class),
-            ])
-            ->addTag('twig.extension');
-        // MenuDispatcher service
         $builder->register(MenuDispatcher::class)
-            ->setArguments([
-                new Reference('knp_menu.factory'),
-                new Reference('event_dispatcher'),
-            ]);
+            ->setArgument('$factory', new Reference('knp_menu.factory'))
+            ->setArgument('$dispatcher', new Reference('event_dispatcher'));
 
-        // Twig extension for functions
+        $builder->register(MenuRenderer::class)
+            ->setArgument('$dispatcher', new Reference(MenuDispatcher::class))
+            ->setArgument('$knpHelper', new Reference('knp_menu.helper'))
+            ->setArgument('$requestStack', new Reference('request_stack'))
+            ->setArgument('$templatePrefix', '@SurvosTabler/menu/');
+
+        $iconConfig = $config['icons'] ?? [];
+        $builder->register(IconService::class)
+            ->setArgument('$configuredAliases', $iconConfig['aliases'] ?? [])
+            ->setArgument('$configuredPresets', $iconConfig['presets'] ?? [])
+            ->setArgument('$defaultPrefix', $iconConfig['prefix'] ?? 'tabler');
+
+        $builder->register(RouteAliasService::class)
+            ->setArgument('$configuredAliases', $config['routes'])
+            ->setArgument('$router', new Reference('router'));
+
+        $builder->register(ContextService::class)
+            ->setAutowired(true)
+            ->setArgument('$config', $config)
+            ->setArgument('$options', $config['options']);
+
+        $builder->register(MenuService::class)
+            ->setAutowired(true)
+            ->setArgument('$routeRequirements', '%survos_tabler.route_requirements%')
+            ->setArgument('$impersonateUrlGenerator', new Reference('security.impersonate_url_generator', ContainerInterface::NULL_ON_INVALID_REFERENCE))
+            ->setArgument('$authorizationChecker', new Reference('security.authorization_checker', ContainerInterface::NULL_ON_INVALID_REFERENCE))
+            ->setArgument('$usersToImpersonate', $config['impersonate'])
+            ->setArgument('$security', new Reference('security.helper', ContainerInterface::NULL_ON_INVALID_REFERENCE));
+
+        // === Twig Extensions ===
+
         $builder->register(MenuExtension::class)
-            ->setArguments([
-                new Reference(MenuRenderer::class),
-            ])
+            ->setArgument('$renderer', new Reference(MenuRenderer::class))
             ->addTag('twig.extension');
 
-        // Twig extension for globals (implements GlobalsInterface)
         $builder->register(MenuGlobalsExtension::class)
             ->addTag('twig.extension');
 
-        // Demo menu listener (enabled via ?menu_demo=1)
+        $builder->register(IconExtension::class)
+            ->setArgument('$iconService', new Reference(IconService::class))
+            ->addTag('twig.extension');
+
+        $builder->register(RouteAliasExtension::class)
+            ->setArgument('$routeAliasService', new Reference(RouteAliasService::class))
+            ->addTag('twig.extension');
+
+        $builder->autowire('survos.tabler_twig', TwigExtension::class)
+            ->setArgument('$config', $config)
+            ->setArgument('$routes', $config['routes'])
+            ->setArgument('$options', $config['options'])
+            ->setArgument('$contextService', new Reference(ContextService::class))
+            ->addTag('twig.extension');
+
+        // === Menu Demo Listener ===
+
         $builder->register(DemoMenu::class)
             ->setAutowired(true)
-            ->setAutoconfigured(true) // so we don't have to register each event
-            ->setArguments([
-                new Reference('request_stack'),
-            ])
-//            ->addTag('kernel.event_listener')
-        ;
+            ->setAutoconfigured(true)
+            ->setArgument('$requestStack', new Reference('request_stack'));
 
-        $builder->register(MenuRenderer::class)
-            ->setArguments([
-                new Reference(MenuDispatcher::class),
-                new Reference('knp_menu.helper'),
-                new Reference('request_stack'),
-                '@SurvosTabler/menu/', // templatePrefix
-            ]);
+        // === Twig Components ===
 
-        // Store config for ContextService or other uses
-        $builder->setParameter('survos_tabler.config', $config);
-//        dd($this->getCachedDataFilename($builder));
+        $simpleComponents = [
+            AlertComponent::class,
+            AccordionComponent::class,
+            BrandComponent::class,
+            BadgeComponent::class,
+            ButtonComponent::class,
+            CardComponent::class,
+            CarouselComponent::class,
+            DropdownComponent::class,
+            DividerComponent::class,
+            LinkComponent::class,
+            TabsComponent::class,
+            TablerPage::class,
+            LocaleSwitcherDropdown::class,
+            TablerHeader::class,
+            TablerFooter::class,
+            MiniCard::class,
+            TablerIcon::class,
+            TablerHead::class,
+            TablerPageHeader::class,
+        ];
 
-        // inject into parameters, so we can access it in the compiler pass and inject it globally.
-
-        assert(is_array($config['routes']), json_encode($config));
-
-        $builder->register(ContextService::class)
-            ->setArgument('$config', $config)
-            ->setArgument('$options', $config['options'])
-            ->setAutowired(true);
-        $container->parameters()->set('my.theme', $config['options']['theme']);
-
-
-        foreach (
-            [
-                AlertComponent::class,
-                AccordionComponent::class,
-                AlertComponent::class,
-                BrandComponent::class,
-                BadgeComponent::class,
-                ButtonComponent::class,
-                CardComponent::class,
-                CarouselComponent::class,
-                DropdownComponent::class,
-                DividerComponent::class,
-                LinkComponent::class,
-                TabsComponent::class,
-                TablerPage::class,
-                LocaleSwitcherDropdown::class,
-
-                TablerHeader::class,
-                TablerFooter::class,
-
-                MiniCard::class,
-                TablerIcon::class,
-                TablerHead::class,
-                TablerPageHeader::class,
-            ] as $componentClass
-        ) {
-            $builder->register($componentClass)->setAutowired(true)->setAutoconfigured(true);
+        foreach ($simpleComponents as $componentClass) {
+            $builder->register($componentClass)
+                ->setAutowired(true)
+                ->setAutoconfigured(true);
         }
 
-//        $taggedServices = $container->findTaggedServiceIds('container.service_subscriber');
-
-        $builder
-            ->autowire('survos.bootstrap_translations', RoutesTranslationLoader::class)
-            ->setAutowired(true)
-            ->setAutoconfigured(true)
-//            ->setArgument('$taggedServices', $tComposerJsonManipulatorConfig)
-            ->addTag(name: 'translation.loader', attributes: ['alias' => 'bin']);
-
-        // register the components
-        foreach ([MenuComponent::class, MenuBreadcrumbComponent::class] as $c) {
-            $builder->register($c)->setAutowired(true)->setAutoconfigured(true)
+        // Menu components need extra arguments
+        foreach ([MenuComponent::class, MenuBreadcrumbComponent::class] as $componentClass) {
+            $builder->register($componentClass)
+                ->setAutowired(true)
+                ->setAutoconfigured(true)
                 ->setArgument('$menuOptions', $config['menu_options'])
                 ->setArgument('$helper', new Reference('knp_menu.helper'))
                 ->setArgument('$factory', new Reference('knp_menu.factory'))
                 ->setArgument('$eventDispatcher', new Reference('event_dispatcher'));
         }
 
-//        $builder
-//            ->autowire('survos.tabler_twig', TablerExtension::class)
-//            ->addTag('twig.extension');
+        // === Translation Loader ===
 
-//        class: KevinPapst\TablerBundle\Twig\RuntimeExtension
-//        arguments:
-//            - '@event_dispatcher'
-//            - '@tabler_bundle.context_helper'
-//            - '%tabler_bundle.routes%'
-//            - '%tabler_bundle.icons%'
-
-//        $builder
-//            ->autowire('survos.tabler_runtime', TablerRuntimeExtension::class)
-//            ->setArgument('$routes', $config['routes'])
-//            ->setArgument('$icons', $config['icons'] ?? [])
-//            ->setAutoconfigured(true)
-//            ->addTag('twig.runtime');
-
-        $builder
-            ->autowire('survos.bootstrap_twig', TwigExtension::class)
-            ->addTag('twig.extension')
-            ->setArgument('$config', $config)
-            ->setArgument('$routes', $config['routes'])
-            ->setArgument('$options', $config['options'])
-            ->setArgument('$contextService', new Reference(ContextService::class))
-//            ->setArgument('$container', new Reference('service_container'))
-//            ->setArgument('$componentRenderer', new Reference('ux.twig_component.component_renderer'))
-        ;
-
-//        $builder
-//            ->autowire('survos.bootstrap_page_top_renderer', PageTopRenderer::class)
-//            ->addTag('knp_menu.renderer', ['alias' =>  'custom'])
-//            ->setArgument('$matcher', new Reference('knp_menu.matcher'))
-//            ->setArgument('$charset', '%kernel.charset%')
-//        ;
-
-
-        // do we need this?  Or is the trait better? Or both?
-        $builder->register(MenuService::class)
+        $builder->autowire('survos.tabler_translations', RoutesTranslationLoader::class)
             ->setAutowired(true)
-            ->setArgument('$routeRequirementsFilename', $this->getCachedDataFilename($builder))
-            ->setArgument(
-                '$impersonateUrlGenerator',
-                new Reference('security.impersonate_url_generator', ContainerInterface::NULL_ON_INVALID_REFERENCE)
-            )
-            ->setArgument(
-                '$authorizationChecker',
-                new Reference('security.authorization_checker', ContainerInterface::NULL_ON_INVALID_REFERENCE)
-            )
-            ->setArgument('$usersToImpersonate', $config['impersonate'])
-            ->setArgument(
-                '$security',
-                new Reference('security.helper', ContainerInterface::NULL_ON_INVALID_REFERENCE)
-            );;
+            ->setAutoconfigured(true)
+            ->addTag('translation.loader', ['alias' => 'bin']);
     }
 
     public function configure(DefinitionConfigurator $definition): void
     {
-        // since the configuration is short, we can add it here
         $definition->rootNode()
             ->children()
-// In the rootNode children:
-            ->arrayNode('icons')
-                ->useAttributeAsKey('name')
-                ->scalarPrototype()->end()
-            ->info('Icon alias overrides (alias: icon-name)')
-            ->end()
-            ->append($this->getAppConfig())
-            ->append($this->getRouteAliasesConfig())
-            ->append($this->getContextConfig())
-            ->arrayNode('menu_options')->useAttributeAsKey('name')->prototype('scalar')->end()->end() // arrayNode
-            ->arrayNode('impersonate')->useAttributeAsKey('name')->prototype('scalar')->end()->end() // arrayNode
-            ->end(); // rootNode
+                ->append($this->getIconsConfig())
+                ->append($this->getAppConfig())
+                ->append($this->getRoutesConfig())
+                ->append($this->getOptionsConfig())
+                ->arrayNode('menu_options')
+                    ->useAttributeAsKey('name')
+                    ->scalarPrototype()->end()
+                ->end()
+                ->arrayNode('impersonate')
+                    ->useAttributeAsKey('name')
+                    ->scalarPrototype()->end()
+                    ->info('User identifiers that can be impersonated')
+                ->end()
+            ->end();
+    }
+
+    private function getIconsConfig(): ArrayNodeDefinition
+    {
+        $treeBuilder = new TreeBuilder('icons');
+        $rootNode = $treeBuilder->getRootNode();
+
+        $rootNode
+            ->addDefaultsIfNotSet()
+            ->children()
+                ->scalarNode('prefix')
+                    ->defaultValue('tabler')
+                    ->info('Default icon prefix (e.g., tabler, fa6-solid)')
+                ->end()
+                ->arrayNode('aliases')
+                    ->useAttributeAsKey('name')
+                    ->scalarPrototype()->end()
+                    ->info('Icon alias overrides: alias: icon-name')
+                ->end()
+                ->arrayNode('presets')
+                    ->useAttributeAsKey('name')
+                    ->arrayPrototype()
+                        ->children()
+                            ->scalarNode('icon')->isRequired()->end()
+                            ->scalarNode('class')->defaultValue('')->end()
+                        ->end()
+                    ->end()
+                    ->info('Style presets with icon and CSS class')
+                ->end()
+            ->end();
+
+        return $rootNode;
+    }
+
+    private function getAppConfig(): ArrayNodeDefinition
+    {
+        $treeBuilder = new TreeBuilder('app');
+        $rootNode = $treeBuilder->getRootNode();
+
+        $rootNode
+            ->addDefaultsIfNotSet()
+            ->children()
+                ->arrayNode('social')
+                    ->useAttributeAsKey('name')
+                    ->scalarPrototype()->end()
+                    ->info('Social media links (facebook: https://...)')
+                ->end()
+                ->scalarNode('code')
+                    ->defaultValue('my-project')
+                    ->info('Project code for repo, deployment, etc.')
+                ->end()
+                ->scalarNode('abbr')
+                    ->defaultValue('my<b>Project</b>')
+                    ->info('HTML abbreviation for branding')
+                ->end()
+                ->scalarNode('logo')
+                    ->defaultNull()
+                    ->info('Path to main logo')
+                ->end()
+                ->scalarNode('logo_small')
+                    ->defaultNull()
+                    ->info('Path to small/favicon logo')
+                ->end()
+            ->end();
+
+        return $rootNode;
+    }
+
+    private function getRoutesConfig(): ArrayNodeDefinition
+    {
+        $treeBuilder = new TreeBuilder('routes');
+        $rootNode = $treeBuilder->getRootNode();
+
+        $rootNode
+            ->addDefaultsIfNotSet()
+            ->info('Route aliases - use null/~ for routes that do not exist')
+            ->children()
+                ->scalarNode('home')
+                    ->defaultValue('app_homepage')
+                    ->info('Homepage route')
+                ->end()
+                ->scalarNode('login')
+                    ->defaultNull()
+                    ->info('Login route')
+                ->end()
+                ->scalarNode('logout')
+                    ->defaultNull()
+                    ->info('Logout route')
+                ->end()
+                ->scalarNode('register')
+                    ->defaultNull()
+                    ->info('Registration route')
+                ->end()
+                ->scalarNode('profile')
+                    ->defaultNull()
+                    ->info('User profile route')
+                ->end()
+                ->scalarNode('settings')
+                    ->defaultNull()
+                    ->info('User settings route')
+                ->end()
+                ->scalarNode('search')
+                    ->defaultNull()
+                    ->info('Global search route')
+                ->end()
+            ->end();
+
+        return $rootNode;
+    }
+
+    private function getOptionsConfig(): ArrayNodeDefinition
+    {
+        $treeBuilder = new TreeBuilder('options');
+        $rootNode = $treeBuilder->getRootNode();
+
+        $rootNode
+            ->addDefaultsIfNotSet()
+            ->children()
+                ->scalarNode('theme')
+                    ->defaultValue('tabler')
+                    ->info('Theme name')
+                ->end()
+                ->enumNode('layout')
+                    ->values(['horizontal', 'vertical', 'condensed'])
+                    ->defaultValue('horizontal')
+                    ->info('Layout direction')
+                ->end()
+                ->booleanNode('dark_mode')
+                    ->defaultFalse()
+                    ->info('Enable dark mode by default')
+                ->end()
+                ->booleanNode('show_locale_dropdown')
+                    ->defaultFalse()
+                    ->info('Show locale switcher in navbar')
+                ->end()
+            ->end();
+
+        return $rootNode;
     }
 
     public function getPaths(): array
@@ -323,97 +416,5 @@ class SurvosTablerBundle extends AbstractBundle implements CompilerPassInterface
         $dir = realpath(__DIR__ . '/../assets/');
         assert(file_exists($dir), 'asset path must exist for the assets in ' . __DIR__);
         return [$dir => '@survos/tabler'];
-    }
-
-    private function getAppConfig(): ArrayNodeDefinition
-    {
-        $treeBuilder = new TreeBuilder('app');
-        /** @var ArrayNodeDefinition $rootNode */
-        $rootNode = $treeBuilder->getRootNode();
-
-        $rootNode
-            ->addDefaultsIfNotSet()
-            ->children()
-            ->arrayNode('impersonate')->useAttributeAsKey('name')->prototype('scalar')->end()->info('identifiers of users to impersonate')->end()
-            ->arrayNode('social')->useAttributeAsKey('name')->prototype('scalar')->end()->info('links to facebook, etc.')->end()
-            ->scalarNode('code')->defaultValue('my-project')->info('project code, default for repo, dokku deployment, etc.')->end()
-            ->scalarNode('abbr')->defaultValue('my<b>Project</b>')->info('text abbreviation')->end()
-            ->scalarNode('logo')->defaultNull()->end() // arrayNode
-            ->scalarNode('logo_small')->defaultNull()->end() // arrayNode
-            ->end();
-        return $rootNode;
-    }
-
-
-    // inspired by AdminLTEBundle
-    private function getRouteAliasesConfig(): ArrayNodeDefinition
-    {
-        $treeBuilder = new TreeBuilder('routes');
-        /** @var ArrayNodeDefinition $rootNode */
-        $rootNode = $treeBuilder->getRootNode();
-
-        $rootNode
-            ->addDefaultsIfNotSet()
-            ->children()
-            ->scalarNode('home')
-            ->defaultValue('app_homepage')
-            ->info('name of the homepage route')
-            ->end()
-            ->scalarNode('login')->defaultValue('app_login')->info('name of the login')->end()
-            ->scalarNode('homepage')->defaultValue('app_homepage')->info('name of the home routes')->end()
-            ->scalarNode('logout')
-            ->defaultValue('app_logout')
-            ->info('name of the logout route')
-            ->end()
-            ->scalarNode('offcanvas')
-            ->defaultValue('app_settings')
-            ->info('name of the offcanvas route (e.g. a settings sidebar)')
-            ->end()
-            ->scalarNode('register')->defaultValue('app_register')->info('name of the register route')->end()
-            ->scalarNode('search')->defaultValue(false)->info('multi-entity search route')->end()
-            ->end();
-        return $rootNode;
-    }
-
-    private function getContextConfig(): ArrayNodeDefinition
-    {
-        $treeBuilder = new TreeBuilder('options');
-        /** @var ArrayNodeDefinition $rootNode */
-        $rootNode = $treeBuilder->getRootNode();
-
-        $rootNode
-            ->addDefaultsIfNotSet()
-            ->children()
-            ->scalarNode('theme')->defaultValue('bootswatch')->info("theme name")->end()
-            ->scalarNode('layout_direction')->defaultValue('horizontal')->end()
-            ->scalarNode('offcanvas')->defaultValue('end')->info("Offcanvas position (top,bottom,start,end")->end()
-//            ->scalarNode('offcanvas')
-//                ->defaultValue('')
-//                ->info("Offcanvas position (top,bottom,start,end")
-//            ->end()
-            ->booleanNode('allow_login')->defaultValue(false)->info("Login route exists")->end()
-            ->booleanNode('show_locale_dropdown')->defaultValue(false)->info("Add a locale dropdown to the navbar")->end();
-        return $rootNode;
-    }
-
-    /**
-     * Merge available configuration options, so they are all available for the ContextHelper.
-     *
-     * @return array
-     */
-    protected function getContextOptions(array $config = [])
-    {
-        $sidebar = [];
-
-        if (isset($config['control_sidebar']) && !empty($config['control_sidebar'])) {
-            $sidebar = $config['control_sidebar'];
-        }
-
-        $contextOptions = (array)($config['options'] ?? []);
-        $contextOptions['control_sidebar'] = $sidebar;
-        $contextOptions['knp_menu'] = (array)$config['knp_menu'];
-        $contextOptions = array_merge($contextOptions, $config['theme']);
-
-        return $contextOptions;
     }
 }
