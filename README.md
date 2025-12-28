@@ -1,9 +1,12 @@
 
 NOTE: During Dec 2025 development, bundle is in its own repo, NOT the mono-repo!
 
+composer config repositories.survos_admin_bundle '{"type": "vcs", "url": "git@github.com:survos/SurvosTablerBundle.git"}'
+composer req survos/tabler-bundle
+>>>>>>> 850d10b769ef645b816c99647d7e3f5f8a0df124
+
 composer config repositories.survos_tabler_bundle '{"type": "vcs", "url": "git@github.com:survos/SurvosTablerBundle.git"}'
 composer req survos/tabler-bundle
-
 
 # Survos Tabler Bundle
 
@@ -11,6 +14,8 @@ Derived from survos/bootstrap-bundle, it is tabler-only.
 
 A moderately-opinionated bundle that provides a quick way to get up and running with Symfony.  
 In particular, it sets up and uses the following:
+
+* Knp Menu for sidebar and top nagivation
 
 ## Assumptions
 

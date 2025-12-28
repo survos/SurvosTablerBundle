@@ -1,0 +1,61 @@
+{# @SurvosBootstrap/page/simple.html.twig #}
+{% extends '@SurvosBootstrap/layout/base.html.twig' %}
+
+{% block title %}Simple Page · {{ parent() }}{% endblock %}
+
+{# Override the header to pass different props #}
+{% block header %}
+  <twig:tabler:header
+    pretitle="Examples"
+    title="Simple Page"
+    subtitle="Rendered with Twig Components"
+    :dark="false"
+    :overlap="false"
+    :showActions="true"
+    :debug="true"
+  />
+{% endblock %}
+
+{% block content %}
+  <div class="card">
+    <div class="card-body">
+      <h3 class="card-title">Hello from <code>simple.html.twig</code></h3>
+      <p class="text-secondary mb-3">
+        This content block lives in the child template and the header/footer are Twig Components.
+      </p>
+
+      <div class="row g-3">
+        <div class="col-sm-6">
+          <div class="card card-sm">
+            <div class="card-body">
+              <div class="subheader">Where am I?</div>
+              <div><code>{{ _self }}</code></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <div class="card card-sm">
+            <div class="card-body">
+              <div class="subheader">Layout template</div>
+              <div><code>@SurvosBootstrap/layout/base.html.twig</code></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
+
+{% block footer %}
+  <twig:tabler:footer
+    appName="Survos / Tabler Demo"
+    :year="null"
+    :links="{
+      'Docs': 'https://tabler.io/docs',
+      'GitHub': 'https://github.com/tabler/tabler'
+    }"
+    :debug="true"
+  />
+{% endblock %}

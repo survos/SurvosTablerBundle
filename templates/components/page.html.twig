@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.locale }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{{ this.resolvedTitle }}{% endblock %}</title>
+    {% block meta %}{% endblock %}
+    {% block stylesheets %}{% endblock %}
+    {{ importmap(this.entrypoint) }}
+</head>
+<body class="layout-{{ this.layout }}{% if this.bodyClass %} {{ this.bodyClass }}{% endif %}">
+
+{% if this.shouldShow('navbar') %}
+    {% block navbar %}
+        {# TODO: <twig:tabler:navbar :menuCode="this.navbarMenu" /> #}
+        <header class="navbar navbar-expand-md d-print-none">
+            <div class="container-xl">
+                <div class="navbar-brand">{{ this.resolvedTitle }}</div>
+                {# KnpMenu will go here #}
+            </div>
+        </header>
+    {% endblock %}
+{% endif %}
+
+<div class="page-wrapper">
+    {% if this.shouldShow('sidebar') %}
+        {% block sidebar %}
+            {# TODO: <twig:tabler:sidebar :menuCode="this.sidebarMenu" /> #}
+            <aside class="navbar navbar-vertical navbar-expand-lg">
+                <div class="container-fluid">
+                    {# KnpMenu sidebar will go here #}
+                </div>
+            </aside>
+        {% endblock %}
+    {% endif %}
+
+    <div class="page-body">
+        {% if this.shouldShow('header') %}
+            {% block header %}
+                <div class="page-header d-print-none">
+                    <div class="container-xl">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                {% if this.resolvedPretitle %}
+                                    <div class="page-pretitle">{{ this.resolvedPretitle }}</div>
+                                {% endif %}
+                                {% if this.resolvedTitle %}
+                                    <h2 class="page-title">
+                                        {% if this.icon %}<span class="{{ this.icon }} me-2"></span>{% endif %}
+                                        {{ this.resolvedTitle }}
+                                    </h2>
+                                {% endif %}
+                                {% if this.resolvedSubtitle %}
+                                    <div class="text-body-secondary mt-1">{{ this.resolvedSubtitle }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="col-auto ms-auto d-print-none">
+                                {% block header_actions %}
+                                    {# TODO: render actionsMenu as buttons #}
+                                {% endblock %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endblock %}
+        {% endif %}
+
+        <div class="container-xl">
+            {% block content %}
+                {% if this.resolvedContent %}
+                    <div class="markdown">{{ this.resolvedContent|raw }}</div>
+                {% endif %}
+            {% endblock %}
+        </div>
+    </div>
+
+    {% if this.shouldShow('footer') %}
+        {% block footer %}
+            <footer class="footer footer-transparent d-print-none">
+                <div class="container-xl">
+                    {% block footer_content %}
+                        <div class="text-body-secondary">
+                            &copy; {{ 'now'|date('Y') }}
+                        </div>
+                    {% endblock %}
+                </div>
+            </footer>
+        {% endblock %}
+    {% endif %}
+</div>
+
+{% block javascripts %}{% endblock %}
+</body>
+</html>

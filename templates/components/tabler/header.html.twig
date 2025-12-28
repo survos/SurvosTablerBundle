@@ -1,4 +1,5 @@
 {# @SurvosBootstrap/components/tabler/header.html.twig #}
+<<<<<<< HEAD
 {% if showHeader|default(true) %}
 <div class="page-header d-print-none{{ dark|default(false) or overlap|default(false) ? ' text-white' : '' }}">
   <div class="container-xl">
@@ -13,6 +14,20 @@
         {% endif %}
 
         {% if subtitle|default(false) %}
+=======
+{# Minimal Tabler-styled page header, powered by Twig Component props. #}
+<div class="page-header d-print-none{{ dark or overlap ? ' text-white' : '' }}">
+  <div class="container-xl">
+    <div class="row align-items-center">
+      <div class="col">
+        {% if pretitle %}
+          <div class="page-pretitle">{{ pretitle }}</div>
+        {% endif %}
+
+        <h2 class="page-title">{{ title }}</h2>
+
+        {% if subtitle %}
+>>>>>>> 850d10b769ef645b816c99647d7e3f5f8a0df124
           <div class="text-body-secondary mt-1{% if dark or overlap %} text-white-50{% endif %}">
             {{ subtitle }}
           </div>
