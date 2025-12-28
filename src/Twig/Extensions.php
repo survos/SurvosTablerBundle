@@ -7,7 +7,7 @@
  * file that was distributed with this source slug.
  */
 
-namespace Survos\BaseBundle\Twig;
+namespace Survos\TablerBundle\Twig;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Twig\Extension\AbstractExtension;

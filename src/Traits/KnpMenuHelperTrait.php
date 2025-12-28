@@ -1,9 +1,12 @@
-<?php // Simplies the construction of menu items,
-namespace Survos\BaseBundle\Traits;
+<?php
+// Simplies the construction of menu items,
+
+namespace Survos\TablerBundle\Traits;
 
 use Knp\Menu\ItemInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+
 use function Symfony\Component\String\u;
 
 trait KnpMenuHelperTrait

@@ -1,25 +1,16 @@
 
-composer config repositories.survos_admin_bundle '{"type": "vcs", "url": "git@github.com:survos/SurvosAdminBundle.git"}'
-composer req survos/admin-bundle
+NOTE: During Dec 2025 development, bundle is in its own repo, NOT the mono-repo!
 
-@TODO:
+composer config repositories.survos_tabler_bundle '{"type": "vcs", "url": "git@github.com:survos/SurvosTablerBundle.git"}'
+composer req survos/tabler-bundle
 
-* Extend from Umbrella
-* Add DataTableBundle (ux component)
-* Add #[RouteParameter] to Entity Properties.
-* Make ParamConverter listen via Attributes
-* Add LandingBundle (make:landing)
-* Symfony 5.4 or 6
 
-# Survos Admin Bundle
+# Survos Tabler Bundle
+
+Derived from survos/bootstrap-bundle, it is tabler-only.
 
 A moderately-opinionated bundle that provides a quick way to get up and running with Symfony.  
 In particular, it sets up and uses the following:
-
-* AdminLTE4 (Bootstrap 5)
-* Knp Menu for sidebar and top nagivation
-* webpack encore 
-* optional jQuery (for js-tree and datatables)
 
 ## Assumptions
 
@@ -28,59 +19,16 @@ While the following can be disabled, by default the bundle assumes you want the 
 * Authentication
 * A user and an admin role
 * Users
-* An API (for Vue, DataTables)
-* Bootstrap 5, icons
-* Deployable on Heroku
 
-## Process
-
-Go to ... and fill out the form with what you want.  Run the script to create the Symfony shell.
-
-```
-
-Then in app.js
-
-```javascript
-require('adminkit/static/js/app');
-require('../css/app.scss');
-```
-
-and app.scss
-
-```scss
-@import "~adminkit/static/css/app.css";
-```
-
-
-Change app.js:
-
-```javascript
-require('@popperjs/core');
-require('bootstrap');
-require('Hinclude/hinclude');
-require('./css/app.scss');
-
-```
-
-```scss
-@import "~bootstrap/dist/css/bootstrap.min.css";
-@import "../../public/bundles/survosbase/volt-dist/css/volt.css";
-```
 
 ### Goals
 
 This bundle was created originally to isolate issues with other bundles and to get data on a website as quickly and painlessly as possible.  
 
-## Some themes worth checking out
-
-https://github.com/xriley/portal-theme-bs5 (check license though)
-https://github.com/zuramai/voler 
-
 ### Requirements
 
 * composer
-* PHP 7.2+
-* yarn
+* PHP 8.4+
 * Symfony CLI (for running a local server, creating project, etc.)
 
 ### Create github Project
@@ -91,7 +39,7 @@ https://github.com/zuramai/voler
 
 on github.com with no files (no README or license), clone it to some directory and go there.
 
-     REPO=base-bundle-demo 
+     REPO=tabler-bundle-demo 
      git clone git@github.com:survos/$REPO.git && cd $REPO 
      
 * Create the Symfony Skeleton WITHOUT a git repo, then ADD the repo.  Allow recipes
@@ -99,19 +47,12 @@ on github.com with no files (no README or license), clone it to some directory a
 ```bash
 rm -f LICENSE && rm -f README.md && mv .git .. && symfony new --full . --no-git --version=5.4 && mv ../.git . && git checkout .
 composer config extra.symfony.allow-contrib true
-composer req webapp && yarn install && yarn encore dev
 ```     
         
-* Create the project on heroku, after logging in.  Optionally create database.
-
-  
 OR if you're using Sqlite.
 
 ```bash
 heroku create $REPO
-heroku addons:create heroku-postgresql:hobby-dev
-echo "DATABASE_URL=$(heroku config:get DATABASE_URL)" > .env.heroku.local
-# Without heroku, use sqlite (or setup MySQL)
 echo "DATABASE_URL=sqlite:///%kernel.project_dir%/var/data.db" > .env.local
 ```
 

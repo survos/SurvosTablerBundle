@@ -43,6 +43,12 @@ fixed, layout-boxed, layout-top-nav, sidebar-collapse, sidebar-mini
     {% block navbar %}
         {{ _self }}
         <nav class="main-header navbar navbar-expand fixed-top navbar-dark">
+
+            {{ component('menu', {type: NAVBAR_MENU, caller: _self}) }}
+            {{ component('menu', {type: NAVBAR_MENU2, caller: _self}) }}
+            {{ component('menu', {type: NAVBAR_MENU3, caller: _self}) }}
+            {{ component('menu', {type: AUTH_MENU, caller: _self}) }}
+
             <ul class="navbar-nav">
                 {% block navbar_toggle %}
                     <li class="nav-item">
@@ -108,6 +114,7 @@ fixed, layout-boxed, layout-top-nav, sidebar-collapse, sidebar-mini
 
     {% block sidebar %}
         <aside class="main-sidebar sidebar-dark-primary elevation-4 d-print-none">
+            {{ _self }}
             <a href="{% block logo_path %}{{ path('app_homepage') }}{% endblock %}" class="brand-link ">
                 {% block logo_mini %}
                     <img src="{{ asset('favicon-32x32.png')  }}" alt="Logo" class="brand-image elevation-3" >

@@ -1,4 +1,4 @@
-### Upgrading to Bootstrap5 and AdminKit
+### Upgrading to Tabler5 and AdminKit
 
     yarn add https://github.com/survos/adminkit.git
 
