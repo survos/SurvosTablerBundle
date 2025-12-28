@@ -6,6 +6,7 @@ use Survos\TablerBundle\Components\AccordionComponent;
 use Survos\TablerBundle\Components\LocaleSwitcherDropdown;
 use Survos\TablerBundle\Components\TablerFooter;
 use Survos\TablerBundle\Components\TablerHeader;
+use Survos\TablerBundle\Components\TablerPage;
 use Survos\TablerBundle\Components\TabsComponent;
 use Survos\TablerBundle\Components\AlertComponent;
 use Survos\TablerBundle\Components\BadgeComponent;
@@ -19,7 +20,11 @@ use Survos\TablerBundle\Components\LinkComponent;
 use Survos\TablerBundle\Components\MenuBreadcrumbComponent;
 use Survos\TablerBundle\Components\MenuComponent;
 use Survos\TablerBundle\Event\KnpMenuEvent;
+use Survos\TablerBundle\Menu\DemoMenu;
 use Survos\TablerBundle\Service\ContextService;
+use Survos\TablerBundle\Service\IconAliasService;
+use Survos\TablerBundle\Service\MenuDispatcher;
+use Survos\TablerBundle\Service\MenuRenderer;
 use Survos\TablerBundle\Service\MenuService;
 use Survos\TablerBundle\Twig\Components\MiniCard;
 use Survos\TablerBundle\Twig\Components\TablerHead;
@@ -27,6 +32,9 @@ use Survos\TablerBundle\Twig\Components\TablerIcon;
 use Survos\TablerBundle\Twig\Components\TablerPageHeader;
 //use Survos\TablerBundle\Twig\TablerExtension;
 //use Survos\TablerBundle\Twig\TablerRuntimeExtension;
+use Survos\TablerBundle\Twig\IconAliasExtension;
+use Survos\TablerBundle\Twig\MenuExtension;
+use Survos\TablerBundle\Twig\MenuGlobalsExtension;
 use Survos\TablerBundle\Twig\TwigExtension;
 use Survos\CoreBundle\HasAssetMapperInterface;
 use Survos\CoreBundle\Traits\HasAssetMapperTrait;
@@ -58,7 +66,7 @@ class SurvosTablerBundle extends AbstractBundle implements CompilerPassInterface
         $container->addCompilerPass($this);
     }
 
-    private function getCachedDataFilename(ContainerBuilder $container)
+    private function getCachedDataFilename(ContainerBuilder $container): string
     {
         $kernelCacheDir = $container->getParameter('kernel.cache_dir');
         return $kernelCacheDir . '/route_requirements.json';
@@ -125,6 +133,56 @@ class SurvosTablerBundle extends AbstractBundle implements CompilerPassInterface
     public function loadExtension(array $config, ContainerConfigurator $container, ContainerBuilder $builder): void
     {
 
+        // IconAliasService
+        $builder->register(IconAliasService::class)
+            ->setArguments([
+                $config['icons'] ?? [],
+            ]);
+
+// Icon alias twig extension
+        $builder->register(IconAliasExtension::class)
+            ->setArguments([
+                new Reference(IconAliasService::class),
+            ])
+            ->addTag('twig.extension');
+        // MenuDispatcher service
+        $builder->register(MenuDispatcher::class)
+            ->setArguments([
+                new Reference('knp_menu.factory'),
+                new Reference('event_dispatcher'),
+            ]);
+
+        // Twig extension for functions
+        $builder->register(MenuExtension::class)
+            ->setArguments([
+                new Reference(MenuRenderer::class),
+            ])
+            ->addTag('twig.extension');
+
+        // Twig extension for globals (implements GlobalsInterface)
+        $builder->register(MenuGlobalsExtension::class)
+            ->addTag('twig.extension');
+
+        // Demo menu listener (enabled via ?menu_demo=1)
+        $builder->register(DemoMenu::class)
+            ->setAutowired(true)
+            ->setAutoconfigured(true) // so we don't have to register each event
+            ->setArguments([
+                new Reference('request_stack'),
+            ])
+//            ->addTag('kernel.event_listener')
+        ;
+
+        $builder->register(MenuRenderer::class)
+            ->setArguments([
+                new Reference(MenuDispatcher::class),
+                new Reference('knp_menu.helper'),
+                new Reference('request_stack'),
+                '@SurvosTabler/menu/', // templatePrefix
+            ]);
+
+        // Store config for ContextService or other uses
+        $builder->setParameter('survos_tabler.config', $config);
 //        dd($this->getCachedDataFilename($builder));
 
         // inject into parameters, so we can access it in the compiler pass and inject it globally.
@@ -152,6 +210,7 @@ class SurvosTablerBundle extends AbstractBundle implements CompilerPassInterface
                 DividerComponent::class,
                 LinkComponent::class,
                 TabsComponent::class,
+                TablerPage::class,
                 LocaleSwitcherDropdown::class,
 
                 TablerHeader::class,
@@ -245,6 +304,12 @@ class SurvosTablerBundle extends AbstractBundle implements CompilerPassInterface
         // since the configuration is short, we can add it here
         $definition->rootNode()
             ->children()
+// In the rootNode children:
+            ->arrayNode('icons')
+                ->useAttributeAsKey('name')
+                ->scalarPrototype()->end()
+            ->info('Icon alias overrides (alias: icon-name)')
+            ->end()
             ->append($this->getAppConfig())
             ->append($this->getRouteAliasesConfig())
             ->append($this->getContextConfig())
@@ -257,7 +322,7 @@ class SurvosTablerBundle extends AbstractBundle implements CompilerPassInterface
     {
         $dir = realpath(__DIR__ . '/../assets/');
         assert(file_exists($dir), 'asset path must exist for the assets in ' . __DIR__);
-        return [$dir => '@survos/bootstrap'];
+        return [$dir => '@survos/tabler'];
     }
 
     private function getAppConfig(): ArrayNodeDefinition

@@ -1,0 +1,78 @@
+{#
+Tabler sidebar menu template for KnpMenu.
+Vertical navigation with headings, icons, and collapsible sections.
+#}
+{% extends '@KnpMenu/menu.html.twig' %}
+
+{% block root %}
+    {% set listAttributes = item.childrenAttributes|merge({class: (item.childrenAttributes.class|default('') ~ ' navbar-nav pt-lg-3')|trim}) %}
+    {{ block('list') }}
+{% endblock %}
+
+{% block item %}
+    {% import _self as knp %}
+    {% set icon = item.extras.icon|default(item.attributes['data-icon']|default(null)) %}
+    {% set isHeading = item.extras.heading|default(false) %}
+    {% set isSubmenu = item.extras.submenu|default(false) or item.hasChildren %}
+    {% set isActive = matcher.isCurrent(item) or matcher.isAncestor(item) %}
+    
+    {% if isHeading %}
+        <li class="nav-item pt-3">
+            <span class="nav-link disabled text-uppercase text-body-secondary">
+                {% if icon %}{{ ux_icon(icon, {class: 'icon'}) }}{% endif %}
+                {{ block('label') }}
+            </span>
+        </li>
+    {% elseif isSubmenu %}
+        {% set collapseId = 'sidebar-' ~ item.name|replace({' ': '-', '.': '-'})|lower ~ '-' ~ loop.index %}
+        <li class="nav-item{% if isActive %} active{% endif %}">
+            <a class="nav-link dropdown-toggle{% if not isActive %} collapsed{% endif %}" href="#{{ collapseId }}" data-bs-toggle="collapse" data-bs-auto-close="false" role="button" aria-expanded="{{ isActive ? 'true' : 'false' }}">
+                <span class="nav-link-icon d-md-none d-lg-inline-block">
+                    {% if icon %}{{ ux_icon(icon, {class: 'icon'}) }}{% else %}{{ ux_icon('tabler:folder', {class: 'icon'}) }}{% endif %}
+                </span>
+                <span class="nav-link-title">{{ block('label') }}</span>
+            </a>
+            <div class="collapse{% if isActive %} show{% endif %}" id="{{ collapseId }}">
+                <ul class="nav nav-pills flex-column">
+                    {% for child in item.children %}
+                        {{ knp.render_sidebar_child(child, matcher) }}
+                    {% endfor %}
+                </ul>
+            </div>
+        </li>
+    {% else %}
+        <li class="nav-item{% if isActive %} active{% endif %}">
+            <a class="nav-link" href="{{ item.uri }}"{% if item.linkAttributes.target|default(false) %} target="{{ item.linkAttributes.target }}"{% endif %}>
+                <span class="nav-link-icon d-md-none d-lg-inline-block">
+                    {% if icon %}{{ ux_icon(icon, {class: 'icon'}) }}{% else %}{{ ux_icon('tabler:point', {class: 'icon'}) }}{% endif %}
+                </span>
+                <span class="nav-link-title">{{ block('label') }}</span>
+                {% if item.extras.badge is defined %}
+                    <span class="badge bg-primary ms-auto">{{ item.extras.badge }}</span>
+                {% endif %}
+            </a>
+        </li>
+    {% endif %}
+{% endblock %}
+
+{% block label %}
+    {% if options.allow_safe_labels and item.extras.safe_label|default(false) %}
+        {{ item.label|trans(item.extras.translation_params|default({}), item.extras.translation_domain|default('messages'))|raw }}
+    {% else %}
+        {{ item.label|trans(item.extras.translation_params|default({}), item.extras.translation_domain|default('messages')) }}
+    {% endif %}
+{% endblock %}
+
+{% macro render_sidebar_child(item, matcher) %}
+    {% set icon = item.extras.icon|default(null) %}
+    {% set isActive = matcher.isCurrent(item) %}
+    
+    <li class="nav-item">
+        <a class="nav-link{% if isActive %} active{% endif %}" href="{{ item.uri }}">
+            {% if icon %}
+                <span class="nav-link-icon">{{ ux_icon(icon, {class: 'icon'}) }}</span>
+            {% endif %}
+            {{ item.label|trans({}, item.extras.translation_domain|default('messages')) }}
+        </a>
+    </li>
+{% endmacro %}

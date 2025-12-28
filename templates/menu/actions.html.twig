@@ -1,0 +1,28 @@
+{#
+Tabler page actions menu template.
+Renders as button list.
+#}
+{% extends '@KnpMenu/menu.html.twig' %}
+
+{% block root %}
+    {# No wrapper ul - items render as buttons directly #}
+    {% for child in item.children %}
+        {% with {item: child} %}
+            {{ block('item') }}
+        {% endwith %}
+    {% endfor %}
+{% endblock %}
+
+{% block item %}
+    {% set icon = item.extras.icon|default(item.attributes['data-icon']|default(null)) %}
+    {% set isPrimary = loop.last %}
+    
+    <a href="{{ item.uri }}" class="btn{% if isPrimary %} btn-primary{% else %} btn-outline-secondary{% endif %}">
+        {% if icon %}{{ ux_icon(icon, {class: 'icon'}) }}{% endif %}
+        {{ block('label') }}
+    </a>
+{% endblock %}
+
+{% block label %}
+    {{ item.label|trans(item.extras.translation_params|default({}), item.extras.translation_domain|default('messages')) }}
+{% endblock %}

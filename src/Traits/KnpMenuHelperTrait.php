@@ -1,4 +1,5 @@
 <?php
+
 // Simplies the construction of menu items,
 
 namespace Survos\TablerBundle\Traits;
@@ -11,8 +12,7 @@ use function Symfony\Component\String\u;
 
 trait KnpMenuHelperTrait
 {
-
-    public function authMenu(AuthorizationCheckerInterface $security, ItemInterface $menu, $childOptions=[])
+    public function authMenux(AuthorizationCheckerInterface $security, ItemInterface $menu, $childOptions = []): void
     {
         if ($security->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             $menu->addChild(
@@ -34,8 +34,5 @@ trait KnpMenuHelperTrait
                 // route is likely missing
             }
         }
-
     }
-
-
 }

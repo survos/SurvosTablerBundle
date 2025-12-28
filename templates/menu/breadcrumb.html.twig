@@ -1,0 +1,24 @@
+{#
+Tabler breadcrumb menu template.
+#}
+{% extends '@KnpMenu/menu.html.twig' %}
+
+{% block root %}
+    <ol class="breadcrumb breadcrumb-arrows" aria-label="breadcrumbs">
+        {% for child in item.children %}
+            {% with {item: child, loop: loop} %}
+                {{ block('item') }}
+            {% endwith %}
+        {% endfor %}
+    </ol>
+{% endblock %}
+
+{% block item %}
+    <li class="breadcrumb-item{% if loop.last %} active{% endif %}"{% if loop.last %} aria-current="page"{% endif %}>
+        <a href="{{ item.uri }}">{{ block('label') }}</a>
+    </li>
+{% endblock %}
+
+{% block label %}
+    {{ item.label|trans(item.extras.translation_params|default({}), item.extras.translation_domain|default('messages')) }}
+{% endblock %}

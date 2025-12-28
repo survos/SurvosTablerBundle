@@ -15,7 +15,7 @@ use Symfony\Component\Security\Http\Impersonate\ImpersonateUrlGenerator;
 
 use function Symfony\Component\String\u;
 
-class MenuService implements KnpMenuHelperInterface
+class MenuService # implements KnpMenuHelperInterface
 {
     use KnpMenuHelperTrait;
 
@@ -61,7 +61,7 @@ class MenuService implements KnpMenuHelperInterface
         return $this->authorizationChecker;
     }
 
-    public function addAuthMenu(ItemInterface $menu, $childOptions = []): ItemInterface
+    public function addAuthMenuxx(ItemInterface $menu, $childOptions = []): ItemInterface
     {
         $translationDomain = 'FOSUserBundle'; // should this be in AuthService or Tabler?
         if ($this->isGranted('IS_AUTHENTICATED_REMEMBERED')) {

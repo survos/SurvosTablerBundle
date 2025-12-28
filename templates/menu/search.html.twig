@@ -1,0 +1,19 @@
+{#
+Tabler search menu template.
+Simple wrapper for search functionality.
+#}
+{% extends '@KnpMenu/menu.html.twig' %}
+
+{% block root %}
+    <div class="nav-item">
+        {% for child in item.children %}
+            {% with {item: child} %}
+                {{ block('item') }}
+            {% endwith %}
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block item %}
+    {{ item.label|raw }}
+{% endblock %}

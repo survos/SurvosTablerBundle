@@ -1,10 +1,10 @@
 {
     "name": "survos/tabler-bundle",
-    "description": "Add some tools and resources to a 6 application, based on Tabler (tabler.io)",
+    "description": "Add some tools and resources to a Symfony 7.4/8 application, based on Tabler (tabler.io)",
     "type": "symfony-bundle",
-    "keywords": ["symfony-ux", "symfony6"],
+    "keywords": ["symfony-ux", "symfony"],
     "require": {
-        "php": ">= 8.1",
+        "php": "^8.4",
         "ext-json": "*",
         "ext-zip": "*",
         "doctrine/common": "^3.0",
@@ -26,6 +26,7 @@
         "twig/twig": "^3.3"
     },
     "require-dev": {
+        "roave/security-advisories": "dev-latest",
         "meyfa/php-svg": "^0.16.1",
         "phpstan/phpstan": "^2.0",
         "rector/rector": "^2.0",

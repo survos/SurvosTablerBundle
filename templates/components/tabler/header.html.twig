@@ -1,82 +1,83 @@
 {# @SurvosBootstrap/components/tabler/header.html.twig #}
-<<<<<<< HEAD
 {% if showHeader|default(true) %}
 <div class="page-header d-print-none{{ dark|default(false) or overlap|default(false) ? ' text-white' : '' }}">
-  <div class="container-xl">
-    <div class="row align-items-center">
-      <div class="col">
-        {% if pretitle|default(false) %}
-          <div class="page-pretitle">{{ pretitle }}</div>
-        {% endif %}
+    <div class="container-xl">
+        <div class="row align-items-center">
+            <div class="col">
+                {% if pretitle|default(false) %}
+                    <div class="page-pretitle">{{ pretitle }}</div>
+                {% endif %}
 
-        {% if title|default(false) %}
-        <h2 class="page-title">{{ title }}</h2>
-        {% endif %}
+                {% if title|default(false) %}
+                    <h2 class="page-title">{{ title }}</h2>
+                {% endif %}
 
-        {% if subtitle|default(false) %}
-=======
-{# Minimal Tabler-styled page header, powered by Twig Component props. #}
-<div class="page-header d-print-none{{ dark or overlap ? ' text-white' : '' }}">
-  <div class="container-xl">
-    <div class="row align-items-center">
-      <div class="col">
-        {% if pretitle %}
-          <div class="page-pretitle">{{ pretitle }}</div>
-        {% endif %}
+                {% if subtitle|default(false) %}
+                {% endif %}
 
-        <h2 class="page-title">{{ title }}</h2>
+                {# Minimal Tabler-styled page header, powered by Twig Component props. #}
+                <div class="page-header d-print-none{{ dark or overlap ? ' text-white' : '' }}">
+                    <div class="container-xl">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                {% if pretitle %}
+                                    <div class="page-pretitle">{{ pretitle }}</div>
+                                {% endif %}
 
-        {% if subtitle %}
->>>>>>> 850d10b769ef645b816c99647d7e3f5f8a0df124
-          <div class="text-body-secondary mt-1{% if dark or overlap %} text-white-50{% endif %}">
-            {{ subtitle }}
-          </div>
-        {% endif %}
+                                <h2 class="page-title">{{ title }}</h2>
 
-        <div class="small mt-2 opacity-50">
-          <code>{{ _self }}</code>
-        </div>
+                                {% if subtitle %}
+                                    <div class="text-body-secondary mt-1{% if dark or overlap %} text-white-50{% endif %}">
+                                        {{ subtitle }}
+                                    </div>
+                                {% endif %}
 
-        {% if debug|default(app.request.query.get('debug', false)) %}
-          <div class="card card-sm mt-3">
-            <div class="card-body">
-              <div class="subheader mb-2">Header props (debug)</div>
-              <pre class="m-0">{{ {
-                title: title,
-                pretitle: pretitle,
-                subtitle: subtitle,
-                dark: dark,
-                overlap: overlap,
-                showActions: showActions
-              }|json_encode(constant('JSON_PRETTY_PRINT')) }}</pre>
-            </div>
-          </div>
-        {% endif %}
-      </div>
+                                <div class="small mt-2 opacity-50">
+                                    <code>{{ _self }}</code>
+                                </div>
 
-        <div class="d-flex align-items-center gap-3">
-            {{ dump(config().options) }}
-            {% if config().options.show_locale_dropdown %}
-                <div class="d-inline-block d-lg-none">
-                    {{ include('@SurvosBootstrap/_navbar_language_dropdown.html.twig') }}
+                                {% if debug|default(app.request.query.get('debug', false)) %}
+                                    <div class="card card-sm mt-3">
+                                        <div class="card-body">
+                                            <div class="subheader mb-2">Header props (debug)</div>
+                                            <pre class="m-0">{{ {
+                                                    title: title,
+                                                    pretitle: pretitle,
+                                                    subtitle: subtitle,
+                                                    dark: dark,
+                                                    overlap: overlap,
+                                                    showActions: showActions
+                                                }|json_encode(constant('JSON_PRETTY_PRINT')) }}</pre>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <div class="d-flex align-items-center gap-3">
+                                {{ dump(config().options) }}
+                                {% if config().options.show_locale_dropdown %}
+                                    <div class="d-inline-block d-lg-none">
+                                        {{ include('@SurvosBootstrap/_navbar_language_dropdown.html.twig') }}
+                                    </div>
+                                {% endif %}
+                                <button id="navbar-toggle-bundle" class="navbar-toggler" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
+                                        aria-controls="navbarResponsive" aria-expanded="false"
+                                        aria-label="Toggle navigation">
+                                    <span class="navbar-toggler-icon"></span>
+                                </button>
+                            </div>
+
+
+                            {% if showActions|default(true) %}
+                                <div class="col-12 col-md-auto ms-auto d-print-none">
+                                    <div class="btn-list">
+                                        <a href="#" class="btn btn-white">New view</a>
+                                        <a href="#" class="btn btn-primary d-none d-sm-inline-block">Create new
+                                            report</a>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
                 </div>
-            {% endif %}
-            <button id="navbar-toggle-bundle" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
-                    aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-        </div>
-
-
-        {% if showActions|default(true) %}
-        <div class="col-12 col-md-auto ms-auto d-print-none">
-          <div class="btn-list">
-            <a href="#" class="btn btn-white">New view</a>
-            <a href="#" class="btn btn-primary d-none d-sm-inline-block">Create new report</a>
-          </div>
-        </div>
-      {% endif %}
-    </div>
-  </div>
-</div>
-{% endif %}

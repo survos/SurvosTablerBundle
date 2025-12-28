@@ -1,0 +1,29 @@
+{
+  "name": "@survos/tabler-bundle",
+  "description": "integrate php and javascript helpers for tabler, including menus",
+  "license": "MIT",
+  "version": "1.0.1",
+  "symfony": {
+    "controllers": {
+      "search": {
+        "main": "src/controllers/search_controller.js",
+        "webpackMode": "eager",
+        "fetch": "lazy",
+        "enabled": true,
+        "autoimport": {
+        }
+      }
+    },
+    "importmap": {
+      "@hotwired/stimulus": "^3.0.0"
+    },
+    "autoimport": {
+    }
+  },
+  "peerDependencies": {
+    "@hotwired/stimulus": "^3.2.2"
+  },
+  "devDependencies": {
+    "@hotwired/stimulus": "^3.2.2"
+  }
+}

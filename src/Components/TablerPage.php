@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Survos\TablerBundle\Components;
 
-use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 use Symfony\UX\TwigComponent\Attribute\ExposeInTemplate;
@@ -21,6 +20,8 @@ final class TablerPage
 
     /** Layout preset: content, dashboard, search, minimal */
     public string $layout = 'dashboard';
+
+    public bool $debug = false;
 
     /** Translation key prefix — if set, resolves title/pretitle/subtitle/content from translations */
     public ?string $transPrefix = null;
@@ -76,7 +77,7 @@ final class TablerPage
     public function shouldShow(string $section): bool
     {
         $prop = 'show' . ucfirst($section);
-        
+
         if ($this->$prop !== null) {
             return $this->$prop;
         }
@@ -95,7 +96,7 @@ final class TablerPage
         if ($this->transPrefix) {
             $transKey = "{$this->transPrefix}.{$key}";
             $translated = $this->translator->trans($transKey);
-            
+
             // translator returns the key if no translation found
             return $translated !== $transKey ? $translated : null;
         }
