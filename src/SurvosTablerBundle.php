@@ -50,6 +50,7 @@ use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\UX\Icons\Twig\UXIconRuntime;
 
 class SurvosTablerBundle extends AbstractBundle implements CompilerPassInterface, HasAssetMapperInterface
 {
@@ -82,7 +83,7 @@ class SurvosTablerBundle extends AbstractBundle implements CompilerPassInterface
             }
 
             $reflectionClass = new \ReflectionClass($controllerClass);
-            
+
             // Controller-level IsGranted attributes
             $controllerRequirements = [];
             foreach ($reflectionClass->getAttributes(IsGranted::class) as $attribute) {
@@ -123,7 +124,6 @@ class SurvosTablerBundle extends AbstractBundle implements CompilerPassInterface
                 $twigDef->addMethodCall('addGlobal', [$name, $value]);
             }
         }
-
         // Theme from config
         if ($container->hasParameter('survos_tabler.theme')) {
             $twigDef->addMethodCall('addGlobal', ['theme', $container->getParameter('survos_tabler.theme')]);
@@ -182,10 +182,13 @@ class SurvosTablerBundle extends AbstractBundle implements CompilerPassInterface
         $builder->register(MenuGlobalsExtension::class)
             ->addTag('twig.extension');
 
+// In loadExtension(), replace IconExtension registration:
         $builder->register(IconExtension::class)
+//            ->setArgument('$uxIconRuntime', new Reference(UXIconRuntime::class))
+//            ->setArgument('$uxIconRuntime', new Reference(UXIconRuntime::class, ContainerInterface::NULL_ON_INVALID_REFERENCE))
+            ->setArgument('$twig', new Reference('twig', ContainerInterface::NULL_ON_INVALID_REFERENCE))
             ->setArgument('$iconService', new Reference(IconService::class))
             ->addTag('twig.extension');
-
         $builder->register(RouteAliasExtension::class)
             ->setArgument('$routeAliasService', new Reference(RouteAliasService::class))
             ->addTag('twig.extension');

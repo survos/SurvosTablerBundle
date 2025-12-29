@@ -33,13 +33,14 @@ class TwigExtension extends AbstractExtension // implements ServiceSubscriberInt
         // consider something like https://github.com/a-r-m-i-n/font-awesome-bundle
         return [
             new TwigFilter('attributes', [$this, 'attributes'], ['is_safe' => ['html']]),
-            new TwigFilter('icon', [$this, 'icon'], ['is_safe' => ['html']]),
             new TwigFilter('tabler_container', [$this, 'containerClass'], ['is_safe' => ['html']]),
-            new TwigFilter('fas_icon',
-                // candidate for component
-                fn(string $value, string $extra=''): string => sprintf('<span class="fas fa-%s %s"></span>', $value, $extra),
-                ['is_safe' => ['html']]),
-            // if you're calling route_alias and it doesn't exist, maybe it should be '#'?
+            // hmm, do we want these?
+//            new TwigFilter('icon', [$this, 'icon'], ['is_safe' => ['html']]),
+//            new TwigFilter('fas_icon',
+//                // candidate for component
+//                fn(string $value, string $extra=''): string => sprintf('<span class="fas fa-%s %s"></span>', $value, $extra),
+//                ['is_safe' => ['html']]),
+//            // if you're calling route_alias and it doesn't exist, maybe it should be '#'?
             new TwigFilter('route_alias', fn (string $routeName): ?string =>
 //            dd($this->routes[$routeName]) &&
             ($this->routes[$routeName] === false)

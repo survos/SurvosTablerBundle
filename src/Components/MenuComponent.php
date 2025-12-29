@@ -1,4 +1,7 @@
 <?php
+/* src/Components/MenuComponent.php v2.0 - Menu component using MenuSlot events (not final - can be extended) */
+
+declare(strict_types=1);
 
 namespace Survos\TablerBundle\Components;
 
@@ -6,11 +9,11 @@ use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
 use Knp\Menu\Twig\Helper;
 use Survos\TablerBundle\Event\KnpMenuEvent;
+use Survos\TablerBundle\Menu\MenuSlot;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 use Symfony\UX\TwigComponent\Attribute\ExposeInTemplate;
-use Symfony\UX\TwigComponent\Attribute\PreMount;
 
 #[AsTwigComponent('menu', template: '@SurvosTabler/components/menu.html.twig')]
 class MenuComponent
@@ -20,9 +23,7 @@ class MenuComponent
         protected Helper $helper,
         protected FactoryInterface $factory,
         protected EventDispatcherInterface $eventDispatcher,
-    ) {
-        //    public function __construct(private Helper $helper) {
-    }
+    ) {}
 
     public ?string $title = null;
     public ?string $caller = null;
@@ -30,7 +31,7 @@ class MenuComponent
     #[ExposeInTemplate]
     public string $type; // shortcut
 
-    public string $eventName = ''; // this is the real event name, but shortcuts are easier.
+    public string $eventName = '';
 
     public string $menuAlias = KnpMenuEvent::class;
 
@@ -46,15 +47,15 @@ class MenuComponent
 
     public string $wrapperClass = '';
 
-    public function mount(string $type, ?string $caller = null, array $path = [], array $options = [])
+    public function mount(string $type, ?string $caller = null, array $path = [], array $options = []): void
     {
         assert($caller);
         $this->type = $type;
-        $this->path = $path; // use this to get a specific branch or node from the menu, e.g. in breadcrumbs.
+        $this->path = $path;
         $this->options = $options;
-        //        dd(constant(KnpMenuEvent::NAVBAR_MENU), $type, $eventName);
-        $eventName = constant(KnpMenuEvent::class.'::'.$type);
-        //        dd(func_get_args(), $eventName, $caller);
+        
+        // Support both MenuSlot constants and legacy KnpMenuEvent constants
+        $eventName = $this->resolveEventName($type);
 
         $menu = $this->factory->createItem($options['name'] ?? KnpMenuEvent::class);
 
@@ -63,33 +64,29 @@ class MenuComponent
             ->resolve($options);
         $options['caller'] = $caller;
 
+        // Dispatch both old and new event formats for compatibility
         $this->eventDispatcher->dispatch(new KnpMenuEvent($menu, $this->factory, $options), $eventName);
         $this->menuItem = $this->helper->get($menu, $path, $options);
     }
 
-    //    #[PreMount]
-    public function xpreMount(array $data): array
+    private function resolveEventName(string $type): string
     {
-        // validate data
-        $resolver = new OptionsResolver();
-        $resolver->setDefaults([
-            'title' => null,
-            'type' => null,
-            'path' => [],
-            'print' => false,
-            'options' => [],
-        ]);
-        //        $resolver->setRequired('body');
-        $resolver->setAllowedTypes('title', ['null', 'string']);
+        // Try MenuSlot constant first
+        if (defined(MenuSlot::class . '::' . $type)) {
+            return constant(MenuSlot::class . '::' . $type);
+        }
+        
+        // Fall back to KnpMenuEvent constant
+        if (defined(KnpMenuEvent::class . '::' . $type)) {
+            return constant(KnpMenuEvent::class . '::' . $type);
+        }
+        
+        // Assume it's already an event name
+        return $type;
+    }
 
-        $data = $resolver->resolve($data);
-        $type = $data['type'];
-        $data['options']['type'] = $type; // so it's passed into the MenuBuilder, mostly for debugging
-        $data['menuCode'] = KnpMenuEvent::class;
-
-        //        $data['menuAlias'] = KnpMenuEvent::class;
-        //        $menuItem = $this->helper->get($shortcuts[$data['type']], $this->path, $data['options']);
-        //        $data['menuItem'] = $menuItem;
-        return $data;
+    public function hasItems(): bool
+    {
+        return $this->menuItem->hasChildren();
     }
 }

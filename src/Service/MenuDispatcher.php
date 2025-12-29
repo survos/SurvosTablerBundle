@@ -1,4 +1,5 @@
 <?php
+/* src/Service/MenuDispatcher.php v1.0 - Dispatches menu slot events */
 
 declare(strict_types=1);
 
@@ -10,29 +11,25 @@ use Survos\TablerBundle\Event\MenuEvent;
 use Survos\TablerBundle\Menu\MenuSlot;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
-final readonly class MenuDispatcher
+class MenuDispatcher
 {
     public function __construct(
-        private FactoryInterface $factory,
-        private EventDispatcherInterface $dispatcher,
+        private readonly FactoryInterface $factory,
+        private readonly EventDispatcherInterface $dispatcher,  // Matches bundle definition
     ) {}
-    
-    public function dispatch(MenuSlot|string $slot, array $context = []): ItemInterface
+
+    public function dispatch(MenuSlot $slot, array $options = []): ItemInterface
     {
-        if (is_string($slot)) {
-            $slot = MenuSlot::fromLegacy($slot);
-        }
-        
-        $menu = $this->factory->createItem($slot->value);
-        
-        $event = new MenuEvent($slot, $menu, $this->factory, $context);
+        $menu = $this->factory->createItem('root');
+
+        $event = new MenuEvent($menu, $this->factory, $slot, $options);
         $this->dispatcher->dispatch($event, $slot->eventName());
-        
+
         return $menu;
     }
-    
-    public function hasItems(MenuSlot|string $slot, array $context = []): bool
+
+    public function getFactory(): FactoryInterface
     {
-        return $this->dispatch($slot, $context)->hasChildren();
+        return $this->factory;
     }
 }

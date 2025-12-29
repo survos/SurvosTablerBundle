@@ -1,4 +1,5 @@
 <?php
+/* src/Twig/MenuExtension.php v1.0 - Twig functions for menu rendering */
 
 declare(strict_types=1);
 
@@ -15,28 +16,24 @@ final class MenuExtension extends AbstractExtension
     public function __construct(
         private readonly MenuRenderer $renderer,
     ) {}
-    
+
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('tabler_menu', $this->render(...), ['is_safe' => ['html']]),
-            new TwigFunction('tabler_menu_has_items', $this->hasItems(...)),
-            new TwigFunction('tabler_menu_get', $this->getMenu(...)),
+            new TwigFunction('tabler_menu', [$this, 'renderMenu'], ['is_safe' => ['html']]),
+            new TwigFunction('tabler_menu_has_items', [$this, 'hasItems']),
         ];
     }
-    
-    public function render(MenuSlot|string $slot, array $context = []): string
+
+    public function renderMenu(string|MenuSlot $slot, array $options = []): string
     {
-        return $this->renderer->render($slot, $context);
+        $slot = $slot instanceof MenuSlot ? $slot : MenuSlot::from($slot);
+        return $this->renderer->render($slot, $options);
     }
-    
-    public function hasItems(MenuSlot|string $slot, array $context = []): bool
+
+    public function hasItems(string|MenuSlot $slot, array $options = []): bool
     {
-        return $this->renderer->hasItems($slot, $context);
-    }
-    
-    public function getMenu(MenuSlot|string $slot, array $context = []): ItemInterface
-    {
-        return $this->renderer->getMenu($slot, $context);
+        $slot = $slot instanceof MenuSlot ? $slot : MenuSlot::from($slot);
+        return $this->renderer->hasItems($slot, $options);
     }
 }

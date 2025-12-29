@@ -8,7 +8,7 @@
     {% block stylesheets %}{% endblock %}
     {{ importmap(this.entrypoint) }}
 </head>
-<body class="layout-{{ this.layout }}{% if this.bodyClass %} {{ this.bodyClass }}{% endif %}">
+<body class="d-flex flex-column layout-{{ this.layout }}{% if this.bodyClass %} {{ this.bodyClass }}{% endif %}">
 
 {% if this.shouldShow('navbar') %}
     {% block navbar %}
@@ -17,7 +17,7 @@
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                
+
                 {# Use route alias for home link #}
                 {% if tabler_route_exists('home') %}
                     <a href="{{ tabler_url('home') }}" class="navbar-brand d-none-navbar-horizontal pe-md-3">
@@ -28,12 +28,12 @@
                         {{ this.resolvedTitle }}
                     </span>
                 {% endif %}
-                
+
                 <div class="collapse navbar-collapse" id="navbar-menu">
                     {{ tabler_menu(MenuSlot.Navbar, {layout: this.layout}) }}
                     {{ tabler_menu(MenuSlot.NavbarSecondary, {layout: this.layout}) }}
                 </div>
-                
+
                 <div class="navbar-nav flex-row order-md-last">
                     {{ tabler_menu(MenuSlot.Auth) }}
                 </div>
@@ -42,7 +42,7 @@
     {% endblock %}
 {% endif %}
 
-<div class="page-wrapper">
+<div class="page-wrapper flex-fill d-flex flex-column">
     {% if this.shouldShow('sidebar') %}
         {% block sidebar %}
             <aside class="navbar navbar-vertical navbar-expand-lg navbar-dark">
@@ -50,7 +50,7 @@
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar-menu">
                         <span class="navbar-toggler-icon"></span>
                     </button>
-                    
+
                     <div class="collapse navbar-collapse" id="sidebar-menu">
                         {{ tabler_menu(MenuSlot.Sidebar, {layout: this.layout}) }}
                     </div>
@@ -59,7 +59,7 @@
         {% endblock %}
     {% endif %}
 
-    <div class="page-body">
+    <div class="page-body flex-fill">
         {% if this.shouldShow('header') %}
             {% block header %}
                 <div class="page-header d-print-none">
@@ -73,19 +73,19 @@
                                 {% elseif this.resolvedPretitle %}
                                     <div class="page-pretitle">{{ this.resolvedPretitle }}</div>
                                 {% endif %}
-                                
+
                                 {% if this.resolvedTitle %}
                                     <h2 class="page-title">
                                         {% if this.icon %}{{ icon(this.icon) }} {% endif %}
                                         {{ this.resolvedTitle }}
                                     </h2>
                                 {% endif %}
-                                
+
                                 {% if this.resolvedSubtitle %}
                                     <div class="text-body-secondary mt-1">{{ this.resolvedSubtitle }}</div>
                                 {% endif %}
                             </div>
-                            
+
                             <div class="col-auto ms-auto d-print-none">
                                 {% block header_actions %}
                                     {% if tabler_menu_has_items(MenuSlot.PageActions) %}
@@ -112,7 +112,7 @@
                     {% endfor %}
                 {% endfor %}
             {% endblock %}
-            
+
             {% block content %}
                 {% if this.resolvedContent %}
                     <div class="markdown">{{ this.resolvedContent|raw }}</div>

@@ -1,4 +1,5 @@
 <?php
+/* src/Event/MenuEvent.php v1.1 - Event dispatched for menu building with MenuSlot enum */
 
 declare(strict_types=1);
 
@@ -9,27 +10,38 @@ use Knp\Menu\ItemInterface;
 use Survos\TablerBundle\Menu\MenuSlot;
 use Symfony\Contracts\EventDispatcher\Event;
 
-final class MenuEvent extends Event
+class MenuEvent extends Event
 {
     public function __construct(
-        public readonly MenuSlot $slot,
         public readonly ItemInterface $menu,
         public readonly FactoryInterface $factory,
-        private array $context = [],
+        public readonly MenuSlot $slot,
+        private array $options = [],
     ) {}
-    
+
+    public function getMenu(): ItemInterface
+    {
+        return $this->menu;
+    }
+
+    public function getFactory(): FactoryInterface
+    {
+        return $this->factory;
+    }
+
     public function get(string $key, mixed $default = null): mixed
     {
-        return $this->context[$key] ?? $default;
+        return $this->options[$key] ?? $default;
     }
-    
-    public function has(string $key): bool
+
+    public function set(string $key, mixed $value): self
     {
-        return array_key_exists($key, $this->context);
+        $this->options[$key] = $value;
+        return $this;
     }
-    
-    public function all(): array
+
+    public function getOptions(): array
     {
-        return $this->context;
+        return $this->options;
     }
 }
