@@ -1,0 +1,15 @@
+{# templates/components/cards/body-placeholder.html.twig v3.9 #}
+{% set width = width | default(400)  %}
+{% set height = height | default(200)  %}
+<div class="card-body{% if class  %} {{ class  }}{% endif  %}">
+	<twig:ui:svg :width="width" :height="height" :ratio="ratio" class="w-100 border rounded"/>
+</div>
+
+{#
+=== Original Liquid (body-placeholder.html) ===
+{% assign width = include.width | default: 400 %}
+{% assign height = include.height | default: 200 %}
+<div class="card-body{% if include.class %} {{ include.class }}{% endif %}">
+	{% include "ui/svg.html" width=width height=height ratio=include.ratio class="w-100 border rounded" %}
+</div>
+#}

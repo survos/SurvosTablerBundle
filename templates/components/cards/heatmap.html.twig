@@ -1,0 +1,20 @@
+{# templates/components/cards/heatmap.html.twig v3.9 #}
+<div class="card">
+	<div class="card-body">
+		<h4 class="card-title">{{ title  }}</h4>
+
+		<twig:ui:chart-heatmap :chartId="id" :id="id" :colors="colors" :scale="scale" :labels="labels" :noShades="no-shades" :count="count" :color="color"/>
+	</div>
+</div>
+
+{#
+=== Original Liquid (charts/heatmap.html) ===
+<div class="card">
+	<div class="card-body">
+		<h4 class="card-title">{{ include.title }}</h4>
+
+		{% include "ui/chart-heatmap.html" chart-id=include.id id=include.id colors=include.colors scale=include.scale labels=include.labels no-shades=include.no-shades count=include.count color=include.color %}
+	</div>
+</div>
+
+#}

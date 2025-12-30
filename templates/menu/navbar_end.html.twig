@@ -1,0 +1,28 @@
+{# @SurvosTabler/menu/navbar_end.html.twig - Right side of navbar #}
+{% extends '@KnpMenu/menu.html.twig' %}
+
+{% block root %}
+{{ block('children') }}
+{% endblock %}
+
+{% block item %}
+{% if item.displayed %}
+    {% set icon = item.getExtra('icon') %}
+    {% set tooltip = item.getExtra('tooltip') %}
+    <div class="nav-item d-none d-md-flex me-3">
+        <a href="{{ item.uri }}" class="nav-link px-0"{% if tooltip %} data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ tooltip }}"{% endif %}{% if item.linkAttribute('target') %} target="{{ item.linkAttribute('target') }}"{% endif %}>
+            {% if icon %}{{ ux_icon('tabler:' ~ icon, {class: 'icon'}) }}{% endif %}
+            {% if item.label %}<span class="ms-1">{{ block('label') }}</span>{% endif %}
+        </a>
+    </div>
+{% endif %}
+{% endblock %}
+
+{% block label %}
+{%- set translation_domain = item.extra('translation_domain', 'messages') -%}
+{%- if translation_domain is not same as(false) -%}
+    {{ item.label|trans({}, translation_domain) }}
+{%- else -%}
+    {{ item.label }}
+{%- endif -%}
+{% endblock %}

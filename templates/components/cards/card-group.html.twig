@@ -1,0 +1,16 @@
+{# templates/components/cards/card-group.html.twig v3.9 #}
+<div class="card-group">
+   <twig:cards:card :link="true" class="text-center" body="This is first card" :inactive="true"/>
+   <twig:cards:card :link="true" class="text-center" body="This is second card" :active="true"/>
+   <twig:cards:card :link="true" class="text-center" body="This is third card"/>
+</div>
+
+{#
+=== Original Liquid (card-group.html) ===
+<div class="card-group">
+   {% include "cards/card.html" link=true class="text-center" body="This is first card" inactive=true %}
+   {% include "cards/card.html" link=true class="text-center" body="This is second card" active=true %}
+   {% include "cards/card.html" link=true class="text-center" body="This is third card" %}
+</div>
+
+#}

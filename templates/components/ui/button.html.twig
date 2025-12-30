@@ -1,0 +1,63 @@
+{# templates/components/ui/button.html.twig v3.9 #}
+{% set spinnerClass = false  %}
+
+{% set color = color  %}
+{% if color == false  %}
+{% set color = null  %}
+{% endif  %}
+
+{% set provider = provider | default('fe')  %}
+{% if text  %}{% set spinnerClass = "me2"  %}{% endif  %}
+
+{% set href = '#'  %}
+{% if href  %}
+	{% if external  %}
+		{% set href = href  %}
+	{% else  %}
+		{% set href = site.base ~ '/' | append: href  %}
+	{% endif  %}
+{% endif  %}
+
+{% set e = element | default('a')  %}
+<{{ e  }}{% if e == 'a'  %} href="{{ href  }}"{% endif  %}{% if type  %} type="{{ type  }}"{% endif  %}{% if id  %} id="{{ id  }}"{% endif  %} class="btn{% if height  %} btn-{{ height  }}{% endif  %}{% if color  %} btn-{% if outline  %}outline-{% elseif ghost  %}ghost-{% endif  %}{{ color  }}{% endif  %}{% if disabled  %} disabled{% endif  %}{% if square  %} btn-square{% endif  %}{% if loading  %} btn-loading{% endif  %}{% if pill  %} btn-pill{% endif  %}{% if size  %} btn-{{ size  }}{% endif  %}{% if class  %} {{ class  }}{% endif  %}{% if block  %} w-100{% endif  %}{% if link  %} btn-link{% endif  %}{% if iconOnly  %} btn-icon{% endif  %}"{% if external  %} target="_blank" rel="noreferrer"{% endif  %}{% if modalId  %} data-bs-toggle="modal" data-bs-target="#modal-{{ modalId  }}"{% endif  %}{% if toastId  %} data-bs-toggle="toast" data-bs-target="#toast-{{ toastId  }}"{% endif  %}{% if iconOnly  %} aria-label="{{ text | default('Button')  }}"{% endif  %}{% if dismiss  %} data-bs-dismiss="modal"{% endif  %}>
+{% if spinner  %}
+<twig:ui:spinner :color="false" size="sm" :class="spinner-class" element="span"/>{% endif  %}
+{% if icon  %}<twig:ui:icon :icon="icon" :color="icon-color"/>{% endif  %}
+{% if not (iconOnly)  %}
+{{ text | default('Button')  }}{% if dots  %}<span class="animated-dots"></span>{% endif  %}
+{% if iconEnd  %}<twig:ui:icon :icon="icon-end" class="icon-end"/>{% endif  %}
+{% endif  %}
+</{{ e  }}>
+
+{#
+=== Original Liquid (button.html) ===
+{% assign spinner-class = false %}
+
+{% assign color = include.color %}
+{% if include.color == false %}
+{% assign color = null %}
+{% endif %}
+
+{% assign provider = include.provider | default: 'fe' %}
+{% if include.text %}{% assign spinner-class="me-2" %}{% endif %}
+
+{% assign href = '#' %}
+{% if include.href %}
+	{% if include.external %}
+		{% assign href = include.href %}
+	{% else %}
+		{% assign href = site.base | append: '/' | append: include.href %}
+	{% endif %}
+{% endif %}
+
+{% assign e = include.element | default: 'a' %}
+<{{ e }}{% if e == 'a' %} href="{{ href }}"{% endif %}{% if include.type %} type="{{ include.type }}"{% endif %}{% if include.id %} id="{{ include.id }}"{% endif %} class="btn{% if include.height %} btn-{{ include.height }}{% endif %}{% if color %} btn-{% if include.outline %}outline-{% elsif include.ghost %}ghost-{% endif %}{{ color }}{% endif %}{% if include.disabled %} disabled{% endif %}{% if include.square %} btn-square{% endif %}{% if include.loading %} btn-loading{% endif %}{% if include.pill %} btn-pill{% endif %}{% if include['size'] %} btn-{{ include['size'] }}{% endif %}{% if include.class %} {{ include.class }}{% endif %}{% if include.block %} w-100{% endif %}{% if include.link %} btn-link{% endif %}{% if include.icon-only %} btn-icon{% endif %}"{% if include.external %} target="_blank" rel="noreferrer"{% endif %}{% if include.modal-id %} data-bs-toggle="modal" data-bs-target="#modal-{{ include.modal-id }}"{% endif %}{% if include.toast-id %} data-bs-toggle="toast" data-bs-target="#toast-{{ include.toast-id }}"{% endif %}{% if include.icon-only %} aria-label="{{ include.text | default: "Button" }}"{% endif %}{% if include.dismiss %} data-bs-dismiss="modal"{% endif %}>
+{% if include.spinner %}
+{% include "ui/spinner.html" color=false size="sm" class=spinner-class element="span" %}{% endif %}
+{% if include.icon %}{% include "ui/icon.html" icon=include.icon color=include.icon-color %}{% endif %}
+{% unless include.icon-only %}
+{{ include.text | default: "Button" }}{% if include.dots %}<span class="animated-dots"></span>{% endif %}
+{% if include.icon-end %}{% include "ui/icon.html" icon=include.icon-end class="icon-end" %}{% endif %}
+{% endunless %}
+</{{ e }}>
+#}

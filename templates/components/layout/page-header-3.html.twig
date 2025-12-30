@@ -1,0 +1,43 @@
+{# templates/components/layout/page-header-3.html.twig v3.9 #}
+{% set person = people[1]  %}
+<div class="page-header page-header-border">
+	<div class="row align-items-center">
+		<div class="col">
+			<h2 class="page-title">Improve cards with no border</h2>
+			<div class="text-secondary mt-1">
+				<a href="#" class="text-reset">#693</a>
+				opened by <a href="#" class="text-body">{{ person.full_name  }}</a>
+				in <a href="#" class="text-body">Calendar Page</a>
+			</div>
+		</div>
+		<div class="col-auto">
+			<div class="btn-list">
+				<twig:ui:button icon="plus" icon="edit" text="Edit"/>
+				<twig:ui:button icon="plus" icon="bell" text="Subscribe" class="d-none d-md-inline-flex"/>
+			</div>
+		</div>
+	</div>
+</div>
+
+{#
+=== Original Liquid (headers/page-header-3.html) ===
+{% assign person = people[1] %}
+<div class="page-header page-header-border">
+	<div class="row align-items-center">
+		<div class="col">
+			<h2 class="page-title">Improve cards with no border</h2>
+			<div class="text-secondary mt-1">
+				<a href="#" class="text-reset">#693</a>
+				opened by <a href="#" class="text-body">{{ person.full_name }}</a>
+				in <a href="#" class="text-body">Calendar Page</a>
+			</div>
+		</div>
+		<div class="col-auto">
+			<div class="btn-list">
+				{% include "ui/button.html" icon="plus" icon="edit" text="Edit" %}
+				{% include "ui/button.html" icon="plus" icon="bell" text="Subscribe" class="d-none d-md-inline-flex" %}
+			</div>
+		</div>
+	</div>
+</div>
+#}

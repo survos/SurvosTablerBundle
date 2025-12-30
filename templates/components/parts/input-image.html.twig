@@ -1,0 +1,44 @@
+{# templates/components/parts/input-image.html.twig v3.9 #}
+{% set limit = limit | default(6)  %}
+{% set offset = offset | default(0)  %}
+<div class="mb-3">
+	<label class="form-label">Image Check</label>
+	<div class="row g-2">
+		{% set filteredPhotos = photos | where: 'horizontal', true  %}
+
+		{% for photo in filteredPhotos limit: limit offset: offset  %}
+		<div class="{{ rowClass | default('col6 colSm4')  }}">
+			<label class="form-imagecheck mb-2">
+				<input name="form-imagecheck" type="checkbox" value="{{ loop.index  }}" class="form-imagecheck-input" {% if loop.index == 2 or loop.index == 4  or loop.index == 7  %} checked{% endif  %}/>
+				<span class="form-imagecheck-figure">
+					<img src="{{ page | relative  }}/static/photos/{{ photo.file  }}" alt="{{ photo.title  }}" class="form-imagecheck-image">
+				</span>
+			</label>
+		</div>
+		{% endfor  %}
+	</div>
+</div>
+
+{#
+=== Original Liquid (form/input-image.html) ===
+{% assign limit = include.limit | default: 6 %}
+{% assign offset = include.offset | default: 0 %}
+<div class="mb-3">
+	<label class="form-label">Image Check</label>
+	<div class="row g-2">
+		{% assign filtered-photos = photos | where: 'horizontal', true %}
+
+		{% for photo in filtered-photos limit: limit offset: offset %}
+		<div class="{{ include.row-class | default: 'col-6 col-sm-4' }}">
+			<label class="form-imagecheck mb-2">
+				<input name="form-imagecheck" type="checkbox" value="{{ forloop.index }}" class="form-imagecheck-input" {% if forloop.index == 2 or forloop.index == 4  or forloop.index == 7 %} checked{% endif %}/>
+				<span class="form-imagecheck-figure">
+					<img src="{{ page | relative }}/static/photos/{{ photo.file }}" alt="{{ photo.title }}" class="form-imagecheck-image">
+				</span>
+			</label>
+		</div>
+		{% endfor %}
+	</div>
+</div>
+
+#}

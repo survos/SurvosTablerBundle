@@ -1,29 +1,29 @@
-{#
-Tabler footer menu template.
-Inline list with optional icons.
-#}
+{# @SurvosTabler/menu/footer.html.twig - Footer links #}
 {% extends '@KnpMenu/menu.html.twig' %}
 
-{% block root %}
-    {% set listAttributes = item.childrenAttributes|merge({class: (item.childrenAttributes.class|default('') ~ ' list-inline list-inline-dots mb-0')|trim}) %}
-    {{ block('list') }}
+{% block list %}
+<ul{{ knp_menu.attributes(listAttributes) }}>
+    {{ block('children') }}
+</ul>
 {% endblock %}
 
 {% block item %}
-    {% set icon = item.extras.icon|default(item.attributes['data-icon']|default(null)) %}
-    
+{% if item.displayed %}
+    {% set icon = item.getExtra('icon') %}
     <li class="list-inline-item">
-        <a class="link-secondary" href="{{ item.uri }}"{% if item.linkAttributes.target|default(false) %} target="{{ item.linkAttributes.target }}"{% endif %}>
-            {% if icon %}{{ ux_icon(icon, {class: 'icon'}) }}{% endif %}
+        <a class="link-secondary" href="{{ item.uri }}"{% if item.linkAttribute('target') %} target="{{ item.linkAttribute('target') }}"{% endif %}>
+            {% if icon %}{{ ux_icon('tabler:' ~ icon, {class: 'icon'}) }}{% endif %}
             {{ block('label') }}
         </a>
     </li>
+{% endif %}
 {% endblock %}
 
 {% block label %}
-    {% if options.allow_safe_labels and item.extras.safe_label|default(false) %}
-        {{ item.label|trans(item.extras.translation_params|default({}), item.extras.translation_domain|default('messages'))|raw }}
-    {% else %}
-        {{ item.label|trans(item.extras.translation_params|default({}), item.extras.translation_domain|default('messages')) }}
-    {% endif %}
+{%- set translation_domain = item.extra('translation_domain', 'messages') -%}
+{%- if translation_domain is not same as(false) -%}
+    {{ item.label|trans({}, translation_domain) }}
+{%- else -%}
+    {{ item.label }}
+{%- endif -%}
 {% endblock %}

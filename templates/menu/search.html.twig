@@ -1,19 +1,14 @@
-{#
-Tabler search menu template.
-Simple wrapper for search functionality.
-#}
+{# @SurvosTabler/menu/search.html.twig - Search widget #}
 {% extends '@KnpMenu/menu.html.twig' %}
 
 {% block root %}
-    <div class="nav-item">
-        {% for child in item.children %}
-            {% with {item: child} %}
-                {{ block('item') }}
-            {% endwith %}
-        {% endfor %}
+<div class="nav-item d-none d-md-flex me-3">
+    <div class="btn-list">
+        {{ block('children') }}
     </div>
+</div>
 {% endblock %}
 
 {% block item %}
-    {{ item.label|raw }}
+{# Search is typically handled separately, this is a placeholder #}
 {% endblock %}

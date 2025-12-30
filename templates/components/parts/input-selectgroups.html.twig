@@ -1,0 +1,44 @@
+{# templates/components/parts/input-selectgroups.html.twig v3.9 #}
+<div class="mb-3">
+   <label class="form-label">Simple selectgroup</label>
+   <twig:ui:input-selectgroup values="HTML,CSS,PHP,JavaScript"/>
+</div>
+
+<div class="mb-3">
+   <label class="form-label">Icon input</label>
+   <twig:ui:input-selectgroup values="i:sun,i:moon,i:cloud-rain,i:cloud,Other"/>
+</div>
+
+<div class="mb-3">
+   <label class="form-label">Selectgroup with icons and text</label>
+   <twig:ui:input-selectgroup values="i:home,i:user,i:circle,i:square" type="radio" name="icons" :withText="true"/>
+</div>
+
+<div class="mb-3">
+	<label class="form-label">Different style</label>
+	<twig:ui:input-selectgroup values="HTML,CSS,PHP,JavaScript" class="form-selectgroup-pills"/>
+</div>
+
+{#
+=== Original Liquid (form/input-selectgroups.html) ===
+<div class="mb-3">
+   <label class="form-label">Simple selectgroup</label>
+   {% include "ui/form/input-selectgroup.html" values="HTML,CSS,PHP,JavaScript" %}
+</div>
+
+<div class="mb-3">
+   <label class="form-label">Icon input</label>
+   {% include "ui/form/input-selectgroup.html" values="i:sun,i:moon,i:cloud-rain,i:cloud,Other" %}
+</div>
+
+<div class="mb-3">
+   <label class="form-label">Selectgroup with icons and text</label>
+   {% include "ui/form/input-selectgroup.html" values="i:home,i:user,i:circle,i:square" type="radio" name="icons" with-text=true %}
+</div>
+
+<div class="mb-3">
+	<label class="form-label">Different style</label>
+	{% include "ui/form/input-selectgroup.html" values="HTML,CSS,PHP,JavaScript" class="form-selectgroup-pills" %}
+</div>
+
+#}

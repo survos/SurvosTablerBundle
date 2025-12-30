@@ -2,23 +2,12 @@
 
 namespace Survos\TablerBundle;
 
-use Survos\TablerBundle\Components\AccordionComponent;
-use Survos\TablerBundle\Components\AlertComponent;
-use Survos\TablerBundle\Components\BadgeComponent;
-use Survos\TablerBundle\Components\BrandComponent;
-use Survos\TablerBundle\Components\ButtonComponent;
-use Survos\TablerBundle\Components\CardComponent;
-use Survos\TablerBundle\Components\CarouselComponent;
-use Survos\TablerBundle\Components\DividerComponent;
-use Survos\TablerBundle\Components\DropdownComponent;
-use Survos\TablerBundle\Components\LinkComponent;
-use Survos\TablerBundle\Components\LocaleSwitcherDropdown;
-use Survos\TablerBundle\Components\MenuBreadcrumbComponent;
+use App\Model\MenuItem;
+use Survos\TablerBundle\Components\LocaleSwitcherComponent;
 use Survos\TablerBundle\Components\MenuComponent;
-use Survos\TablerBundle\Components\TablerFooter;
-use Survos\TablerBundle\Components\TablerHeader;
-use Survos\TablerBundle\Components\TablerPage;
-use Survos\TablerBundle\Components\TabsComponent;
+use Survos\TablerBundle\Components\PageComponent;
+use Survos\TablerBundle\Components\Ui\DropdownComponent;
+use Survos\TablerBundle\Event\MenuEvent;
 use Survos\TablerBundle\Menu\DemoMenu;
 use Survos\TablerBundle\Menu\MenuSlot;
 use Survos\TablerBundle\Service\ContextService;
@@ -30,11 +19,11 @@ use Survos\TablerBundle\Service\RouteAliasService;
 use Survos\TablerBundle\Translation\RoutesTranslationLoader;
 use Survos\TablerBundle\Twig\Components\MiniCard;
 use Survos\TablerBundle\Twig\Components\TablerHead;
+use Survos\TablerBundle\Twig\Components\TablerHeader;
 use Survos\TablerBundle\Twig\Components\TablerIcon;
 use Survos\TablerBundle\Twig\Components\TablerPageHeader;
 use Survos\TablerBundle\Twig\IconExtension;
 use Survos\TablerBundle\Twig\MenuExtension;
-use Survos\TablerBundle\Twig\MenuGlobalsExtension;
 use Survos\TablerBundle\Twig\RouteAliasExtension;
 use Survos\TablerBundle\Twig\TwigExtension;
 use Survos\CoreBundle\HasAssetMapperInterface;
@@ -42,6 +31,7 @@ use Survos\CoreBundle\Traits\HasAssetMapperTrait;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
+use Symfony\Component\DependencyInjection\Argument\IteratorArgument;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -67,6 +57,7 @@ class SurvosTablerBundle extends AbstractBundle implements CompilerPassInterface
         // Collect route security requirements from IsGranted attributes
         $routeRequirements = $this->collectRouteRequirements($container);
         $container->setParameter('survos_tabler.route_requirements', $routeRequirements);
+
 
         // Set up Twig globals
         $this->configureTwigGlobals($container);
@@ -117,13 +108,17 @@ class SurvosTablerBundle extends AbstractBundle implements CompilerPassInterface
 
         $twigDef = $container->getDefinition('twig');
 
-        // MenuSlot constants (legacy support for old templates)
-        $menuSlotReflection = new \ReflectionEnum(MenuSlot::class);
-        foreach ($menuSlotReflection->getConstants() as $name => $value) {
-            if (is_string($value)) {
-                $twigDef->addMethodCall('addGlobal', [$name, $value]);
-            }
+        $menuSlots = [];
+        foreach (MenuEvent::getConstants() as $name => $value) {
+            $twigDef->addMethodCall('addGlobal', [$name, $value]);
         }
+
+//        $menuSlotReflection = new \ReflectionClass(MenuEvent::class);
+//        foreach ($menuSlotReflection->getConstants() as $name => $value) {
+//            if (is_string($value)) {
+//                $twigDef->addMethodCall('addGlobal', ['MenuEvent.' . $name, $value]);
+//            }
+//        }
         // Theme from config
         if ($container->hasParameter('survos_tabler.theme')) {
             $twigDef->addMethodCall('addGlobal', ['theme', $container->getParameter('survos_tabler.theme')]);
@@ -132,6 +127,19 @@ class SurvosTablerBundle extends AbstractBundle implements CompilerPassInterface
 
     public function loadExtension(array $config, ContainerConfigurator $container, ContainerBuilder $builder): void
     {
+
+        // Load generated component services
+        $container->import('../config/component-services.php');
+
+
+        // find all the routes and create sensible translations from the route name.  We _could_ provide a hint in options
+        // === Translation Loader ===
+        $builder->autowire('survos.tabler_translations', RoutesTranslationLoader::class)
+            ->setAutowired(true)
+            ->setAutoconfigured(true)
+//            ->setArgument('$controllers', new IteratorArgument($controllerRefs))
+            ->addTag('translation.loader', ['alias' => 'bin']);
+
         // === Parameters ===
         $builder->setParameter('survos_tabler.config', $config);
         $builder->setParameter('survos_tabler.routes', $config['routes']);
@@ -179,9 +187,6 @@ class SurvosTablerBundle extends AbstractBundle implements CompilerPassInterface
             ->setArgument('$renderer', new Reference(MenuRenderer::class))
             ->addTag('twig.extension');
 
-        $builder->register(MenuGlobalsExtension::class)
-            ->addTag('twig.extension');
-
 // In loadExtension(), replace IconExtension registration:
         $builder->register(IconExtension::class)
 //            ->setArgument('$uxIconRuntime', new Reference(UXIconRuntime::class))
@@ -200,35 +205,15 @@ class SurvosTablerBundle extends AbstractBundle implements CompilerPassInterface
             ->setArgument('$contextService', new Reference(ContextService::class))
             ->addTag('twig.extension');
 
-        // === Menu Demo Listener ===
-
-        $builder->register(DemoMenu::class)
-            ->setAutowired(true)
-            ->setAutoconfigured(true)
-            ->setArgument('$requestStack', new Reference('request_stack'));
-
-        // === Twig Components ===
-
+        // === Twig Components we created (not generated from tabler) ===
         $simpleComponents = [
-            AlertComponent::class,
-            AccordionComponent::class,
-            BrandComponent::class,
-            BadgeComponent::class,
-            ButtonComponent::class,
-            CardComponent::class,
-            CarouselComponent::class,
-            DropdownComponent::class,
-            DividerComponent::class,
-            LinkComponent::class,
-            TabsComponent::class,
-            TablerPage::class,
-            LocaleSwitcherDropdown::class,
-            TablerHeader::class,
-            TablerFooter::class,
             MiniCard::class,
             TablerIcon::class,
             TablerHead::class,
+            TablerHeader::class,
+            PageComponent::class,
             TablerPageHeader::class,
+            LocaleSwitcherComponent::class,
         ];
 
         foreach ($simpleComponents as $componentClass) {
@@ -236,9 +221,18 @@ class SurvosTablerBundle extends AbstractBundle implements CompilerPassInterface
                 ->setAutowired(true)
                 ->setAutoconfigured(true);
         }
+        $builder->getDefinition(PageComponent::class)
+            ->setArgument('$defaultLayout', $config['options']['layout']);
 
+        foreach ([DropdownComponent::class] as $componentClass) {
+            $builder->register($componentClass)
+                ->setAutowired(true)
+                ->setAutoconfigured(true);
+        }
+
+        // @todo: , MenuBreadcrumbComponent::class
         // Menu components need extra arguments
-        foreach ([MenuComponent::class, MenuBreadcrumbComponent::class] as $componentClass) {
+        foreach ([MenuComponent::class] as $componentClass) {
             $builder->register($componentClass)
                 ->setAutowired(true)
                 ->setAutoconfigured(true)
@@ -248,12 +242,6 @@ class SurvosTablerBundle extends AbstractBundle implements CompilerPassInterface
                 ->setArgument('$eventDispatcher', new Reference('event_dispatcher'));
         }
 
-        // === Translation Loader ===
-
-        $builder->autowire('survos.tabler_translations', RoutesTranslationLoader::class)
-            ->setAutowired(true)
-            ->setAutoconfigured(true)
-            ->addTag('translation.loader', ['alias' => 'bin']);
     }
 
     public function configure(DefinitionConfigurator $definition): void
@@ -397,7 +385,7 @@ class SurvosTablerBundle extends AbstractBundle implements CompilerPassInterface
                     ->info('Theme name')
                 ->end()
                 ->enumNode('layout')
-                    ->values(['horizontal', 'vertical', 'condensed'])
+                    ->values(['horizontal', 'dashboard', 'vertical', 'condensed'])
                     ->defaultValue('horizontal')
                     ->info('Layout direction')
                 ->end()
@@ -406,7 +394,7 @@ class SurvosTablerBundle extends AbstractBundle implements CompilerPassInterface
                     ->info('Enable dark mode by default')
                 ->end()
                 ->booleanNode('show_locale_dropdown')
-                    ->defaultFalse()
+                    ->defaultTrue()
                     ->info('Show locale switcher in navbar')
                 ->end()
             ->end();

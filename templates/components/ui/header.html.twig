@@ -1,0 +1,13 @@
+{# templates/components/ui/header.html.twig v3.9 #}
+<div class="modal-header">
+	<h5 class="modal-title">{{ title | default('Modal title')  }}</h5>
+	<twig:ui:close/>
+</div>
+
+{#
+=== Original Liquid (modal/header.html) ===
+<div class="modal-header">
+	<h5 class="modal-title">{{ include.title | default: 'Modal title' }}</h5>
+	{% include "ui/modal/close.html" %}
+</div>
+#}

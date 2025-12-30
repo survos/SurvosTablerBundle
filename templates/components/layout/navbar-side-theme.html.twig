@@ -1,0 +1,32 @@
+{# templates/components/layout/navbar-side-theme.html.twig v3.9 #}
+<!-- BEGIN THEME TOGGLE -->
+<div class="nav-item">
+	<a href="?theme=dark" class="nav-link px-0 hide-theme-dark" title="Enable dark mode" data-bs-toggle="tooltip"
+		data-bs-placement="bottom">
+		<twig:ui:icon icon="moon"/>
+	</a>
+
+	<a href="?theme=light" class="nav-link px-0 hide-theme-light" title="Enable light mode" data-bs-toggle="tooltip"
+		data-bs-placement="bottom">
+		<twig:ui:icon icon="sun"/>
+	</a>
+</div>
+<!-- END THEME TOGGLE -->
+
+{#
+=== Original Liquid (navbar-side-theme.html) ===
+<!-- BEGIN THEME TOGGLE -->
+<div class="nav-item">
+	<a href="?theme=dark" class="nav-link px-0 hide-theme-dark" title="Enable dark mode" data-bs-toggle="tooltip"
+		data-bs-placement="bottom">
+		{% include "ui/icon.html" icon="moon" %}
+	</a>
+
+	<a href="?theme=light" class="nav-link px-0 hide-theme-light" title="Enable light mode" data-bs-toggle="tooltip"
+		data-bs-placement="bottom">
+		{% include "ui/icon.html" icon="sun" %}
+	</a>
+</div>
+<!-- END THEME TOGGLE -->
+
+#}

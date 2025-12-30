@@ -1,0 +1,20 @@
+{# templates/components/layout/navbar-search.html.twig v3.9 #}
+{% set breakpoint = breakpoint | default('lg')  %}
+
+<div{% if class  %} class="{{ class  }}"{% endif  %}>
+	<form action="{{ page | relative  }}/" method="get" autocomplete="off" novalidate role="search">
+		<twig:ui:input-icon :prepend="true" :rounded="rounded" ariaLabel="Search in website"/>
+	</form>
+</div>
+
+{#
+=== Original Liquid (navbar-search.html) ===
+{% assign breakpoint = include.breakpoint | default: 'lg' %}
+
+<div{% if include.class %} class="{{ include.class }}"{% endif %}>
+	<form action="{{ page | relative }}/" method="get" autocomplete="off" novalidate role="search">
+		{% include "ui/form/input-icon.html" prepend=true rounded=include.rounded aria-label="Search in website" %}
+	</form>
+</div>
+
+#}

@@ -13,10 +13,10 @@ use Symfony\Component\String\Slugger\AsciiSlugger;
 
 /**
  * Menu builder trait with smart icon inference and safe route handling.
- * 
+ *
  * Classes using this trait should define these properties (via constructor promotion):
  *   - protected readonly ?RouterInterface $router
- *   - protected readonly ?RouteAliasService $routeAliasService  
+ *   - protected readonly ?RouteAliasService $routeAliasService
  *   - protected readonly ?IconService $iconService
  */
 trait MenuBuilderTrait
@@ -35,7 +35,7 @@ trait MenuBuilderTrait
     protected function resolveIcon(?string $icon, ?string $route = null): ?string
     {
         $iconService = $this->iconService ?? null;
-        
+
         if ($icon !== null) {
             return $iconService?->resolve($icon) ?? $icon;
         }
@@ -96,6 +96,9 @@ trait MenuBuilderTrait
             return $menu;
         }
 
+        if ($route) {
+            assert($this->routeExists($route), "Missing route $route");
+        }
         // Skip if route doesn't exist (safe by default)
         if ($route && $checkRouteExists && !$this->routeExists($route)) {
             return $menu;
@@ -161,7 +164,7 @@ trait MenuBuilderTrait
         ?string $icon = null,
     ): ItemInterface {
         $routeAliasService = $this->routeAliasService ?? null;
-        
+
         if (!$routeAliasService?->has($alias)) {
             return $menu;
         }

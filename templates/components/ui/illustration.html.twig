@@ -1,0 +1,35 @@
+{# templates/components/ui/illustration.html.twig v3.9 #}
+{% set image = image | replace({'.svg': ''})  %}
+{% set height = height | default(128)  %}
+
+{% set illustration = freeIllustrations.autodark[image]  %}
+
+{% set replaceTo = '<svg class="img'  %}
+{% if class  %}{% set replaceTo = replaceTo ~ ' ' | append: class  %}{% endif  %}
+{% set replaceTo = replaceTo ~ '' '  %}
+{% set illustration = illustration | replace: '<svg ', replaceTo  %}
+
+{% set replaceToHeight = 'height="' | append: height ~ '''  %}
+{% set illustration = illustration | replace: 'width="800" height="600"', replaceToHeight  %}
+
+{{ illustration  }}
+
+{#
+=== Original Liquid (illustration.html) ===
+{% removeemptylines %}
+{% assign image = include.image | replace: '.svg', '' %}
+{% assign height = include.height | default: 128 %}
+
+{% assign illustration = free-illustrations.autodark[image] %}
+
+{% assign replace-to = '<svg class="img' %}
+{% if include.class %}{% assign replace-to = replace-to | append: ' ' | append: include.class %}{% endif %}
+{% assign replace-to = replace-to | append: '" ' %}
+{% assign illustration = illustration | replace: '<svg ', replace-to %}
+
+{% assign replace-to-height = 'height="' | append: height | append: '"' %}
+{% assign illustration = illustration | replace: 'width="800" height="600"', replace-to-height %}
+
+{{ illustration }}
+{% endremoveemptylines %}
+#}

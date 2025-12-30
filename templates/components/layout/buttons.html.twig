@@ -1,0 +1,32 @@
+{# templates/components/layout/buttons.html.twig v3.9 #}
+<div class="btn-list">
+	<span class="d-none d-sm-inline">
+		{% if layoutNavbarOverlap and layoutNavbarDark  %}
+		<twig:ui:button text="New view" color="dark"/>
+		{% else  %}
+		<twig:ui:button text="New view"/>
+		{% endif  %}
+	</span>
+	<twig:ui:button icon="plus" text="Create new report" color="primary" class="d-none d-sm-inline-block" modalId="report"/>
+	<twig:ui:button icon="plus" :iconOnly="true" color="primary" class="d-sm-none" text="Create new report" modalId="report"/>
+</div>
+
+<twig:ui:modal modalId="report" size="lg" :top="true"/>
+
+{#
+=== Original Liquid (header-actions/buttons.html) ===
+<div class="btn-list">
+	<span class="d-none d-sm-inline">
+		{% if layout-navbar-overlap and layout-navbar-dark %}
+		{% include "ui/button.html" text="New view" color="dark" %}
+		{% else %}
+		{% include "ui/button.html" text="New view"  %}
+		{% endif %}
+	</span>
+	{% include "ui/button.html" icon="plus" text="Create new report" color="primary" class="d-none d-sm-inline-block" modal-id="report" %}
+	{% include "ui/button.html" icon="plus" icon-only=true color="primary" class="d-sm-none" text="Create new report" modal-id="report" %}
+</div>
+
+{% include "ui/modal.html" modal-id="report" size="lg" top=true %}
+
+#}

@@ -1,0 +1,14 @@
+<?php
+/* src/Components/Layout/NavbarSideAppsComponent.php v3.9 - Generated 2025-12-30 */
+
+declare(strict_types=1);
+
+namespace Survos\TablerBundle\Components\Layout;
+
+use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
+
+#[AsTwigComponent(name: 'layout:navbar-side-apps', template: '@SurvosTabler/components/layout/navbar-side-apps.html.twig')]
+final class NavbarSideAppsComponent
+{
+
+}

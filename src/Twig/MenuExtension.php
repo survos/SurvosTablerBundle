@@ -6,7 +6,6 @@ declare(strict_types=1);
 namespace Survos\TablerBundle\Twig;
 
 use Knp\Menu\ItemInterface;
-use Survos\TablerBundle\Menu\MenuSlot;
 use Survos\TablerBundle\Service\MenuRenderer;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
@@ -25,15 +24,13 @@ final class MenuExtension extends AbstractExtension
         ];
     }
 
-    public function renderMenu(string|MenuSlot $slot, array $options = []): string
+    public function renderMenu(string $slot, array $options = []): string
     {
-        $slot = $slot instanceof MenuSlot ? $slot : MenuSlot::from($slot);
         return $this->renderer->render($slot, $options);
     }
 
-    public function hasItems(string|MenuSlot $slot, array $options = []): bool
+    public function hasItems(string $slot, array $options = []): bool
     {
-        $slot = $slot instanceof MenuSlot ? $slot : MenuSlot::from($slot);
         return $this->renderer->hasItems($slot, $options);
     }
 }

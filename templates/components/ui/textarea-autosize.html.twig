@@ -1,0 +1,8 @@
+{# templates/components/ui/textarea-autosize.html.twig v3.9 #}
+<textarea class="form-control{% if class  %} {{ class  }}{% endif  %}" data-bs-toggle="autosize" placeholder="{{ placeholder | default('Type something…')  }}"{% if rows  %} rows="{{ rows  }}"{% endif  %}></textarea>
+
+{#
+=== Original Liquid (form/textarea-autosize.html) ===
+<textarea class="form-control{% if include.class %} {{ include.class }}{% endif %}" data-bs-toggle="autosize" placeholder="{{ include.placeholder | default: 'Type something…' }}"{% if include.rows %} rows="{{ include.rows }}"{% endif %}></textarea>
+
+#}

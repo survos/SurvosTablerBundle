@@ -1,0 +1,22 @@
+{# templates/components/parts/input-range.html.twig v3.9 #}
+<div class="mb-3">
+	<label class="form-label">Range input</label>
+
+	<twig:ui:range :value="40"/>
+	<twig:ui:range value="20" id="simple" :connect="true"/>
+	<twig:ui:range value="60,90" id="connect"/>
+	<twig:ui:range value="40" id="color" class="text-green" :connect="true"/>
+</div>
+
+{#
+=== Original Liquid (form/input-range.html) ===
+<div class="mb-3">
+	<label class="form-label">Range input</label>
+
+	{% include "ui/range.html" value=40 %}
+	{% include "ui/range.html" value="20" id="simple" connect=true %}
+	{% include "ui/range.html" value="60,90" id="connect" %}
+	{% include "ui/range.html" value="40" id="color" class="text-green" connect=true %}
+</div>
+
+#}

@@ -1,0 +1,14 @@
+{# @SurvosTabler/menu/banner.html.twig - Top promotional banner #}
+{% extends '@KnpMenu/menu.html.twig' %}
+
+{% block root %}
+{{ block('children') }}
+{% endblock %}
+
+{% block item %}
+{% if item.displayed %}
+    <a class="tblr-banner-text" href="{{ item.uri }}"{% if item.linkAttribute('target') %} target="{{ item.linkAttribute('target') }}"{% endif %}>
+        {{ item.label|raw }}
+    </a>
+{% endif %}
+{% endblock %}

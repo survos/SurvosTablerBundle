@@ -1,0 +1,32 @@
+{# templates/components/cards/ribbon.html.twig v3.9 #}
+{% set productId = productId | default(0)  %}
+{% set product = products[productId]  %}
+
+<div class="card">
+	<div class="card-body"{% if not (lorem)  %} style="height: 5rem"{% endif  %}>
+		{% if lorem  %}
+			<h3 class="card-title">Card with ribbon</h3>
+			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda consectetur consequuntur culpa cum dolorum eveniet.</p>
+		{% endif  %}
+	</div>
+
+	<twig:ui:ribbon :color="color" :top="top" :left="left" :bottom="bottom" :bookmark="bookmark"/>
+</div>
+
+{#
+=== Original Liquid (ribbon.html) ===
+{% assign product-id = include.product-id | default: 0 %}
+{% assign product = products[product-id] %}
+
+<div class="card">
+	<div class="card-body"{% unless include.lorem %} style="height: 5rem"{% endunless %}>
+		{% if include.lorem %}
+			<h3 class="card-title">Card with ribbon</h3>
+			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda consectetur consequuntur culpa cum dolorum eveniet.</p>
+		{% endif %}
+	</div>
+
+	{% include "ui/ribbon.html" color=include.color top=include.top left=include.left bottom=include.bottom bookmark=include.bookmark %}
+</div>
+
+#}

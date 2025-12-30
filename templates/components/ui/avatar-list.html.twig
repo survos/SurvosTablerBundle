@@ -1,0 +1,28 @@
+{# templates/components/ui/avatar-list.html.twig v3.9 #}
+{% set limit = limit | default(5)  %}
+{% set offset = offset | default(0)  %}
+{% set size = size | default('sm')  %}
+<div class="avatar-list{% if stacked  %} avatar-list-stacked{% endif  %}{% if class  %} {{ class  }}{% endif  %}">
+    {% for person in people limit: limit offset: offset  %}
+        <twig:ui:avatar :person="person" :size="size" :rounded="true"/>
+    {% endfor  %}
+    {% if text  %}
+      <twig:ui:avatar :placeholder="text" :size="size" :rounded="true"/>
+    {% endif  %}
+</div>
+
+{#
+=== Original Liquid (avatar-list.html) ===
+{% assign limit = include.limit | default: 5 %}
+{% assign offset = include.offset | default: 0 %}
+{% assign size = include['size'] | default: 'sm' %}
+<div class="avatar-list{% if include.stacked %} avatar-list-stacked{% endif %}{% if include.class %} {{ include.class }}{% endif %}">
+    {% for person in people limit: limit offset: offset %}
+        {% include "ui/avatar.html" person=person size=size rounded=true %}
+    {% endfor %}
+    {% if include.text %}
+      {% include "ui/avatar.html" placeholder=include.text size=size rounded=true %}
+    {% endif %}
+</div>
+
+#}

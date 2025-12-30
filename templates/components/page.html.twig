@@ -1,146 +1,191 @@
-<!DOCTYPE html>
-<html lang="{{ app.request.locale }}">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% block title %}{{ this.resolvedTitle }}{% endblock %}</title>
-    {% block meta %}{% endblock %}
-    {% block stylesheets %}{% endblock %}
-    {{ importmap(this.entrypoint) }}
-</head>
-<body class="d-flex flex-column layout-{{ this.layout }}{% if this.bodyClass %} {{ this.bodyClass }}{% endif %}">
+{# @SurvosTabler/components/page.html.twig v2.0 - Main page wrapper #}
+{% set _layout = this.layout|default('horizontal') %}
 
-{% if this.shouldShow('navbar') %}
-    {% block navbar %}
-        <header class="navbar navbar-expand-md d-print-none">
-            <div class="container-xl">
+<!doctype html>
+<html lang="{{ app.request.locale|default('en') }}"{% if _layout == 'rtl' %} dir="rtl"{% endif %}>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>{% block title %}{{ this.resolvedTitle ?: 'Tabler' }}{% endblock %}</title>
+    {% block stylesheets %}{% endblock %}
+    {% block head %}{% endblock %}
+</head>
+
+<body class="{{ this.pageClass }}">
+    {% block body_start %}{% endblock %}
+
+    {# === BANNER === #}
+    {% block banner %}
+    {% if tabler_menu_has_items(BANNER) %}
+    <div class="tblr-banner">
+        {{ tabler_menu(BANNER, {layout: this.layout}) }}
+        <div class="tblr-banner-close" data-bs-dismiss="alert">{{ ux_icon('tabler:x') }}</div>
+    </div>
+    {% endif %}
+    {% endblock %}
+
+    <div class="page">
+        {% if this.navbar %}
+        <header class="navbar navbar-expand-md{% if _layout == 'navbar-dark' %} navbar-dark{% endif %}{% if _layout == 'navbar-overlap' %} navbar-overlap{% endif %} d-print-none">
+            <div class="{{ this.containerClass }}">
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
-                {# Use route alias for home link #}
-                {% if tabler_route_exists('home') %}
-                    <a href="{{ tabler_url('home') }}" class="navbar-brand d-none-navbar-horizontal pe-md-3">
-                        {{ this.resolvedTitle }}
+                <h1 class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
+                    <a href="{{ path('app_homepage') }}">
+                        {% block brand %}
+                            {{ ux_icon('tabler:brand-tabler', {height: 32}) }}
+                            <span class="ms-2">Tabler</span>
+                        {% endblock %}
                     </a>
-                {% else %}
-                    <span class="navbar-brand d-none-navbar-horizontal pe-md-3">
-                        {{ this.resolvedTitle }}
-                    </span>
-                {% endif %}
-
-                <div class="collapse navbar-collapse" id="navbar-menu">
-                    {{ tabler_menu(MenuSlot.Navbar, {layout: this.layout}) }}
-                    {{ tabler_menu(MenuSlot.NavbarSecondary, {layout: this.layout}) }}
-                </div>
+                </h1>
 
                 <div class="navbar-nav flex-row order-md-last">
-                    {{ tabler_menu(MenuSlot.Auth) }}
+                    {{ component('menu', {type: NAVBAR_MENU}) }}
+{#                    {{ tabler_menu(SEARCH, {layout: this.layout}) }}#}
+{#                    {{ tabler_menu(NAVBAR_END, {layout: this.layout}) }}#}
+{#                    {{ tabler_menu(AUTH, {layout: this.layout}) }}#}
+
+                    <twig:tabler:locale-switcher/>
+
+                </div>
+
+            {# Minimal - icon + full language name #}
+
+{#            #}{# With flags instead of icon #}
+{#            <twig:tabler:locale-switcher showFlag/>#}
+
+{#            #}{# Short codes only (EN, ES, FR) #}
+{#            <twig:tabler:locale-switcher :showFullName="false"/>#}
+
+{#            #}{# Flags with short codes #}
+{#            <twig:tabler:locale-switcher showFlag :showFullName="false"/>#}
+
+{#            #}{# Custom button variant #}
+{#            <twig:tabler:locale-switcher variant="primary"/>#}
+
+            </div>
+        </header>
+        {% endif %}
+
+        {% if _layout in ['horizontal', 'combo'] %}
+        <header class="navbar-expand-md">
+            <div class="collapse navbar-collapse" id="navbar-menu">
+                <div class="navbar">
+                    <div class="{{ this.containerClass }}">
+                        <div class="row flex-fill align-items-center">
+                            <div class="col">
+                                {{ tabler_menu(NAVBAR_MENU, {layout: this.layout}) }}
+                            </div>
+                            <div class="col-auto">
+                                {{ tabler_menu(NAVBAR_MENU_END, {layout: this.layout}) }}
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </header>
-    {% endblock %}
-{% endif %}
-
-<div class="page-wrapper flex-fill d-flex flex-column">
-    {% if this.shouldShow('sidebar') %}
-        {% block sidebar %}
-            <aside class="navbar navbar-vertical navbar-expand-lg navbar-dark">
-                <div class="container-fluid">
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar-menu">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-
-                    <div class="collapse navbar-collapse" id="sidebar-menu">
-                        {{ tabler_menu(MenuSlot.Sidebar, {layout: this.layout}) }}
-                    </div>
-                </div>
-            </aside>
-        {% endblock %}
-    {% endif %}
-
-    <div class="page-body flex-fill">
-        {% if this.shouldShow('header') %}
-            {% block header %}
-                <div class="page-header d-print-none">
-                    <div class="container-xl">
-                        <div class="row align-items-center">
-                            <div class="col">
-                                {% if tabler_menu_has_items(MenuSlot.Breadcrumb) %}
-                                    <div class="page-pretitle">
-                                        {{ tabler_menu(MenuSlot.Breadcrumb) }}
-                                    </div>
-                                {% elseif this.resolvedPretitle %}
-                                    <div class="page-pretitle">{{ this.resolvedPretitle }}</div>
-                                {% endif %}
-
-                                {% if this.resolvedTitle %}
-                                    <h2 class="page-title">
-                                        {% if this.icon %}{{ icon(this.icon) }} {% endif %}
-                                        {{ this.resolvedTitle }}
-                                    </h2>
-                                {% endif %}
-
-                                {% if this.resolvedSubtitle %}
-                                    <div class="text-body-secondary mt-1">{{ this.resolvedSubtitle }}</div>
-                                {% endif %}
-                            </div>
-
-                            <div class="col-auto ms-auto d-print-none">
-                                {% block header_actions %}
-                                    {% if tabler_menu_has_items(MenuSlot.PageActions) %}
-                                        <div class="btn-list">
-                                            {{ tabler_menu(MenuSlot.PageActions) }}
-                                        </div>
-                                    {% endif %}
-                                {% endblock %}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            {% endblock %}
         {% endif %}
 
-        <div class="container-xl">
+        {% if this.sidebar %}
+        <aside class="navbar navbar-vertical navbar-expand-lg">
+            <div class="{{ this.containerClass }}">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar-menu">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="sidebar-menu">
+                    {{ tabler_menu(SIDEBAR, {layout: this.layout}) }}
+                </div>
+            </div>
+        </aside>
+        {% endif %}
+
+        <div class="page-wrapper">
             {% block flashes %}
+            {% if this.flashes %}
+            <div class="{{ this.containerClass }} mt-3">
                 {% for type, messages in app.flashes %}
+                    {% set alertType = {success: 'success', error: 'danger', danger: 'danger', warning: 'warning', info: 'info', notice: 'info'}[type]|default('info') %}
                     {% for message in messages %}
-                        <div class="alert alert-{{ type == 'error' ? 'danger' : type }} alert-dismissible" role="alert">
-                            {{ message }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    <div class="alert alert-{{ alertType }} alert-dismissible fade show" role="alert">
+                        <div class="d-flex">
+                            <div>{{ ux_icon('tabler:' ~ {success: 'check', danger: 'alert-circle', warning: 'alert-triangle', info: 'info-circle'}[alertType]|default('info-circle'), {class: 'alert-icon'}) }}</div>
+                            <div class="ms-2">{{ message }}</div>
                         </div>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
                     {% endfor %}
                 {% endfor %}
+            </div>
+            {% endif %}
             {% endblock %}
 
-            {% block content %}
-                {% if this.resolvedContent %}
-                    <div class="markdown">{{ this.resolvedContent|raw }}</div>
-                {% endif %}
+            {% block breadcrumbs %}
+            {% if this.breadcrumbs|length > 0 %}
+            <div class="page-header d-print-none">
+                <div class="{{ this.containerClass }}">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            {% for crumb in this.breadcrumbs %}
+                            <li class="breadcrumb-item{% if loop.last %} active{% endif %}"{% if loop.last %} aria-current="page"{% endif %}>
+                                {% if crumb.url is defined and crumb.url and not loop.last %}<a href="{{ crumb.url }}">{{ crumb.label }}</a>{% else %}{{ crumb.label }}{% endif %}
+                            </li>
+                            {% endfor %}
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+            {% endif %}
             {% endblock %}
+
+            {% block page_header %}
+            {% if this.resolvedTitle or tabler_menu_has_items(PAGE_ACTIONS) %}
+            <div class="page-header d-print-none">
+                <div class="{{ this.containerClass }}">
+                    <div class="row g-2 align-items-center">
+                        <div class="col">
+                            {% if this.resolvedPretitle %}<div class="page-pretitle">{{ this.resolvedPretitle }}</div>{% endif %}
+                            {% if this.resolvedTitle %}<h2 class="page-title">{{ this.resolvedTitle }}</h2>{% endif %}
+                        </div>
+                        {% if tabler_menu_has_items(PAGE_ACTIONS) %}
+                        <div class="col-auto ms-auto d-print-none">
+                            <div class="btn-list">{{ tabler_menu(PAGE_ACTIONS, {layout: this.layout}) }}</div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            {% endblock %}
+
+            <div class="page-body">
+                <div class="{{ this.containerClass }}">
+                    {% block content %}{{ block('_content') }}{% endblock %}
+                </div>
+            </div>
+
+            {% if this.footer %}
+            <footer class="footer footer-transparent d-print-none">
+                <div class="{{ this.containerClass }}">
+                    <div class="row text-center align-items-center flex-row-reverse">
+                        <div class="col-lg-auto ms-lg-auto">{{ tabler_menu(FOOTER_END, {layout: this.layout}) }}</div>
+                        <div class="col-12 col-lg-auto mt-3 mt-lg-0">
+                            {% if tabler_menu_has_items(FOOTER) %}
+                                {{ tabler_menu(FOOTER, {layout: this.layout}) }}
+                            {% else %}
+                                {% block footer_text %}Copyright &copy; {{ 'now'|date('Y') }} <a href="https://tabler.io" class="link-secondary">Tabler</a>. All rights reserved.{% endblock %}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </footer>
+            {% endif %}
         </div>
     </div>
 
-    {% if this.shouldShow('footer') %}
-        {% block footer %}
-            <footer class="footer footer-transparent d-print-none">
-                <div class="container-xl">
-                    {% block footer_content %}
-                        <div class="row text-center align-items-center">
-                            <div class="col-12 col-lg-auto mt-3 mt-lg-0">
-                                {{ tabler_menu(MenuSlot.Footer) }}
-                            </div>
-                            <div class="col-lg-auto ms-lg-auto">
-                                &copy; {{ 'now'|date('Y') }}
-                            </div>
-                        </div>
-                    {% endblock %}
-                </div>
-            </footer>
-        {% endblock %}
-    {% endif %}
-</div>
-
-{% block javascripts %}{% endblock %}
+    {% block javascripts %}{{ importmap('app') }}{% endblock %}
+    {% block body_end %}{% endblock %}
 </body>
 </html>

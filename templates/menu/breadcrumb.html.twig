@@ -1,24 +1,31 @@
-{#
-Tabler breadcrumb menu template.
-#}
+{# @SurvosTabler/menu/breadcrumb.html.twig #}
 {% extends '@KnpMenu/menu.html.twig' %}
 
 {% block root %}
-    <ol class="breadcrumb breadcrumb-arrows" aria-label="breadcrumbs">
-        {% for child in item.children %}
-            {% with {item: child, loop: loop} %}
-                {{ block('item') }}
-            {% endwith %}
-        {% endfor %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        {{ block('children') }}
     </ol>
+</nav>
 {% endblock %}
 
 {% block item %}
-    <li class="breadcrumb-item{% if loop.last %} active{% endif %}"{% if loop.last %} aria-current="page"{% endif %}>
-        <a href="{{ item.uri }}">{{ block('label') }}</a>
+{% if item.displayed %}
+    <li class="breadcrumb-item{% if item.isCurrent %} active{% endif %}"{% if item.isCurrent %} aria-current="page"{% endif %}>
+        {% if item.uri and not item.isCurrent %}
+            <a href="{{ item.uri }}">{{ block('label') }}</a>
+        {% else %}
+            {{ block('label') }}
+        {% endif %}
     </li>
+{% endif %}
 {% endblock %}
 
 {% block label %}
-    {{ item.label|trans(item.extras.translation_params|default({}), item.extras.translation_domain|default('messages')) }}
+{%- set translation_domain = item.extra('translation_domain', 'messages') -%}
+{%- if translation_domain is not same as(false) -%}
+    {{ item.label|trans({}, translation_domain) }}
+{%- else -%}
+    {{ item.label }}
+{%- endif -%}
 {% endblock %}

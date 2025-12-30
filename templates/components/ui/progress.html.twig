@@ -1,0 +1,46 @@
+{# templates/components/ui/progress.html.twig v3.9 #}
+{% set percentage = value | replace({'%': ''}) | default(38) %}
+{% set colors = colors | default(color) | default('blue,red,green,yellow,dark') | split(',')  %}
+<div class="progress{% if size  %} progress-{{ size  }}{% endif  %}{% if class  %} {{ class  }}{% endif  %}"{% if width  %} style="width: {{ width  }}"{% endif  %}{% if id  %} id="{{ id  }}"{% endif  %}>
+   {% if indeterminate  %}
+      <div class="progress-bar progress-bar-indeterminate{% if color  %} bg-{{ color  }}{% endif  %}"></div>
+   {% elseif values   %}
+      {% set values = values | split(',')  %}
+      {% for value in values  %}
+         <div class="progress-bar bg-{{ colors[loop.index0]  }}" style="width: {{ value  }}%" role="progressbar" aria-valuenow="{{ value  }}" aria-valuemin="0" aria-valuemax="100"></div>
+      {% endfor  %}
+   {% else  %}
+      <div class="progress-bar{% if color  %} bg-{{ color  }}{% endif  %}{% if striped  %} progress-bar-striped{% if animated  %} progress-bar-animated{% endif  %}{% endif  %}" style="width: {{ percentage  }}%" role="progressbar" aria-valuenow="{{ percentage  }}" aria-valuemin="0" aria-valuemax="100" aria-label="{{ percentage  }}% Complete">
+         {% if showValue  %}
+            {{ percentage  }}%
+         {% else  %}
+            <span class="visually-hidden">{{ percentage  }}% Complete</span>
+         {% endif  %}
+      </div>
+   {% endif  %}
+</div>
+
+{#
+=== Original Liquid (progress.html) ===
+{% assign percentage = include.value | replace: '%', '' | default: 38 %}
+{% assign colors = include.colors | default: include.color | default: 'blue,red,green,yellow,dark' | split: ',' %}
+<div class="progress{% if include['size'] %} progress-{{ include['size'] }}{% endif %}{% if include.class %} {{ include.class }}{% endif %}"{% if include.width %} style="width: {{ include.width }}"{% endif %}{% if include.id %} id="{{ include.id }}"{% endif %}>
+   {% if include.indeterminate %}
+      <div class="progress-bar progress-bar-indeterminate{% if include.color %} bg-{{ include.color }}{% endif %}"></div>
+   {% elsif include.values  %}
+      {% assign values = include.values | split: ',' %}
+      {% for value in values %}
+         <div class="progress-bar bg-{{ colors[forloop.index0] }}" style="width: {{ value }}%" role="progressbar" aria-valuenow="{{ value }}" aria-valuemin="0" aria-valuemax="100"></div>
+      {% endfor %}
+   {% else %}
+      <div class="progress-bar{% if include.color %} bg-{{ include.color }}{% endif %}{% if include.striped %} progress-bar-striped{% if include.animated %} progress-bar-animated{% endif %}{% endif %}" style="width: {{ percentage }}%" role="progressbar" aria-valuenow="{{ percentage }}" aria-valuemin="0" aria-valuemax="100" aria-label="{{ percentage }}% Complete">
+         {% if include.show-value %}
+            {{ percentage }}%
+         {% else %}
+            <span class="visually-hidden">{{ percentage }}% Complete</span>
+         {% endif %}
+      </div>
+   {% endif %}
+</div>
+
+#}

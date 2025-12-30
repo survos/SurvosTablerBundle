@@ -1,0 +1,7 @@
+{# templates/components/ui/input-mask.html.twig v3.9 #}
+<input type="text" name="input-{{ name | default('mask')  }}" class="form-control" data-mask="{{ mask | default('00/00/0000')  }}"{% if visible  %} data-mask-visible="true"{% endif  %}{% if placeholder  %} placeholder="{{ placeholder  }}"{% else  %} placeholder="{{ mask  }}"{% endif  %}{% if reverse  %} data-mask-reverse="true"{% endif  %}autocomplete="off"/>
+
+{#
+=== Original Liquid (form/input-mask.html) ===
+<input type="text" name="input-{{ include.name | default: 'mask' }}" class="form-control" data-mask="{{ include.mask | default: '00/00/0000' }}"{% if include.visible %} data-mask-visible="true"{% endif %}{% if include.placeholder %} placeholder="{{ include.placeholder }}"{% else %} placeholder="{{ include.mask }}"{% endif %}{% if include.reverse %} data-mask-reverse="true"{% endif %}autocomplete="off"/>
+#}

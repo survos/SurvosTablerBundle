@@ -1,0 +1,18 @@
+{# templates/components/parts/input-toggle.html.twig v3.9 #}
+<div class="mb-3">
+	<div class="form-label">Toggle switches</div>
+   <twig:ui:check :switch="true" title="Option 1" :checked="true"/>
+   <twig:ui:check :switch="true" title="Option 2"/>
+   <twig:ui:check :switch="true" title="Option 3"/>
+</div>
+
+{#
+=== Original Liquid (form/input-toggle.html) ===
+<div class="mb-3">
+	<div class="form-label">Toggle switches</div>
+   {% include "ui/form/check.html" switch=true title="Option 1" checked=true %}
+   {% include "ui/form/check.html" switch=true title="Option 2" %}
+   {% include "ui/form/check.html" switch=true title="Option 3" %}
+</div>
+
+#}

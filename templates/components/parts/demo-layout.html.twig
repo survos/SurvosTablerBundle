@@ -1,0 +1,44 @@
+{# templates/components/parts/demo-layout.html.twig v3.9 #}
+{% set config = config  %}
+<div class="border rounded w-8 h-7 bg-light shadow-sm mx-auto d-flex flex-column">
+	<div class="row row-0 flex-fill">
+		{% if config.sidebar  %}
+		<div class="{% if config.sidebarNarrow  %}col-auto w-2{% else  %}col-3{% endif  %} {% if config.sidebarDark  %}bg-dark{% else  %}border-end bg-white{% endif  %}"></div>
+		{% endif  %}
+		<div class="col">
+			{% if not (config.hideTopnav)  %}
+			<div class="h-2 {% if config.topnavDark  %}bg-dark{% else  %}border-bottom bg-white{% endif  %}"></div>
+			{% endif  %}
+			{% if config.topmenu  %}
+			<div class="h-2 {% if config.topmenuDark  %}bg-dark{% else  %}border-bottom bg-white{% endif  %}"></div>
+			{% endif  %}
+		</div>
+		{% if config.sidebarEnd  %}
+		<div class="{% if config.sidebarNarrow  %}col-auto w-2{% else  %}col-3{% endif  %} {% if config.sidebarDark  %}bg-dark{% else  %}border-start bg-white{% endif  %}"></div>
+		{% endif  %}
+	</div>
+</div>
+
+{#
+=== Original Liquid (demo-layout.html) ===
+{% assign config = include.config %}
+<div class="border rounded w-8 h-7 bg-light shadow-sm mx-auto d-flex flex-column">
+	<div class="row row-0 flex-fill">
+		{% if config.sidebar %}
+		<div class="{% if config.sidebar-narrow %}col-auto w-2{% else %}col-3{% endif %} {% if config.sidebar-dark %}bg-dark{% else %}border-end bg-white{% endif %}"></div>
+		{% endif %}
+		<div class="col">
+			{% unless config.hide-topnav %}
+			<div class="h-2 {% if config.topnav-dark %}bg-dark{% else %}border-bottom bg-white{% endif %}"></div>
+			{% endunless %}
+			{% if config.topmenu %}
+			<div class="h-2 {% if config.topmenu-dark %}bg-dark{% else %}border-bottom bg-white{% endif %}"></div>
+			{% endif %}
+		</div>
+		{% if config.sidebar-end %}
+		<div class="{% if config.sidebar-narrow %}col-auto w-2{% else %}col-3{% endif %} {% if config.sidebar-dark %}bg-dark{% else %}border-start bg-white{% endif %}"></div>
+		{% endif %}
+	</div>
+</div>
+
+#}

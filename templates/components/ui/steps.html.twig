@@ -1,0 +1,28 @@
+{# templates/components/ui/steps.html.twig v3.9 #}
+{% set count = count | default(4)  %}
+{% set active = active | default(3)  %}
+<div class="steps{% if numbers  %} steps-counter{% endif  %}{% if color  %} steps-{{ color  }}{% endif  %}{% if size  %} steps-{{ size  }}{% endif  %}">
+   {% for i in (1..count)  %}
+   {% set elem = 'a'  %}
+   {% if i > active  %}{% set elem = 'span'  %}{% endif  %}
+   <{{ elem  }} href="#" class="step-item{% if i == active  %} active{% endif  %}"{% if showTooltip  %} data-bs-toggle="tooltip" title="Step {{ i  }} description"{% endif  %}>{% if showTitle  %}
+      Step {{ i  }}
+   {% endif  %}</{{ elem  }}>
+   {% endfor  %}
+</div>
+
+{#
+=== Original Liquid (steps.html) ===
+{% assign count = include.count | default: 4 %}
+{% assign active = include.active | default: 3 %}
+<div class="steps{% if include.numbers %} steps-counter{% endif %}{% if include.color %} steps-{{ include.color }}{% endif %}{% if include['size'] %} steps-{{ include['size'] }}{% endif %}">
+   {% for i in (1..count) %}
+   {% assign elem = 'a' %}
+   {% if i > active %}{% assign elem = 'span' %}{% endif %}
+   <{{ elem }} href="#" class="step-item{% if i == active %} active{% endif %}"{% if include.show-tooltip %} data-bs-toggle="tooltip" title="Step {{ i }} description"{% endif %}>{% if include.show-title %}
+      Step {{ i }}
+   {% endif %}</{{ elem }}>
+   {% endfor %}
+</div>
+
+#}

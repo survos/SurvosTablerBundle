@@ -1,0 +1,87 @@
+{# templates/components/layout/css.html.twig v3.9 #}
+{% if site.useIconfont - %}
+<!-- BEGIN ICONFONT STYLES -->
+<link href="https://www.unpkg.com/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" rel="stylesheet" />
+<!-- END ICON FONT STYLES -->
+{% endif - %}
+
+{% if pageLibs - %}
+<!-- BEGIN PAGE LEVEL STYLES -->
+{% for lib in libs - %}
+{% if lib[0] in pageLibs - %}
+{% for file in lib[1].css - %}
+<link href="{% if 'http://' in file or 'https://' in file  %}{{ file  }}{% else  %}{{ page | relative  }}/dist/libs/{{ lib[1].npm  }}/{{ file  }}{% if environment != 'development  %}?{{ 'now' | date('%s')  }}{% endif  %}{% endif  %}" rel="stylesheet"/>
+{% endfor - %}
+{% endif - %}
+{% endfor - %}
+<!-- END PAGE LEVEL STYLES -->
+{% endif  %}
+
+<!-- BEGIN GLOBAL MANDATORY STYLES -->
+{% if layoutRtl - %}
+<link href="{{ page | relative  }}/dist/css/tabler.rtl{% if environment == 'preview'  %}.min{% endif  %}.css{% if environment != 'development  %}?{{ 'now' | date('%s')  }}{% endif  %}" rel="stylesheet"{% if environment == 'preview'  %} integrity="{{ sri.cssRtl  }}"{% endif  %} />
+{% else - %}
+<link href="{{ page | relative  }}/dist/css/tabler{% if environment == 'preview'  %}.min{% endif  %}.css{% if environment != 'development  %}?{{ 'now' | date('%s')  }}{% endif  %}" rel="stylesheet"{% if environment == 'preview'  %} integrity="{{ sri.css  }}"{% endif  %} />
+{% endif - %}
+<!-- END GLOBAL MANDATORY STYLES -->
+
+<!-- BEGIN PLUGINS STYLES -->
+{% for plugin in site.cssPlugins - %}
+	{% set sriKey = "css-" | append: plugin - %}
+	{% if layoutRtl - %}
+	{% set sriKey = "css-" | append: plugin ~ '-rtl' - %}
+	<link href="{{ page | relative  }}/dist/css/tabler-{{ plugin  }}.rtl{% if environment == 'preview'  %}.min{% endif  %}.css{% if environment != 'development'  %}?{{ 'now' | date('%s')  }}{% endif  %}" rel="stylesheet"{% if environment == 'preview'  %} integrity="{{ sri[sriKey]  }}"{% endif  %}/>
+	{% else - %}
+	<link href="{{ page | relative  }}/dist/css/tabler-{{ plugin  }}{% if environment == 'preview'  %}.min{% endif  %}.css{% if environment != 'development  %}?{{ 'now' | date('%s')  }}{% endif  %}" rel="stylesheet"{% if environment == 'preview'  %} integrity="{{ sri[sriKey]  }}"{% endif  %}/>
+	{% endif - %}
+{% endfor - %}
+<!-- END PLUGINS STYLES -->
+
+<!-- BEGIN DEMO STYLES -->
+<link href="{{ page | relative  }}/preview/css/demo{% if environment == 'preview'  %}.min{% endif  %}.css{% if environment != 'development  %}?{{ 'now' | date('%s')  }}{% endif  %}" rel="stylesheet"{% if environment == 'preview'  %} integrity="{{ sri.demoCss  }}"{% endif  %}/>
+<!-- END DEMO STYLES -->
+
+{#
+=== Original Liquid (css.html) ===
+{% if site.useIconfont -%}
+<!-- BEGIN ICONFONT STYLES -->
+<link href="https://www.unpkg.com/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" rel="stylesheet" />
+<!-- END ICON FONT STYLES -->
+{% endif -%}
+
+{% if page-libs -%}
+<!-- BEGIN PAGE LEVEL STYLES -->
+{% for lib in libs -%}
+{% if page-libs contains lib[0] -%}
+{% for file in lib[1].css -%}
+<link href="{% if file contains 'http://' or file contains 'https://' %}{{ file }}{% else %}{{ page | relative }}/dist/libs/{{ lib[1].npm }}/{{ file }}{% if environment != 'development %}?{{ 'now' | date: '%s' }}{% endif %}{% endif %}" rel="stylesheet"/>
+{% endfor -%}
+{% endif -%}
+{% endfor -%}
+<!-- END PAGE LEVEL STYLES -->
+{% endif %}
+
+<!-- BEGIN GLOBAL MANDATORY STYLES -->
+{% if layout-rtl -%}
+<link href="{{ page | relative }}/dist/css/tabler.rtl{% if environment == 'preview' %}.min{% endif %}.css{% if environment != 'development %}?{{ 'now' | date: '%s' }}{% endif %}" rel="stylesheet"{% if environment == 'preview' %} integrity="{{ sri.css-rtl }}"{% endif %} />
+{% else -%}
+<link href="{{ page | relative }}/dist/css/tabler{% if environment == 'preview' %}.min{% endif %}.css{% if environment != 'development %}?{{ 'now' | date: '%s' }}{% endif %}" rel="stylesheet"{% if environment == 'preview' %} integrity="{{ sri.css }}"{% endif %} />
+{% endif -%}
+<!-- END GLOBAL MANDATORY STYLES -->
+
+<!-- BEGIN PLUGINS STYLES -->
+{% for plugin in site.cssPlugins -%}
+	{% assign sriKey = "css-" | append: plugin -%}
+	{% if layout-rtl -%}
+	{% assign sriKey = "css-" | append: plugin | append: "-rtl" -%}
+	<link href="{{ page | relative }}/dist/css/tabler-{{ plugin }}.rtl{% if environment == 'preview' %}.min{% endif %}.css{% if environment != 'development' %}?{{ 'now' | date: '%s' }}{% endif %}" rel="stylesheet"{% if environment == 'preview' %} integrity="{{ sri[sriKey] }}"{% endif %}/>
+	{% else -%}
+	<link href="{{ page | relative }}/dist/css/tabler-{{ plugin }}{% if environment == 'preview' %}.min{% endif %}.css{% if environment != 'development %}?{{ 'now' | date: '%s' }}{% endif %}" rel="stylesheet"{% if environment == 'preview' %} integrity="{{ sri[sriKey] }}"{% endif %}/>
+	{% endif -%}
+{% endfor -%}
+<!-- END PLUGINS STYLES -->
+
+<!-- BEGIN DEMO STYLES -->
+<link href="{{ page | relative }}/preview/css/demo{% if environment == 'preview' %}.min{% endif %}.css{% if environment != 'development %}?{{ 'now' | date: '%s' }}{% endif %}" rel="stylesheet"{% if environment == 'preview' %} integrity="{{ sri.demo-css }}"{% endif %}/>
+<!-- END DEMO STYLES -->
+#}

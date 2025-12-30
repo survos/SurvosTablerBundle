@@ -1,0 +1,57 @@
+{# templates/components/cards/small-stats-2.html.twig v3.9 #}
+{% set icon = icon | default('user')  %}
+{% if growth > 0  %}
+	{% set color = "green"  %}
+	{% set arrow = "arrowUp"  %}
+{% elseif growth < 0  %}
+	{% set color = "red"  %}
+	{% set arrow = "arrowDown"  %}
+{% else  %}
+	{% set color = "grey"  %}
+	{% set arrow = "clock"  %}
+{% endif  %}
+
+<div class="card" data-color={{ color }}>
+	<div class="card-body">
+		<div class="float-end avatar{% if color  %} bg-{{ color  }}{% if light  %}-lt{% else  %} text-white{% endif  %}{% endif  %}">
+			<twig:ui:icon :icon="icon"/>
+		</div>
+		<div class="text-secondary fw-normal mt-0">{{ title | default('Customers')  }}</div>
+		<h3 class="h2 mt-2 mb-3">{{ count | default('1,850')  }}</h3>
+		<p class="mb-0 text-secondary">
+			<twig:ui:trending :value="growth"/>
+			<span class="text-nowrap">{{ description | default('Since last month')  }}</span>
+		</p>
+	</div>
+</div>
+
+{#
+=== Original Liquid (small-stats-2.html) ===
+{% assign icon = include.icon | default: "user" %}
+{% if include.growth > 0 %}
+	{% assign color="green" %}
+	{% assign arrow="arrow-up" %}
+{% elsif include.growth < 0 %}
+	{% assign color="red" %}
+	{% assign arrow="arrow-down" %}
+{% else %}
+	{% assign color="grey" %}
+	{% assign arrow="clock" %}
+{% endif %}
+
+
+<div class="card" data-color={{color}}>
+	<div class="card-body">
+		<div class="float-end avatar{% if include.color %} bg-{{ include.color }}{% if include.light %}-lt{% else %} text-white{% endif %}{% endif %}">
+			{% include "ui/icon.html" icon=icon %}
+		</div>
+		<div class="text-secondary fw-normal mt-0">{{ include.title | default: 'Customers' }}</div>
+		<h3 class="h2 mt-2 mb-3">{{ include.count | default: "1,850" }}</h3>
+		<p class="mb-0 text-secondary">
+			{% include "ui/trending.html" value=include.growth %}
+			<span class="text-nowrap">{{ include.description | default: 'Since last month' }}</span>
+		</p>
+	</div>
+</div>
+
+#}

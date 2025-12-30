@@ -1,0 +1,11 @@
+{# templates/components/ui/avatar-upload.html.twig v3.9 #}
+<a href="#" class="avatar avatar-upload{% if class  %} {{ class  }}{% endif  %}{% if size  %} avatar-{{ size  }}{% endif  %}">
+	<twig:ui:icon icon="plus"/>
+</a>
+
+{#
+=== Original Liquid (avatar-upload.html) ===
+<a href="#" class="avatar avatar-upload{% if include.class %} {{ include.class }}{% endif %}{% if include.size %} avatar-{{ include.size }}{% endif %}">
+	{% include "ui/icon.html" icon="plus" %}
+</a>
+#}

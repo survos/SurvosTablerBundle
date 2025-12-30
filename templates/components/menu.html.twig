@@ -1,92 +1,89 @@
-{# templates/components/menu.html.twig v2.0 #}
-{# Menu component - dispatches to appropriate renderer based on type #}
-{# rendered in {{ _self }} #}
+{# @SurvosTabler/components/menu.html.twig v1.0 #}
+{# Renders menu based on type using appropriate KnpMenu template #}
 
-{% set theme = theme_option('theme') %}
-<div title="{{ type }}">
-    {% if type in [SEARCH_MENU] %}
-        {% if menuItem.children %}
-            {{ knp_menu_render(menuItem, {
-                rootAttributes: { class: "search-class" },
-                template: '@SurvosTabler/menu/tabler_search.html.twig',
-                allow_safe_labels: true
-            }) }}
-        {% endif %}
+{{ _self }}
+{{ type }}
+{% if menuItem.children|length > 0 %}
 
-    {% elseif type in [SIDEBAR_MENU] %}
-        {% if wrapperClass|default(false) %}<div class="{{ wrapperClass }}">{% endif %}
-        {{ knp_menu_render(menuItem, {
-            template: '@SurvosTabler/menu/tabler_sidebar.html.twig',
-            currentClass: 'active',
-            allow_safe_labels: true,
-            rootAttributes: { class: 'navbar-nav pt-lg-3', role: 'menu' }
-        }) }}
-        {% if wrapperClass|default(false) %}</div>{% endif %}
+{% if type == NAVBAR_MENU or type == NAVBAR_MENU_END %}
+    {{ type }}
+    {{ knp_menu_render(menuItem, {
+        template: '@SurvosTabler/menu/navbar.html.twig',
+        allow_safe_labels: true,
+        currentClass: 'active',
+        rootAttributes: {
+            class: 'navbar-nav'
+        }
+    }) }}
 
-    {% elseif type in [FOOTER_MENU] %}
-        {% if menuItem.children|length %}
-            {% if wrapperClass|default(false) %}<div class="{{ wrapperClass }}">{% endif %}
-            {{ knp_menu_render(menuItem, {
-                template: '@SurvosTabler/menu/tabler_footer.html.twig',
-                allow_safe_labels: true,
-                rootAttributes: { class: 'list-inline list-inline-dots mb-0' }
-            }) }}
-            {% if wrapperClass|default(false) %}</div>{% endif %}
-        {% endif %}
+{% elseif type == 'SIDEBAR' %}
+    {{ knp_menu_render(menuItem, {
+        template: '@SurvosTabler/menu/sidebar.html.twig',
+        allow_safe_labels: true,
+        currentClass: 'active',
+        ancestorClass: 'active',
+        branch_class: 'nav-item dropdown',
+        leaf_class: 'nav-item',
+        rootAttributes: {
+            class: 'navbar-nav pt-lg-3'
+        }
+    }) }}
 
-    {% elseif type in [AUTH_MENU, 'top_auth'] %}
-        {{ knp_menu_render(menuItem, {
-            rootAttributes: { class: 'nav nav-justify-end list-group list-group-horizontal dropdown d-print-none' },
-            template: '@SurvosTabler/menu/tabler_auth.html.twig',
-            allow_safe_labels: true
-        }) }}
+{% elseif type == 'NAVBAR_END' %}
+    {{ knp_menu_render(menuItem, {
+        template: '@SurvosTabler/menu/navbar_end.html.twig',
+        allow_safe_labels: true,
+        rootAttributes: {
+            class: 'd-flex'
+        }
+    }) }}
 
-    {% elseif type in [BREADCRUMB_MENU] %}
-        {{ knp_menu_render(menuItem, {
-            template: '@SurvosTabler/menu/tabler_breadcrumb.html.twig',
-            allow_safe_labels: true
-        }) }}
+{% elseif type == 'AUTH' %}
+    {{ knp_menu_render(menuItem, {
+        template: '@SurvosTabler/menu/auth.html.twig',
+        allow_safe_labels: true
+    }) }}
 
-    {% elseif type in [PAGE_MENU] %}
-        {% set menuHtml = knp_menu_render(menuItem, {
-            allow_safe_labels: true,
-            rootAttributes: { class: 'nav nav-justify-end mt-0 list-group list-group-horizontal d-print-none sub-navbar collapse collapseExamplePageNav show' },
-            currentClass: 'current active',
-            template: '@SurvosTabler/menu/tabler_navbar.html.twig'
-        })|trim %}
+{% elseif type == 'FOOTER' or type == 'FOOTER_END' %}
+    {{ knp_menu_render(menuItem, {
+        template: '@SurvosTabler/menu/footer.html.twig',
+        allow_safe_labels: true,
+        rootAttributes: {
+            class: 'list-inline list-inline-dots mb-0'
+        }
+    }) }}
 
-        {% if menuHtml %}
-            {% if wrapperClass|default(false) %}<div class="{{ wrapperClass }}">{% endif %}
-            <div class="border-bottom">
-                <div class="container-xl">
-                    <div class="pageNavMenu d-flex align-items-center">
-                        <div class="d-flex flex-wrap align-items-center gap-3 justify-content-between w-100">
-                            {{ menuHtml|raw }}
-                        </div>
-                        <button class="navbar-toggler pageMenu d-lg-none" id="pageMenu" type="button" 
-                                data-bs-toggle="collapse" data-bs-target="#collapseExamplePageNav" 
-                                aria-expanded="false" aria-controls="collapseExamplePageNav">
-                            {{ icon('tabler:list') }}
-                        </button>
-                    </div>
-                </div>
-            </div>
-            {% if wrapperClass|default(false) %}</div>{% endif %}
-        {% endif %}
+{% elseif type == 'PAGE_ACTIONS' %}
+    {{ knp_menu_render(menuItem, {
+        template: '@SurvosTabler/menu/actions.html.twig',
+        allow_safe_labels: true
+    }) }}
 
-    {% elseif type in ['top_navbar', 'top_page', NAVBAR_MENU, NAVBAR_MENU2, NAVBAR_MENU3] %}
-        {% if menuItem.children|length %}
-            {% if wrapperClass|default(false) %}<div class="{{ wrapperClass }}">{% endif %}
-            {{ knp_menu_render(menuItem, {
-                allow_safe_labels: true,
-                rootAttributes: { class: 'navbar-nav' },
-                currentClass: 'nav-item active',
-                template: '@SurvosTabler/menu/tabler_navbar.html.twig'
-            }) }}
-            {% if wrapperClass|default(false) %}</div>{% endif %}
-        {% endif %}
+{% elseif type == 'BREADCRUMB' %}
+    {{ knp_menu_render(menuItem, {
+        template: '@SurvosTabler/menu/breadcrumb.html.twig',
+        allow_safe_labels: true
+    }) }}
 
-    {% else %}
-        <div class="text-danger">Invalid menu type: {{ type }}</div>
-    {% endif %}
-</div>
+{% elseif type == 'SEARCH' %}
+    {{ knp_menu_render(menuItem, {
+        template: '@SurvosTabler/menu/search.html.twig',
+        allow_safe_labels: true
+    }) }}
+
+{% elseif type == 'BANNER' %}
+    {{ knp_menu_render(menuItem, {
+        template: '@SurvosTabler/menu/banner.html.twig',
+        allow_safe_labels: true
+    }) }}
+
+{% else %}
+    {# Fallback #}
+    {{ knp_menu_render(menuItem, {
+        template: '@SurvosTabler/menu/navbar.html.twig',
+        allow_safe_labels: true
+    }) }}
+
+{% endif %}
+
+{% endif %}

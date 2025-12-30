@@ -1,0 +1,54 @@
+{# templates/components/ui/toast.html.twig v3.9 #}
+{% set toastId = toastId | default('simple')  %}
+{% set personId = personId | default(2)  %}
+{% set person = people[personId]  %}
+<div class="toast {% if show  %}show{% endif  %}" id="toast-{{ toastId  }}" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="false">
+	{% if not (hideHeader)  %}
+	<div class="toast-header">
+		<twig:ui:avatar :person="person" class="me-2" size="xs"/>
+		<strong class="me-auto">{{ person.full_name  }}</strong>
+		<small>{{ date | default('11 mins ago')  }}</small>
+		<button type="button" class="ms-2 btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+	</div>
+	{% endif  %}
+	<div class="toast-body">
+		{% if cookies  %}
+		🍪&nbsp;Our site uses cookies. By continuing to use our site, you agree to our Cookie Policy.
+
+		<div class="mt-2 pt-2 border-top">
+			<a href="#" class="btn btn-primary btn-sm">I understand</a>
+		</div>
+		{% else  %}
+		{{ text | default('Hello, world! This is a toast message.')  }}
+		{% endif  %}
+	</div>
+</div>
+
+{#
+=== Original Liquid (toast.html) ===
+{% assign toast-id = include.toast-id | default: 'simple' %}
+{% assign person-id = include.person-id | default: 2 %}
+{% assign person = people[person-id] %}
+<div class="toast {% if include.show %}show{% endif %}" id="toast-{{ toast-id }}" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="false">
+	{% unless include.hide-header %}
+	<div class="toast-header">
+		{% include "ui/avatar.html" person=person class="me-2" size="xs" %}
+		<strong class="me-auto">{{ person.full_name }}</strong>
+		<small>{{ include.date | default: '11 mins ago' }}</small>
+		<button type="button" class="ms-2 btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+	</div>
+	{% endunless %}
+	<div class="toast-body">
+		{% if include.cookies %}
+		🍪&nbsp;Our site uses cookies. By continuing to use our site, you agree to our Cookie Policy.
+
+		<div class="mt-2 pt-2 border-top">
+			<a href="#" class="btn btn-primary btn-sm">I understand</a>
+		</div>
+		{% else %}
+		{{ include.text | default: 'Hello, world! This is a toast message.' }}
+		{% endif %}
+	</div>
+</div>
+
+#}

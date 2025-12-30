@@ -16,7 +16,6 @@ class RoutesTranslationLoader implements LoaderInterface
     public function __construct(
         #[AutowireIterator(tag: 'controller.service_arguments')] private $taggedServices,
     ) {
-//        assert(false, "hello from " . __CLASS__);
     }
 
     /**
@@ -38,10 +37,12 @@ class RoutesTranslationLoader implements LoaderInterface
             $reflectionClass = new \ReflectionClass($controllerClass);
             foreach ($reflectionClass->getMethods() as $method) {
                     foreach ($method->getAttributes(Route::class) as $attribute) {
-                        $args = $attribute->getArguments();
-                        $methodName = $method->getName();
-                        $name = $args['name'] ?? $methodName;
-                        $translations[$name] = u($methodName)->snake()->replace('_', ' ')->title()->toString();
+                        $instance = $attribute->newInstance();
+                        $name = $instance->name;
+                        $name = str_replace('app_', '', $name);
+                        $candidate = u($name)->snake()->replace('_', ' ')->title()->toString();
+                        $translations[$instance->name] = $candidate;
+
                     }
                 }
         }

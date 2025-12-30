@@ -1,56 +1,38 @@
-{#
-Tabler auth menu template.
-User dropdown or login/register links.
-#}
+{# @SurvosTabler/menu/auth.html.twig - User dropdown menu #}
 {% extends '@KnpMenu/menu.html.twig' %}
 
 {% block root %}
-    {% set listAttributes = item.childrenAttributes|merge({class: (item.childrenAttributes.class|default('') ~ ' navbar-nav')|trim}) %}
-    {{ block('list') }}
+<div class="nav-item dropdown">
+    <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
+        <span class="avatar avatar-sm">{{ ux_icon('tabler:user') }}</span>
+    </a>
+    <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+        {{ block('children') }}
+    </div>
+</div>
 {% endblock %}
 
 {% block item %}
-    {% import _self as knp %}
-    {% set icon = item.extras.icon|default(item.attributes['data-icon']|default(null)) %}
-    {% set isSubmenu = item.extras.submenu|default(false) or item.hasChildren %}
+{% if item.displayed %}
+    {% set icon = item.getExtra('icon') %}
+    {% set divider = item.getExtra('divider') %}
     
-    <li class="nav-item{% if isSubmenu %} dropdown{% endif %}">
-        {% if isSubmenu %}
-            <a class="nav-link d-flex lh-1 text-reset p-0" href="#" data-bs-toggle="dropdown" aria-expanded="false">
-                <span class="avatar avatar-sm">
-                    {{ ux_icon(icon|default('tabler:user'), {class: 'icon'}) }}
-                </span>
-                <div class="d-none d-xl-block ps-2">
-                    <div>{{ block('label') }}</div>
-                </div>
-            </a>
-            <div class="dropdown-menu dropdown-menu-end">
-                {% for child in item.children %}
-                    {{ knp.render_auth_item(child, matcher) }}
-                {% endfor %}
-            </div>
-        {% else %}
-            <a class="nav-link" href="{{ item.uri }}">
-                {% if icon %}{{ ux_icon(icon, {class: 'icon'}) }}{% endif %}
-                <span>{{ block('label') }}</span>
-            </a>
-        {% endif %}
-    </li>
-{% endblock %}
-
-{% block label %}
-    {{ item.label|trans(item.extras.translation_params|default({}), item.extras.translation_domain|default('messages')) }}
-{% endblock %}
-
-{% macro render_auth_item(item, matcher) %}
-    {% set icon = item.extras.icon|default(null) %}
-    
-    {% if item.extras.divider|default(false) %}
+    {% if divider %}
         <div class="dropdown-divider"></div>
     {% else %}
         <a class="dropdown-item" href="{{ item.uri }}">
-            {% if icon %}{{ ux_icon(icon, {class: 'icon dropdown-item-icon'}) }}{% endif %}
-            {{ item.label|trans({}, item.extras.translation_domain|default('messages')) }}
+            {% if icon %}{{ ux_icon('tabler:' ~ icon, {class: 'icon dropdown-item-icon'}) }}{% endif %}
+            {{ block('label') }}
         </a>
     {% endif %}
-{% endmacro %}
+{% endif %}
+{% endblock %}
+
+{% block label %}
+{%- set translation_domain = item.extra('translation_domain', 'messages') -%}
+{%- if translation_domain is not same as(false) -%}
+    {{ item.label|trans({}, translation_domain) }}
+{%- else -%}
+    {{ item.label }}
+{%- endif -%}
+{% endblock %}

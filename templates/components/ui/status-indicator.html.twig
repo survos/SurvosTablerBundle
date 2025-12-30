@@ -1,0 +1,15 @@
+{# templates/components/ui/status-indicator.html.twig v3.9 #}
+<span class="status-indicator{% if color  %} status-{{ color  }}{% endif  %}{% if animated  %} status-indicator-animated{% endif  %}">
+	<span class="status-indicator-circle"></span>
+	<span class="status-indicator-circle"></span>
+	<span class="status-indicator-circle"></span>
+</span>
+
+{#
+=== Original Liquid (status-indicator.html) ===
+<span class="status-indicator{% if include.color %} status-{{ include.color }}{% endif %}{% if include.animated %} status-indicator-animated{% endif %}">
+	<span class="status-indicator-circle"></span>
+	<span class="status-indicator-circle"></span>
+	<span class="status-indicator-circle"></span>
+</span>
+#}

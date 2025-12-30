@@ -1,0 +1,14 @@
+<?php
+/* src/Components/Parts/InputIconComponent.php v3.9 - Generated 2025-12-30 */
+
+declare(strict_types=1);
+
+namespace Survos\TablerBundle\Components\Parts;
+
+use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
+
+#[AsTwigComponent(name: 'parts:input-icon', template: '@SurvosTabler/components/parts/input-icon.html.twig')]
+final class InputIconComponent
+{
+
+}

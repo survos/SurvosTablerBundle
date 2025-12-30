@@ -1,0 +1,61 @@
+{# templates/components/parts/input.html.twig v3.9 #}
+{% set type = type  %}
+
+{% if type == 'static'  %}
+	<div class="mb-3">
+		<label class="form-label">{{ label | default('Static')  }}</label>
+		<div class="form-control-plaintext">{{ value | default('Input value')  }}</div>
+	</div>
+
+{% elseif type == 'password'  %}
+	<div class="mb-3">
+		<label class="form-label">{{ label | default('Password')  }}</label>
+		<input type="text" class="form-control" name="example-password-input" placeholder="{{ placeholder | default('Input placeholder')  }}">
+	</div>
+
+{% elseif type == 'textarea'  %}
+<div class="mb-3">
+	<label class="form-label">{{ label | default('Textarea')  }}</label>
+	<textarea class="form-control" name="example-textarea" placeholder="{{ placeholder | default('Textarea placeholder')  }}">{{ value  }}</textarea>
+</div>
+
+{% else  %}
+
+<div class="mb-3">
+	<label class="form-label">{{ label | default('Text')  }}</label>
+	<input type="text" class="form-control" name="example-text-input" placeholder="{{ placeholder | default('Input placeholder')  }}">
+</div>
+
+{% endif  %}
+
+{#
+=== Original Liquid (form/input.html) ===
+{% assign type = include.type %}
+
+{% if type == 'static' %}
+	<div class="mb-3">
+		<label class="form-label">{{ include.label | default: 'Static' }}</label>
+		<div class="form-control-plaintext">{{ include.value | default: 'Input value' }}</div>
+	</div>
+
+{% elsif type == 'password' %}
+	<div class="mb-3">
+		<label class="form-label">{{ include.label | default: 'Password' }}</label>
+		<input type="text" class="form-control" name="example-password-input" placeholder="{{ include.placeholder | default: 'Input placeholder' }}">
+	</div>
+
+{% elsif type == 'textarea' %}
+<div class="mb-3">
+	<label class="form-label">{{ include.label | default: 'Textarea' }}</label>
+	<textarea class="form-control" name="example-textarea" placeholder="{{ include.placeholder | default: 'Textarea placeholder' }}">{{ include.value }}</textarea>
+</div>
+
+{% else %}
+
+<div class="mb-3">
+	<label class="form-label">{{ include.label | default: 'Text' }}</label>
+	<input type="text" class="form-control" name="example-text-input" placeholder="{{ include.placeholder | default: 'Input placeholder' }}">
+</div>
+
+{% endif %}
+#}

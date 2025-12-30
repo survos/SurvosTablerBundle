@@ -1,0 +1,56 @@
+{# templates/components/ui/check.html.twig v3.9 #}
+{% set type = type | default('checkbox')  %}
+{% set checked = checked | default(false)  %}
+{% set disabled = disabled | default(false)  %}
+{% set switch = switch | default(false)  %}
+{% set title = title | default(false)  %}
+{% set name = name | default(false)  %}
+{% set is_empty = empty | default(false)  %}
+{% if not (title)  %}
+{% set title = ''  %}
+{% if disabled  %}{% set title = title ~ ' disabled'  %}{% endif  %}
+{% if checked  %}{% set title = title ~ ' checked'  %}{% endif  %}
+{% if switch  %}{% set title = title ~ ' switch'  %}{% endif  %}
+{% set title = title ~ ' ' | append: type  %}
+{% set title = title ~ ' input' | lstrip | capitalize  %}
+{% endif  %}
+<label class="form-check{% if inline  %} form-check-inline{% endif  %}{% if switch  %} form-switch{% if size  %} form-switch-{{ size  }}{% endif  %}{% endif  %}{% if class  %} {{ class  }}{% endif  %}">
+	<input class="form-check-input{% if is_empty  %} position-static{% endif  %}" type="{{ type  }}" {% if name  %}
+	       name="{{ name  }}" {% endif  %}{% if checked  %} checked{% endif  %}{% if disabled  %} disabled{% endif  %}>
+	{% if titleOn and titleOff  %}
+	<span class="form-check-label form-check-label-on">{{ titleOn  }}</span>
+	<span class="form-check-label form-check-label-off">{{ titleOff  }}</span>
+	{% else  %}
+	{% if not (is_empty)  %}<span class="form-check-label">{{ title  }}</span>{% endif  %}
+	{% endif  %}
+</label>
+
+{#
+=== Original Liquid (form/check.html) ===
+{% assign type = include.type | default: 'checkbox' %}
+{% assign checked = include.checked | default: false %}
+{% assign disabled = include.disabled | default: false %}
+{% assign switch = include.switch | default: false %}
+{% assign title = include.title | default: false %}
+{% assign name = include.name | default: false %}
+{% assign is_empty = include['empty'] | default: false %}
+{% unless title %}
+{% assign title = '' %}
+{% if disabled %}{% assign title = title | append: ' disabled' %}{% endif %}
+{% if checked %}{% assign title = title | append: ' checked' %}{% endif %}
+{% if switch %}{% assign title = title | append: ' switch' %}{% endif %}
+{% assign title = title | append: ' ' | append: type %}
+{% assign title = title | append: ' input' | lstrip | capitalize %}
+{% endunless %}
+<label class="form-check{% if include.inline %} form-check-inline{% endif %}{% if switch %} form-switch{% if include['size'] %} form-switch-{{ include['size'] }}{% endif %}{% endif %}{% if include.class %} {{ include.class }}{% endif %}">
+	<input class="form-check-input{% if is_empty %} position-static{% endif %}" type="{{ type }}" {% if name %}
+	       name="{{ name }}" {% endif %}{% if checked %} checked{% endif %}{% if disabled %} disabled{% endif %}>
+	{% if include.title-on and include.title-off %}
+	<span class="form-check-label form-check-label-on">{{include.title-on }}</span>
+	<span class="form-check-label form-check-label-off">{{include.title-off }}</span>
+	{% else %}
+	{% unless is_empty %}<span class="form-check-label">{{ title }}</span>{% endunless %}
+	{% endif %}
+</label>
+
+#}

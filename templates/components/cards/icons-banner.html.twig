@@ -1,0 +1,59 @@
+{# templates/components/cards/icons-banner.html.twig v3.9 #}
+{% set iconsCount = iconsInfo.count  %}
+
+<div class="card card-md{% if class  %} {{ class  }}{% endif  %}">
+	<div class="card-stamp card-stamp-lg">
+		<div class="card-stamp-icon bg-primary">
+			<twig:ui:icon icon="ghost"/>
+		</div>
+	</div>
+	<div class="card-body">
+		<div class="row align-items-center">
+			<div class="col-10">
+				<h3 class="h1">Tabler Icons</h3>
+				<div class="markdown">
+					All icons come from the Tabler Icons set and are MIT-licensed. Visit
+					<a href="{{ site.icons.link  }}" target="_blank" rel="noopener">Tabler Icons Website</a>,
+					download any of the {{ iconsCount  }} icons in SVG, PNG or&nbsp;React and use them in your favourite design tools.
+				</div>
+				<div class="mt-3">
+					<a href="{{ site.icons.link  }}" class="btn btn-primary" target="_blank" rel="noopener">
+						<twig:ui:icon icon="download"/>
+						Download icons
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+{#
+=== Original Liquid (icons-banner.html) ===
+{% assign icons-count = icons-info.count %}
+
+<div class="card card-md{% if include.class %} {{ include.class }}{% endif %}">
+	<div class="card-stamp card-stamp-lg">
+		<div class="card-stamp-icon bg-primary">
+			{% include "ui/icon.html" icon="ghost" %}
+		</div>
+	</div>
+	<div class="card-body">
+		<div class="row align-items-center">
+			<div class="col-10">
+				<h3 class="h1">Tabler Icons</h3>
+				<div class="markdown">
+					All icons come from the Tabler Icons set and are MIT-licensed. Visit
+					<a href="{{ site.icons.link }}" target="_blank" rel="noopener">Tabler Icons Website</a>,
+					download any of the {{ icons-count }} icons in SVG, PNG or&nbsp;React and use them in your favourite design tools.
+				</div>
+				<div class="mt-3">
+					<a href="{{ site.icons.link }}" class="btn btn-primary" target="_blank" rel="noopener">
+						{% include "ui/icon.html" icon="download" %}
+						Download icons
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+#}

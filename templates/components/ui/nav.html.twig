@@ -1,0 +1,52 @@
+{# templates/components/ui/nav.html.twig v3.9 #}
+<ul class="nav {% if pills  %}nav-pills{% if header  %} card-header-pills{% endif  %}{% elseif tabs  %}nav-tabs{% if header  %} card-header-tabs{% endif  %}{% endif  %}{% if class  %} {{ class  }}{% endif  %}">
+   <li class="nav-item">
+      <a class="nav-link active" href="#">
+         Active
+      </a>
+   </li>
+   <li class="nav-item">
+      <a class="nav-link" href="#">
+         <twig:ui:icon icon="star" class="nav-link-icon"/>
+         Link
+      </a>
+   </li>
+   <li class="nav-item">
+      <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">
+         Disabled
+      </a>
+   </li>
+   <li class="nav-item ms-auto">
+      <a class="nav-link" href="#">
+         <twig:ui:icon icon="settings"/>
+      </a>
+   </li>
+</ul>
+
+{#
+=== Original Liquid (nav.html) ===
+<ul class="nav {% if include.pills %}nav-pills{% if include.header %} card-header-pills{% endif %}{% elsif include.tabs %}nav-tabs{% if include.header %} card-header-tabs{% endif %}{% endif %}{% if include.class %} {{ include.class }}{% endif %}">
+   <li class="nav-item">
+      <a class="nav-link active" href="#">
+         Active
+      </a>
+   </li>
+   <li class="nav-item">
+      <a class="nav-link" href="#">
+         {% include "ui/icon.html" icon="star" class="nav-link-icon" %}
+         Link
+      </a>
+   </li>
+   <li class="nav-item">
+      <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">
+         Disabled
+      </a>
+   </li>
+   <li class="nav-item ms-auto">
+      <a class="nav-link" href="#">
+         {% include "ui/icon.html" icon="settings" %}
+      </a>
+   </li>
+</ul>
+
+#}

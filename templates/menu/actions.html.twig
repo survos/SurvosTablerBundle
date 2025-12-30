@@ -1,28 +1,26 @@
-{#
-Tabler page actions menu template.
-Renders as button list.
-#}
+{# @SurvosTabler/menu/actions.html.twig - Page action buttons #}
 {% extends '@KnpMenu/menu.html.twig' %}
 
 {% block root %}
-    {# No wrapper ul - items render as buttons directly #}
-    {% for child in item.children %}
-        {% with {item: child} %}
-            {{ block('item') }}
-        {% endwith %}
-    {% endfor %}
+{{ block('children') }}
 {% endblock %}
 
 {% block item %}
-    {% set icon = item.extras.icon|default(item.attributes['data-icon']|default(null)) %}
-    {% set isPrimary = loop.last %}
-    
-    <a href="{{ item.uri }}" class="btn{% if isPrimary %} btn-primary{% else %} btn-outline-secondary{% endif %}">
-        {% if icon %}{{ ux_icon(icon, {class: 'icon'}) }}{% endif %}
+{% if item.displayed %}
+    {% set icon = item.getExtra('icon') %}
+    {% set btnClass = item.getExtra('btn_class', 'btn btn-primary') %}
+    <a href="{{ item.uri }}" class="{{ btnClass }}">
+        {% if icon %}{{ ux_icon('tabler:' ~ icon, {class: 'icon'}) }}{% endif %}
         {{ block('label') }}
     </a>
+{% endif %}
 {% endblock %}
 
 {% block label %}
-    {{ item.label|trans(item.extras.translation_params|default({}), item.extras.translation_domain|default('messages')) }}
+{%- set translation_domain = item.extra('translation_domain', 'messages') -%}
+{%- if translation_domain is not same as(false) -%}
+    {{ item.label|trans({}, translation_domain) }}
+{%- else -%}
+    {{ item.label }}
+{%- endif -%}
 {% endblock %}

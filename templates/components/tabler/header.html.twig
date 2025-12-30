@@ -52,7 +52,8 @@
                 {% block header_actions %}
                     {% if showActions %}
                         <div class="btn-list">
-                            {{ tabler_menu(MenuSlot.PageActions) }}
+                            @actions
+{#                            {{ tabler_menu(MenuSlot.PageActions) }}#}
                         </div>
                     {% endif %}
                 {% endblock %}

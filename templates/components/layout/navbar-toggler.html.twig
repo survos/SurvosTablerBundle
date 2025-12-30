@@ -1,0 +1,15 @@
+{# templates/components/layout/navbar-toggler.html.twig v3.9 #}
+<!-- BEGIN NAVBAR TOGGLER -->
+<button class="navbar-toggler" type="button" data-bs-toggle="collapse"{% if target  %} data-bs-target="#{{ target  }}" aria-controls="{{ target  }}"{% endif  %} aria-expanded="false" aria-label="{% if target == 'sidebarMenu'  %}Toggle sidebar navigation{% else  %}Toggle primary navigation{% endif  %}">
+	<span class="navbar-toggler-icon"></span>
+</button>
+<!-- END NAVBAR TOGGLER -->
+
+{#
+=== Original Liquid (navbar-toggler.html) ===
+<!-- BEGIN NAVBAR TOGGLER -->
+<button class="navbar-toggler" type="button" data-bs-toggle="collapse"{% if include.target %} data-bs-target="#{{ include.target }}" aria-controls="{{ include.target }}"{% endif %} aria-expanded="false" aria-label="{% if include.target == 'sidebar-menu' %}Toggle sidebar navigation{% else %}Toggle primary navigation{% endif %}">
+	<span class="navbar-toggler-icon"></span>
+</button>
+<!-- END NAVBAR TOGGLER -->
+#}

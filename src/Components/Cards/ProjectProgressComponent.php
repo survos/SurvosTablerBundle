@@ -1,0 +1,29 @@
+<?php
+/* src/Components/Cards/ProjectProgressComponent.php v3.9 - Generated 2025-12-30 */
+
+declare(strict_types=1);
+
+namespace Survos\TablerBundle\Components\Cards;
+
+use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
+use Survos\TablerBundle\Components\Traits\DataAwareTrait;
+use Survos\TablerBundle\Service\FixtureService;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
+
+#[AsTwigComponent(name: 'cards:project-progress', template: '@SurvosTabler/components/cards/project-progress.html.twig')]
+final class ProjectProgressComponent
+{
+    use DataAwareTrait;
+
+    public ?int $projectId = 0;
+    public ?int $progress = 25;
+    public ?int $daysAgo = 2;
+
+    public function __construct(
+        ?FixtureService $fixtureService = null,
+        ?HttpClientInterface $httpClient = null,
+    ) {
+        $this->fixtureService = $fixtureService;
+        $this->httpClient = $httpClient;
+    }
+}

@@ -1,0 +1,20 @@
+{# templates/components/ui/progressbg.html.twig v3.9 #}
+{% set percentage = value | replace({'%': ''}) | default(0) %}
+{% set color = color | default('primaryLt')  %}
+<div class="progressbg{% if class  %} {{ class  }}{% endif  %}">
+	<twig:ui:progress :value="percentage" class="progressbg-progress" :color="color"/>
+	{% if text  %}<div class="progressbg-text">{{ text  }}</div>{% endif  %}
+	{% if showValue  %}<div class="progressbg-value">{{ percentage  }}%</div>{% endif  %}
+</div>
+
+{#
+=== Original Liquid (progressbg.html) ===
+{% assign percentage = include.value | replace: '%', '' | default: 0 %}
+{% assign color = include.color | default: 'primary-lt' %}
+<div class="progressbg{% if include.class %} {{ include.class }}{% endif %}">
+	{% include "ui/progress.html" value=percentage class="progressbg-progress" color=color %}
+	{% if include.text %}<div class="progressbg-text">{{ include.text }}</div>{% endif %}
+	{% if include.show-value %}<div class="progressbg-value">{{ percentage }}%</div>{% endif %}
+</div>
+
+#}

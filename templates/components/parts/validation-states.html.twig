@@ -1,0 +1,18 @@
+{# templates/components/parts/validation-states.html.twig v3.9 #}
+<div class="mb-3">
+	<label class="form-label">Validation States {% if lite  %}(lite){% endif  %}</label>
+	<input type="text" class="form-control is-valid{% if lite  %} is-valid-lite{% endif  %} mb-2" placeholder="Valid State..">
+	<input type="text" class="form-control is-invalid{% if lite  %} is-invalid-lite{% endif  %}" placeholder="Invalid State..">
+	{% if not (lite)  %}<div class="invalid-feedback">Invalid feedback</div>{% endif  %}
+</div>
+
+{#
+=== Original Liquid (form/validation-states.html) ===
+<div class="mb-3">
+	<label class="form-label">Validation States {% if include.lite %}(lite){% endif %}</label>
+	<input type="text" class="form-control is-valid{% if include.lite %} is-valid-lite{% endif %} mb-2" placeholder="Valid State..">
+	<input type="text" class="form-control is-invalid{% if include.lite %} is-invalid-lite{% endif %}" placeholder="Invalid State..">
+	{% unless include.lite %}<div class="invalid-feedback">Invalid feedback</div>{% endunless %}
+</div>
+
+#}

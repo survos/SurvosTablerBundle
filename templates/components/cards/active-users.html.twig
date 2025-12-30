@@ -1,0 +1,42 @@
+{# templates/components/cards/active-users.html.twig v3.9 #}
+<div class="card">
+	<div class="card-body">
+		<div class="d-flex align-items-center">
+			<div class="subheader">Active subscriptions</div>
+			<div class="ms-auto lh-1">
+				<twig:parts:days id="active-users" label="Select time range for active users"/>
+			</div>
+		</div>
+		<div class="d-flex align-items-baseline">
+			<div class="h1 mb-3 me-2">2,986</div>
+			<div class="me-auto">
+				<twig:ui:trending :value="4"/>
+			</div>
+		</div>
+
+		<twig:ui:chart chartId="active-users" size="sm"/>
+	</div>
+</div>
+
+{#
+=== Original Liquid (charts/active-users.html) ===
+<div class="card">
+	<div class="card-body">
+		<div class="d-flex align-items-center">
+			<div class="subheader">Active subscriptions</div>
+			<div class="ms-auto lh-1">
+				{% include "parts/dropdown/days.html" id="active-users" label="Select time range for active users" %}
+			</div>
+		</div>
+		<div class="d-flex align-items-baseline">
+			<div class="h1 mb-3 me-2">2,986</div>
+			<div class="me-auto">
+				{% include "ui/trending.html" value=4 %}
+			</div>
+		</div>
+
+		{% include "ui/chart.html" chart-id="active-users" size="sm" %}
+	</div>
+</div>
+
+#}

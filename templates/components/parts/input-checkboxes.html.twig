@@ -1,0 +1,22 @@
+{# templates/components/parts/input-checkboxes.html.twig v3.9 #}
+<div class="mb-3">
+   <div class="form-label">Checkboxes</div>
+   <div>
+      <twig:ui:check type="checkbox"/>
+      <twig:ui:check type="checkbox" :disabled="true"/>
+      <twig:ui:check type="checkbox" :checked="true"/>
+   </div>
+</div>
+
+{#
+=== Original Liquid (form/input-checkboxes.html) ===
+<div class="mb-3">
+   <div class="form-label">Checkboxes</div>
+   <div>
+      {% include "ui/form/check.html" type="checkbox" %}
+      {% include "ui/form/check.html" type="checkbox" disabled=true %}
+      {% include "ui/form/check.html" type="checkbox" checked=true %}
+   </div>
+</div>
+
+#}

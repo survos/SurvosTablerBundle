@@ -1,0 +1,50 @@
+{# templates/components/parts/input-color.html.twig v3.9 #}
+{% set colors = '' | split(',')  %}
+{% if not (hideBlackWhite)  %}
+{% set colors = 'dark,white' | split(',')  %}
+{% endif  %}
+
+{% for color in site.colors|slice(0, 10)  %}
+{% set colors = colors | push: color[0]  %}
+{% endfor  %}
+
+<div class="mb-3">
+	<label class="form-label">{{ label | default('Color Input')  }}</label>
+	<div class="row g-2">
+		{% for color in colors - %}
+		<div class="col-auto">
+			<label class="form-colorinput{% if color == 'white'  %} form-colorinput-light{% endif  %}">
+				<input name="{{ name | default('color')  }}" type="{{ type | default('radio')  }}" value="{{ color  }}" class="form-colorinput-input" {% if loop.index == 2  %} checked{% endif  %}/>
+				<span class="form-colorinput-color bg-{{ color  }}{% if rounded  %} rounded-circle{% endif  %}"></span>
+			</label>
+		</div>
+		{% - endfor  %}
+	</div>
+</div>
+
+{#
+=== Original Liquid (form/input-color.html) ===
+{% assign colors = '' | split: ',' %}
+{% unless include.hide-black-white %}
+{% assign colors = 'dark,white' | split: ',' %}
+{% endunless %}
+
+{% for color in site.colors limit: 10 %}
+{% assign colors = colors | push: color[0] %}
+{% endfor %}
+
+<div class="mb-3">
+	<label class="form-label">{{ include.label | default: 'Color Input' }}</label>
+	<div class="row g-2">
+		{% for color in colors -%}
+		<div class="col-auto">
+			<label class="form-colorinput{% if color == 'white' %} form-colorinput-light{% endif %}">
+				<input name="{{ include.name | default: 'color' }}" type="{{ include.type | default: 'radio' }}" value="{{ color }}" class="form-colorinput-input" {% if forloop.index == 2 %} checked{% endif %}/>
+				<span class="form-colorinput-color bg-{{ color }}{% if include.rounded %} rounded-circle{% endif %}"></span>
+			</label>
+		</div>
+		{%- endfor %}
+	</div>
+</div>
+
+#}

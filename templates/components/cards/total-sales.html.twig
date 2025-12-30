@@ -1,0 +1,24 @@
+{# templates/components/cards/total-sales.html.twig v3.9 #}
+<div class="card">
+	<div class="card-body">
+		<twig:ui:card-dropdown/>
+		<h3 class="card-title">Total sales</h3>
+
+		<twig:ui:chart chartId="total-sales" :height="15"/>
+		<twig:ui:chart chartId="campaigns" :height="15"/>
+	</div>
+</div>
+
+{#
+=== Original Liquid (charts/total-sales.html) ===
+<div class="card">
+	<div class="card-body">
+		{% include "ui/card-dropdown.html" %}
+		<h3 class="card-title">Total sales</h3>
+
+		{% include "ui/chart.html" chart-id="total-sales" height=15 %}
+		{% include "ui/chart.html" chart-id="campaigns" height=15 %}
+	</div>
+</div>
+
+#}

@@ -1,5 +1,5 @@
 <?php
-/* src/Service/MenuDispatcher.php v1.0 - Dispatches menu slot events */
+/* src/Service/MenuDispatcher.php v2.1 - Root item not displayed */
 
 declare(strict_types=1);
 
@@ -8,22 +8,26 @@ namespace Survos\TablerBundle\Service;
 use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
 use Survos\TablerBundle\Event\MenuEvent;
-use Survos\TablerBundle\Menu\MenuSlot;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 class MenuDispatcher
 {
     public function __construct(
         private readonly FactoryInterface $factory,
-        private readonly EventDispatcherInterface $dispatcher,  // Matches bundle definition
+        private readonly EventDispatcherInterface $dispatcher,
     ) {}
 
-    public function dispatch(MenuSlot $slot, array $options = []): ItemInterface
+    public function dispatch(string $slot, array $options = []): ItemInterface
     {
-        $menu = $this->factory->createItem('root');
+        // Create root menu - name doesn't matter since it won't be displayed
+        $menu = $this->factory->createItem($options['name'] ?? $slot);
+        if (!empty($options)) dump($options, $slot);
 
-        $event = new MenuEvent($menu, $this->factory, $slot, $options);
-        $this->dispatcher->dispatch($event, $slot->eventName());
+        // IMPORTANT: Don't display the root item itself, only its children
+        $menu->setDisplay(false);
+
+        $event = new MenuEvent($menu, $this->factory, $options);
+        $this->dispatcher->dispatch($event, $slot);
 
         return $menu;
     }

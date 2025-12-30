@@ -1,0 +1,8 @@
+{# templates/components/ui/flag.html.twig v3.9 #}
+<span class="flag{% if size  %} flag-{{ size  }}{% endif  %} flag-country-{{ flag | default('pl') | lower  }}{% if class  %} {{ class  }}{% endif  %}"></span>
+
+{#
+=== Original Liquid (flag.html) ===
+<span class="flag{% if include['size'] %} flag-{{ include.size }}{% endif %} flag-country-{{ include.flag | default: 'pl' | downcase }}{% if include.class %} {{ include.class }}{% endif %}"></span>
+
+#}

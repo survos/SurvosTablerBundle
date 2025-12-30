@@ -1,0 +1,8 @@
+{# templates/components/ui/hr.html.twig v3.9 #}
+<div class="hr-text{% if position  %} hr-text-{{ position | lower  }}{% endif  %}{% if color  %} text-{{ color  }}{% endif  %}{% if class  %} {{ class  }}{% endif  %}">{{ text | default('Label')  }}</div>
+
+{#
+=== Original Liquid (hr.html) ===
+<div class="hr-text{% if include.position %} hr-text-{{ include.position | downcase }}{% endif %}{% if include.color %} text-{{ include.color }}{% endif %}{% if include.class %} {{ include.class }}{% endif %}">{{ include.text | default: 'Label' }}</div>
+
+#}

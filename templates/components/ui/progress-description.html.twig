@@ -1,0 +1,32 @@
+{# templates/components/ui/progress-description.html.twig v3.9 #}
+{% set size = size | default('sm')  %}
+{% set color = color | default('blue')  %}
+
+<div{% if class  %} class="{{ class  }}"{% endif  %}>
+   <div class="d-flex mb-1 align-items-center lh-1">
+      <div class="fs-5 font-weight-semibold m-0">{{ label | default('Label')  }}</div>
+      {% if description  %}
+         <div class="fs-6 text-secondary ms-2">{{ description  }}</div>
+      {% endif  %}
+      <span class="ms-auto fs-6 strong">{{ value  }}%</span>
+   </div>
+   <twig:ui:progress :size="size" :value="value" :color="color"/>
+</div>
+
+{#
+=== Original Liquid (progress-description.html) ===
+{% assign size = include['size'] | default: 'sm' %}
+{% assign color = include.color | default: 'blue' %}
+
+<div{% if include.class %} class="{{ include.class }}"{% endif %}>
+   <div class="d-flex mb-1 align-items-center lh-1">
+      <div class="fs-5 font-weight-semibold m-0">{{ include.label | default: 'Label' }}</div>
+      {% if include.description %}
+         <div class="fs-6 text-secondary ms-2">{{ include.description }}</div>
+      {% endif %}
+      <span class="ms-auto fs-6 strong">{{ include.value }}%</span>
+   </div>
+   {% include "ui/progress.html" size=size value=include.value color=color %}
+</div>
+
+#}
