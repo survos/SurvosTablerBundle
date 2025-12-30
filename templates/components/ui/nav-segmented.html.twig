@@ -1,33 +1,33 @@
-{# templates/components/ui/nav-segmented.html.twig v3.9 #}
-{% set segmentedItems = items | default('First,Second,Third') | split(',')  %}
-{% set segmentedIcons = icons | default(null) | split(',')  %}
-{% set segmentedDisabled = disabled | default(null) | split(',')  %}
-{% set segmentedHover = hover | default(null)  %}
-{% set segmentedDefault = default | default(1) + 0  %}
+{# templates/components/ui/nav-segmented.html.twig v4.8 #}
+{%- set segmentedItems = items | default('First,Second,Third') | split(',') %}
+{%- set segmentedIcons = icons | default(null) | split(',') %}
+{%- set segmentedDisabled = disabled | default(null) | split(',') %}
+{%- set segmentedHover = hover | default(null) %}
+{%- set segmentedDefault = default | default(1) + 0 %}
 
-{% set segmentedItemsCount = segmentedItems | length  %}
-{% set segmentedIconsCount = segmentedIcons | length  %}
-{% set segmentedAllCount = segmentedItemsCount  %}
+{%- set segmentedItemsCount = segmentedItems | length %}
+{%- set segmentedIconsCount = segmentedIcons | length %}
+{%- set segmentedAllCount = segmentedItemsCount %}
 
-{% if segmentedIconsCount > segmentedAllCount  %}{% set segmentedAllCount = segmentedIconsCount  %}{% endif  %}
+{% if segmentedIconsCount > segmentedAllCount %}{%- set segmentedAllCount = segmentedIconsCount %}{% endif %}
 
-<nav class="nav nav-segmented{% if vertical  %} nav-segmented-vertical{% endif  %}{% if size  %} nav-{{ size  }}{% endif  %}{% if fullWidth  %} w-100{% endif  %}{% if class  %} {{ class  }}{% endif  %}" role="tablist">
-	{% for i in (1..segmentedAllCount)  %}
-		{% set index = loop.index ~ ''  %}
-		{% set disabled = segmentedDisabled | contains: index  %}
-		{% set isDefault = loop.index == segmentedDefault  %}
+<nav class="nav nav-segmented{% if vertical %} nav-segmented-vertical{% endif %}{% if size %} nav-{{ size }}{% endif %}{% if fullWidth %} w-100{% endif %}{% if class %} {{ class }}{% endif %}" role="tablist">
+	{% for i in (1..segmentedAllCount) %}
+		{%- set index = loop.index ~ "" %}
+		{%- set disabled = segmentedDisabled | contains: index %}
+		{%- set isDefault = loop.index == segmentedDefault %}
 
-		{% if name  %}<input type="radio" class="nav-link-input" name="{{ name  }}" id="segmented-{{ name  }}-{{ index  }}" {% if isDefault  %}checked{% endif  %} />{% endif  %}
+		{% if name %}<input type="radio" class="nav-link-input" name="{{ name }}" id="segmented-{{ name }}-{{ index }}" {% if isDefault %}checked{% endif %} />{% endif %}
 
-		<{% if name  %}label for="segmented-{{ name  }}-{{ index  }}"{% else  %}button{% endif  %} class="nav-link{% if disabled  %} disabled{% endif  %}{% if segmentedHover == index  %} hover{% endif  %}" role="tab"{% if not (name)  %} data-bs-toggle="tab"{% endif  %} aria-selected="{% if isDefault  %}true{% else  %}false{% endif  %}" {% if disabled  %} aria-disabled="true"{% endif  %}{% if isDefault  %} aria-current="page"{% endif  %}>
-			{% if segmentedIcons[loop.index0]  %}
+		<{% if name %}label for="segmented-{{ name }}-{{ index }}"{% else %}button{% endif %} class="nav-link{% if disabled %} disabled{% endif %}{% if segmentedHover == index %} hover{% endif %}" role="tab"{%- if not (name) -%} data-bs-toggle="tab"{%- endif -%} aria-selected="{% if isDefault %}true{% else %}false{% endif %}" {% if disabled %} aria-disabled="true"{% endif %}{% if isDefault %} aria-current="page"{% endif %}>
+			{% if segmentedIcons[loop.index0] %}
 				<twig:ui:icon :icon="segmented-icons[loop.index0]" class="nav-link-icon"/>
-			{% endif  %}
-			{% if segmentedItems[loop.index0]  %}
-				{{ segmentedItems[loop.index0]  }}
-			{% endif  %}
-		</{% if name  %}label{% else  %}button{% endif  %}>
-	{% endfor  %}
+			{% endif %}
+			{% if segmentedItems[loop.index0] %}
+				{{ segmentedItems[loop.index0] }}
+			{% endif %}
+		</{% if name %}label{% else %}button{% endif %}>
+	{% endfor %}
 </nav>
 
 {#

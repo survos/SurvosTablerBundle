@@ -1,4 +1,4 @@
-{# templates/components/parts/add-task.html.twig v3.9 #}
+{# templates/components/parts/add-task.html.twig v4.8 #}
 <div class="modal-header">
 	<h4 class="modal-title">Add task</h4>
 	<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -14,12 +14,12 @@
 			<label class="form-label">Assigned To</label>
 			<select class="form-select">
 				<option value="">Select person</option>
-				{% set selected_people = "5,6,2,3" | split(',')  %}
-				{% for person_id_str in selected_people  %}
-					{% set person_id = person_id_str + 0 - 1  %}
-					{% set person = people[person_id]  %}
-					<option value="{{ person.id  }}">{{ person.full_name  }}</option>
-				{% endfor  %}
+				{%- set selected_people = "5,6,2,3" | split(',') %}
+				{% for person_id_str in selected_people %}
+					{%- set person_id = person_id_str + 0 - 1 %}
+					{%- set person = people[person_id] %}
+					<option value="{{ person.id }}">{{ person.full_name }}</option>
+				{% endfor %}
 			</select>
 		</div>
 		<div class="mb-3">

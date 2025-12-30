@@ -1,5 +1,5 @@
 <?php
-/* config/component-services.php v3.9 - Generated 2025-12-30 */
+/* config/component-services.php v4.8 - Generated 2025-12-30 */
 /* Import this file in SurvosTablerBundle::loadExtension() */
 
 declare(strict_types=1);
@@ -17,7 +17,9 @@ return static function (ContainerConfigurator $container): void {
         ->autoconfigure();
 
     // === Pure UI components (HTML/CSS only) ===
-    $services->set(Components\Ui\AccordionComponent::class);
+    $services->set(Components\Ui\AccordionComponent::class)
+        ->arg('$fixtureService', service(FixtureService::class)->nullOnInvalid())
+        ->arg('$httpClient', service(HttpClientInterface::class)->nullOnInvalid());
     $services->set(Components\Ui\ProgressComponent::class);
     $services->set(Components\Ui\RangeComponent::class);
     $services->set(Components\Ui\SelectComponent::class)
@@ -43,21 +45,15 @@ return static function (ContainerConfigurator $container): void {
     $services->set(Components\Ui\StepsComponent::class);
     $services->set(Components\Ui\DropzoneComponent::class);
     $services->set(Components\Ui\RibbonComponent::class);
-    $services->set(Components\Ui\ToastComponent::class)
-        ->arg('$fixtureService', service(FixtureService::class)->nullOnInvalid())
-        ->arg('$httpClient', service(HttpClientInterface::class)->nullOnInvalid());
+    $services->set(Components\Ui\ToastComponent::class);
     $services->set(Components\Ui\StatusDotComponent::class);
     $services->set(Components\Ui\CardDropdownComponent::class);
     $services->set(Components\Ui\DropdownComponent::class);
     $services->set(Components\Ui\SpinnerComponent::class);
-    $services->set(Components\Ui\BadgeComponent::class)
-        ->arg('$fixtureService', service(FixtureService::class)->nullOnInvalid())
-        ->arg('$httpClient', service(HttpClientInterface::class)->nullOnInvalid());
+    $services->set(Components\Ui\BadgeComponent::class);
     $services->set(Components\Ui\IconComponent::class);
     $services->set(Components\Ui\ProgressStepsComponent::class);
-    $services->set(Components\Ui\AvatarComponent::class)
-        ->arg('$fixtureService', service(FixtureService::class)->nullOnInvalid())
-        ->arg('$httpClient', service(HttpClientInterface::class)->nullOnInvalid());
+    $services->set(Components\Ui\AvatarComponent::class);
     $services->set(Components\Ui\ProgressbgComponent::class);
     $services->set(Components\Ui\TrackingComponent::class);
     $services->set(Components\Ui\SignatureComponent::class);
@@ -91,9 +87,7 @@ return static function (ContainerConfigurator $container): void {
     $services->set(Components\Ui\PaginationComponent::class);
     $services->set(Components\Ui\InlinePlayerComponent::class);
     $services->set(Components\Ui\HrComponent::class);
-    $services->set(Components\Ui\ChatComponent::class)
-        ->arg('$fixtureService', service(FixtureService::class)->nullOnInvalid())
-        ->arg('$httpClient', service(HttpClientInterface::class)->nullOnInvalid());
+    $services->set(Components\Ui\ChatComponent::class);
     $services->set(Components\Ui\EmptyComponent::class);
     $services->set(Components\Ui\TableComponent::class)
         ->arg('$fixtureService', service(FixtureService::class)->nullOnInvalid())
@@ -101,7 +95,9 @@ return static function (ContainerConfigurator $container): void {
     $services->set(Components\Ui\SwitchIconComponent::class);
     $services->set(Components\Ui\ButtonComponent::class);
     $services->set(Components\Ui\BrowserComponent::class);
-    $services->set(Components\Ui\AlertComponent::class);
+    $services->set(Components\Ui\AlertComponent::class)
+        ->arg('$fixtureService', service(FixtureService::class)->nullOnInvalid())
+        ->arg('$httpClient', service(HttpClientInterface::class)->nullOnInvalid());
 
     // === Data-aware card components ===
     $services->set(Components\Cards\UserInfoComponent::class)
@@ -372,32 +368,20 @@ return static function (ContainerConfigurator $container): void {
     // === Layout structure components ===
     $services->set(Components\Layout\SidebarComponent::class);
     $services->set(Components\Layout\PageHeader2Component::class);
-    $services->set(Components\Layout\PageHeader1Component::class)
-        ->arg('$fixtureService', service(FixtureService::class)->nullOnInvalid())
-        ->arg('$httpClient', service(HttpClientInterface::class)->nullOnInvalid());
-    $services->set(Components\Layout\ProfileComponent::class)
-        ->arg('$fixtureService', service(FixtureService::class)->nullOnInvalid())
-        ->arg('$httpClient', service(HttpClientInterface::class)->nullOnInvalid());
+    $services->set(Components\Layout\PageHeader1Component::class);
+    $services->set(Components\Layout\ProfileComponent::class);
     $services->set(Components\Layout\PageHeader4Component::class);
     $services->set(Components\Layout\UptimeComponent::class);
-    $services->set(Components\Layout\PageHeader3Component::class)
-        ->arg('$fixtureService', service(FixtureService::class)->nullOnInvalid())
-        ->arg('$httpClient', service(HttpClientInterface::class)->nullOnInvalid());
+    $services->set(Components\Layout\PageHeader3Component::class);
     $services->set(Components\Layout\PageHeader5Component::class);
     $services->set(Components\Layout\NavbarSideThemeComponent::class);
-    $services->set(Components\Layout\NavbarSideUserComponent::class)
-        ->arg('$fixtureService', service(FixtureService::class)->nullOnInvalid())
-        ->arg('$httpClient', service(HttpClientInterface::class)->nullOnInvalid());
+    $services->set(Components\Layout\NavbarSideUserComponent::class);
     $services->set(Components\Layout\BannerComponent::class);
     $services->set(Components\Layout\NavbarLogoComponent::class);
     $services->set(Components\Layout\JsComponent::class);
     $services->set(Components\Layout\JsLibsComponent::class);
-    $services->set(Components\Layout\NavbarSideComponent::class)
-        ->arg('$fixtureService', service(FixtureService::class)->nullOnInvalid())
-        ->arg('$httpClient', service(HttpClientInterface::class)->nullOnInvalid());
-    $services->set(Components\Layout\NavbarComponent::class)
-        ->arg('$fixtureService', service(FixtureService::class)->nullOnInvalid())
-        ->arg('$httpClient', service(HttpClientInterface::class)->nullOnInvalid());
+    $services->set(Components\Layout\NavbarSideComponent::class);
+    $services->set(Components\Layout\NavbarComponent::class);
     $services->set(Components\Layout\CalendarComponent::class);
     $services->set(Components\Layout\BreadcrumbComponent::class);
     $services->set(Components\Layout\PrintComponent::class);
@@ -413,17 +397,11 @@ return static function (ContainerConfigurator $container): void {
     $services->set(Components\Layout\NavbarSearchComponent::class);
     $services->set(Components\Layout\SentryComponent::class);
     $services->set(Components\Layout\FooterComponent::class);
-    $services->set(Components\Layout\HomepageComponent::class)
-        ->arg('$fixtureService', service(FixtureService::class)->nullOnInvalid())
-        ->arg('$httpClient', service(HttpClientInterface::class)->nullOnInvalid());
+    $services->set(Components\Layout\HomepageComponent::class);
     $services->set(Components\Layout\NavbarTogglerComponent::class);
-    $services->set(Components\Layout\NavbarSideNotificationsComponent::class)
-        ->arg('$fixtureService', service(FixtureService::class)->nullOnInvalid())
-        ->arg('$httpClient', service(HttpClientInterface::class)->nullOnInvalid());
+    $services->set(Components\Layout\NavbarSideNotificationsComponent::class);
     $services->set(Components\Layout\PageHeaderComponent::class);
-    $services->set(Components\Layout\AnalyticsComponent::class)
-        ->arg('$fixtureService', service(FixtureService::class)->nullOnInvalid())
-        ->arg('$httpClient', service(HttpClientInterface::class)->nullOnInvalid());
+    $services->set(Components\Layout\AnalyticsComponent::class);
     $services->set(Components\Layout\SkipLinkComponent::class);
     $services->set(Components\Layout\OgComponent::class);
     $services->set(Components\Layout\LayoutsListComponent::class);
@@ -433,26 +411,20 @@ return static function (ContainerConfigurator $container): void {
     // === Reusable partial components ===
     $services->set(Components\Parts\DaysComponent::class);
     $services->set(Components\Parts\MonthsComponent::class);
-    $services->set(Components\Parts\DatagridComponent::class)
-        ->arg('$fixtureService', service(FixtureService::class)->nullOnInvalid())
-        ->arg('$httpClient', service(HttpClientInterface::class)->nullOnInvalid());
+    $services->set(Components\Parts\DatagridComponent::class);
     $services->set(Components\Parts\CalendarComponent::class);
-    $services->set(Components\Parts\TasksComponent::class)
-        ->arg('$fixtureService', service(FixtureService::class)->nullOnInvalid())
-        ->arg('$httpClient', service(HttpClientInterface::class)->nullOnInvalid());
+    $services->set(Components\Parts\TasksComponent::class);
     $services->set(Components\Parts\ActivityComponent::class)
         ->arg('$fixtureService', service(FixtureService::class)->nullOnInvalid())
         ->arg('$httpClient', service(HttpClientInterface::class)->nullOnInvalid());
-    $services->set(Components\Parts\NavAsideComponent::class);
-    $services->set(Components\Parts\NewTaskComponent::class)
+    $services->set(Components\Parts\NavAsideComponent::class)
         ->arg('$fixtureService', service(FixtureService::class)->nullOnInvalid())
         ->arg('$httpClient', service(HttpClientInterface::class)->nullOnInvalid());
+    $services->set(Components\Parts\NewTaskComponent::class);
     $services->set(Components\Parts\SmallComponent::class);
     $services->set(Components\Parts\NewEmailComponent::class);
     $services->set(Components\Parts\SimpleComponent::class);
-    $services->set(Components\Parts\DeactivateComponent::class)
-        ->arg('$fixtureService', service(FixtureService::class)->nullOnInvalid())
-        ->arg('$httpClient', service(HttpClientInterface::class)->nullOnInvalid());
+    $services->set(Components\Parts\DeactivateComponent::class);
     $services->set(Components\Parts\SuccessComponent::class);
     $services->set(Components\Parts\DangerComponent::class);
     $services->set(Components\Parts\FullWidthComponent::class);
@@ -461,9 +433,7 @@ return static function (ContainerConfigurator $container): void {
     $services->set(Components\Parts\ReportComponent::class);
     $services->set(Components\Parts\ScrollableComponent::class);
     $services->set(Components\Parts\SignatureComponent::class);
-    $services->set(Components\Parts\AddTaskComponent::class)
-        ->arg('$fixtureService', service(FixtureService::class)->nullOnInvalid())
-        ->arg('$httpClient', service(HttpClientInterface::class)->nullOnInvalid());
+    $services->set(Components\Parts\AddTaskComponent::class);
     $services->set(Components\Parts\ChangePasswordComponent::class);
     $services->set(Components\Parts\TeamComponent::class);
     $services->set(Components\Parts\ConfirmDeleteComponent::class);
@@ -472,7 +442,9 @@ return static function (ContainerConfigurator $container): void {
     $services->set(Components\Parts\InputImageRadioComponent::class);
     $services->set(Components\Parts\InputColorComponent::class);
     $services->set(Components\Parts\InputToggleComponent::class);
-    $services->set(Components\Parts\CheckboxesListComponent::class);
+    $services->set(Components\Parts\CheckboxesListComponent::class)
+        ->arg('$fixtureService', service(FixtureService::class)->nullOnInvalid())
+        ->arg('$httpClient', service(HttpClientInterface::class)->nullOnInvalid());
     $services->set(Components\Parts\InputCheckboxesInlineComponent::class);
     $services->set(Components\Parts\InputSizesComponent::class);
     $services->set(Components\Parts\InputImagePeopleComponent::class)
@@ -496,7 +468,9 @@ return static function (ContainerConfigurator $container): void {
     $services->set(Components\Parts\InputSelectgroupsComponent::class);
     $services->set(Components\Parts\FieldsetComponent::class);
     $services->set(Components\Parts\InputCheckboxesComponent::class);
-    $services->set(Components\Parts\SelectgroupPaymentsComponent::class);
+    $services->set(Components\Parts\SelectgroupPaymentsComponent::class)
+        ->arg('$fixtureService', service(FixtureService::class)->nullOnInvalid())
+        ->arg('$httpClient', service(HttpClientInterface::class)->nullOnInvalid());
     $services->set(Components\Parts\DemoLayoutComponent::class);
     $services->set(Components\Parts\ActivityComponent::class);
 };

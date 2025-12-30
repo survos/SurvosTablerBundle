@@ -1,16 +1,16 @@
-{# templates/components/cards/project-kanban.html.twig v3.9 #}
-{% set offset = offset | default(40)  %}
-{% set limit = limit | default(7)  %}
-{% set percentage = percentage | default(20)  %}
-{% set percentageColor = percentageColor | default('green')  %}
-{% set due = due | default('2 days')  %}
+{# templates/components/cards/project-kanban.html.twig v4.8 #}
+{%- set offset = offset | default(40) %}
+{%- set limit = limit | default(7) %}
+{%- set percentage = percentage | default(20) %}
+{%- set percentageColor = percentageColor | default('green') %}
+{%- set due = due | default('2 days') %}
 <div class="card">
 	<twig:ui:progress :value="percentage" class="card-progress" :color="percentage-color"/>
 	<div class="card-body">
 
 		<h3 class="card-title">
-			<a href="#">{{ title | default('Task Title')  }}</a>
-			{% if badge  %} <span class="badge ms-2">{{ badge  }}</span>{% endif  %}
+			<a href="#">{{ title | default('Task Title') }}</a>
+			{% if badge %} <span class="badge ms-2">{{ badge }}</span>{% endif %}
 		</h3>
 
 		<twig:ui:avatar-list :offset="offset" :limit="limit" :stacked="true" class="mb-3"/>
@@ -20,7 +20,7 @@
 				<twig:ui:icon icon="check" class="me-2"/>
 				<span>5/10</span>
 			</div>
-			<span>Due {{ due  }}</span>
+			<span>Due {{ due }}</span>
 		</div>
 	</div>
 </div>

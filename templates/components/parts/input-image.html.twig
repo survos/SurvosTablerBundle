@@ -1,21 +1,21 @@
-{# templates/components/parts/input-image.html.twig v3.9 #}
-{% set limit = limit | default(6)  %}
-{% set offset = offset | default(0)  %}
+{# templates/components/parts/input-image.html.twig v4.8 #}
+{%- set limit = limit | default(6) %}
+{%- set offset = offset | default(0) %}
 <div class="mb-3">
 	<label class="form-label">Image Check</label>
 	<div class="row g-2">
-		{% set filteredPhotos = photos | where: 'horizontal', true  %}
+		{%- set filteredPhotos = photos | where: 'horizontal', true %}
 
-		{% for photo in filteredPhotos limit: limit offset: offset  %}
-		<div class="{{ rowClass | default('col6 colSm4')  }}">
+		{% for photo in filteredPhotos|slice(offset, limit) %}
+		<div class="{{ rowClass | default('col6 colSm4') }}">
 			<label class="form-imagecheck mb-2">
-				<input name="form-imagecheck" type="checkbox" value="{{ loop.index  }}" class="form-imagecheck-input" {% if loop.index == 2 or loop.index == 4  or loop.index == 7  %} checked{% endif  %}/>
+				<input name="form-imagecheck" type="checkbox" value="{{ loop.index }}" class="form-imagecheck-input" {% if loop.index == 2 or loop.index == 4  or loop.index == 7 %} checked{% endif %}/>
 				<span class="form-imagecheck-figure">
-					<img src="{{ page | relative  }}/static/photos/{{ photo.file  }}" alt="{{ photo.title  }}" class="form-imagecheck-image">
+					<img src="{{ page | relative }}/static/photos/{{ photo.file }}" alt="{{ photo.title }}" class="form-imagecheck-image">
 				</span>
 			</label>
 		</div>
-		{% endfor  %}
+		{% endfor %}
 	</div>
 </div>
 

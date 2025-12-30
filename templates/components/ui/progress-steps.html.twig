@@ -1,24 +1,24 @@
-{# templates/components/ui/progress-steps.html.twig v3.9 #}
-{% set count = count | default(3)  %}
-{% set labels = '' | split(',')  %}
-{% if labels  %}
-{% set labels = labels | split(',')  %}
-{% set count = labels | length  %}
-{% endif  %}
-{% set active = active | default(1)  %}
-{% set color = color | default('primary')  %}
+{# templates/components/ui/progress-steps.html.twig v4.8 #}
+{%- set count = count | default(3) %}
+{%- set labels = '' | split(',') %}
+{% if labels %}
+{%- set labels = labels | split(',') %}
+{%- set count = labels | length %}
+{% endif %}
+{%- set active = active | default(1) %}
+{%- set color = color | default('primary') %}
 
-<ol class="progress-steps{% if class  %} {{ class  }}{% endif  %}" {% if id  %}
-   id="{{ id  }}" {% endif  %}{% if ariaLabel  %} aria-label="{{ ariaLabel  }}" {% endif  %}>
-   {% for i in (1..count)  %}
-   {% set default = 'Step ' | append: i  %}
-   {% set label = labels[loop.index0] | default(default)  %}
-   <li class="progress-steps-item{% if i <= active  %} bg-{{ color  }}{% endif  %}" {% if i==active  %} aria-current="step"{% endif  %}>
+<ol class="progress-steps{% if class %} {{ class }}{% endif %}" {% if id %}
+   id="{{ id }}" {% endif %}{% if ariaLabel %} aria-label="{{ ariaLabel }}" {% endif %}>
+   {% for i in (1..count) %}
+   {%- set default = 'Step ' ~ i %}
+   {%- set label = labels[loop.index0] | default(default) %}
+   <li class="progress-steps-item{% if i <= active %} bg-{{ color }}{% endif %}" {% if i==active %} aria-current="step"{% endif %}>
       <span class="visually-hidden">
-      {{ label  }}
+      {{ label }}
       </span>
    </li>
-   {% endfor  %}
+   {% endfor %}
 </ol>
 
 {#

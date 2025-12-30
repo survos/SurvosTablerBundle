@@ -1,27 +1,27 @@
-{# templates/components/ui/input-icon.html.twig v3.9 #}
-{% set addon  %}
-	{% if loader  %}
-		<span class="input-icon-addon{% if iconClass  %} {{ iconClass  }}{% endif  %}">
+{# templates/components/ui/input-icon.html.twig v4.8 #}
+{%- set addon -%}
+	{% if loader %}
+		<span class="input-icon-addon{% if iconClass %} {{ iconClass }}{% endif %}">
 			<twig:ui:spinner class="text-secondary" size="sm"/>
 		</span>
-	{% else  %}
-		{% set icon = icon | default('search')  %}
-		<span class="input-icon-addon{% if iconClass  %} {{ iconClass  }}{% endif  %}">
+	{% else %}
+		{%- set icon = icon | default('search') %}
+		<span class="input-icon-addon{% if iconClass %} {{ iconClass }}{% endif %}">
 			<twig:ui:icon :icon="icon"/>
 		</span>
-	{% endif  %}
-{% - endcapture  %}
+	{% endif %}
+{%- endset -%}
 
-<div class="input-icon{% if class  %} {{ class  }}{% endif  %}">
-	{% if prepend  %}
-		{{ addon  }}
-	{% endif  %}
+<div class="input-icon{% if class %} {{ class }}{% endif %}">
+	{% if prepend %}
+		{{ addon }}
+	{% endif %}
 
-	<input type="{{ type | default('text')  }}" value="{{ value  }}" class="form-control{% if light  %} form-control-light{% endif  %}{% if rounded  %} form-control-rounded{% endif  %}{% if inputClass  %} {{ inputClass  }}{% endif  %}" placeholder="{{ placeholder | default('Search…')  }}"{% if ariaLabel  %} aria-label="{{ ariaLabel  }}"{% endif  %}{% if readonly  %} readonly{% endif  %}>
+	<input type="{{ type | default('text') }}" value="{{ value }}" class="form-control{% if light %} form-control-light{% endif %}{% if rounded %} form-control-rounded{% endif %}{% if inputClass %} {{ inputClass }}{% endif %}" placeholder="{{ placeholder | default('Search…') }}"{% if ariaLabel %} aria-label="{{ ariaLabel }}"{% endif %}{% if readonly %} readonly{% endif %}>
 
-	{% if not (prepend)  %}
-		{{ addon  }}
-	{% endif  %}
+	{%- if not (prepend) -%}
+		{{ addon }}
+	{%- endif -%}
 </div>
 
 {#

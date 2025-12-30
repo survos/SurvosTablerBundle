@@ -1,13 +1,13 @@
-{# templates/components/layout/sidebar.html.twig v3.9 #}
-{% set breakpoint = breakpoint | default('lg')  %}
+{# templates/components/layout/sidebar.html.twig v4.8 #}
+{%- set breakpoint = breakpoint | default('lg') %}
 
-<aside class="navbar navbar-vertical{% if end  %} navbar-end{% endif  %} navbar-expand-{{ breakpoint  }}{% if transparent  %} navbar-transparent{% endif  %}{% if background  %} bg-{{ background  }}{% endif  %}{% if class  %} {{ class  }}{% endif  %}"{% if backgroundColor  %} style="background: {{ backgroundColor  }}"{% endif  %}{% if dark  %} data-bs-theme="dark"{% endif  %}>
+<aside class="navbar navbar-vertical{% if end %} navbar-end{% endif %} navbar-expand-{{ breakpoint }}{% if transparent %} navbar-transparent{% endif %}{% if background %} bg-{{ background }}{% endif %}{% if class %} {{ class }}{% endif %}"{% if backgroundColor %} style="background: {{ backgroundColor }}"{% endif %}{% if dark %} data-bs-theme="dark"{% endif %}>
 	<div class="container-fluid">
 		<twig:layout:navbar-toggler target="sidebar-menu"/>
 
-		{% if not (hideBrand)  %}
+		{%- if not (hideBrand) -%}
 			<twig:layout:navbar-logo :breakpoint="breakpoint" :header="true"/>
-		{% endif  %}
+		{%- endif -%}
 
 		<twig:layout:navbar-side class="d-lg-none" :hideUsername="hide-username" :personId="person-id" :breakpoint="breakpoint"/>
 

@@ -5,6 +5,7 @@ namespace Survos\TablerBundle\Traits;
 use Knp\Menu\ItemInterface;
 use Survos\TablerBundle\Event\KnpMenuEvent;
 use Survos\CoreBundle\Entity\RouteParametersInterface;
+use Survos\TablerBundle\Event\MenuEvent;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -46,5 +47,5 @@ interface KnpMenuHelperInterface
 
                              ItemInterface                 $menu, $childOptions = []);
 
-    public function supports(KnpMenuEvent $event): bool;
+    public function supports(KnpMenuEvent|MenuEvent $event): bool;
 }

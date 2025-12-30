@@ -1,4 +1,4 @@
-{# templates/components/parts/confirm-delete.html.twig v3.9 #}
+{# templates/components/parts/confirm-delete.html.twig v4.8 #}
 <twig:ui:close/>
 <div class="modal-status bg-danger"></div>
 <div class="modal-body text-center py-4">
@@ -40,7 +40,7 @@
 	</div>
 </div>
 
-{% capture_script  %}
+{% capture_script %}
 <script>
 document.addEventListener("DOMContentLoaded", function () {
 	const checkbox = document.getElementById("confirm-delete-checkbox");
@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	}
 });
 </script>
-{% endcapture_script  %}
+{% endcapture_script %}
 
 {#
 === Original Liquid (modals/confirm-delete.html) ===

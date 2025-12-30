@@ -1,25 +1,25 @@
-{# templates/components/ui/breadcrumb.html.twig v3.9 #}
-{% set breadcrumbPages = pages | default('Home,Library,Data') | split(',') - %}
+{# templates/components/ui/breadcrumb.html.twig v4.8 #}
+{%- set breadcrumbPages = pages | default('Home,Library,Data') | split(',') -%}
 <!-- BEGIN BREADCRUMB -->
 <nav aria-label="Breadcrumb">
-	<ol class="breadcrumb{% if class  %} {{ class  }}{% endif  %}{% if separator  %} breadcrumb-{{ separator  }}{% endif  %}">
-		{% - for page in breadcrumbPages - %}
-		{% - if loop.last - %}
+	<ol class="breadcrumb{% if class %} {{ class }}{% endif %}{% if separator %} breadcrumb-{{ separator }}{% endif %}">
+		{%- for page in breadcrumbPages -%}
+		{%- if loop.last -%}
 		<li class="breadcrumb-item active" aria-current="page">
-			{{ page  }}
+			{{ page }}
 		</li>
-		{% - else - %}
+		{%- else -%}
 		<li class="breadcrumb-item">
-			{% if loop.first and homeIcon- %}
-			<a href="{{ site.baseurl  }}/">
+			{% if loop.first and homeIcon -%}
+			<a href="{{ site.baseurl }}/">
 				<twig:ui:icon icon="home"/>
 			</a>
-			{% - else - %}
-			<a href="#">{{ page  }}</a>
-			{% - endif - %}
+			{%- else -%}
+			<a href="#">{{ page }}</a>
+			{%- endif -%}
 		</li>
-		{% - endif - %}
-		{% - endfor - %}
+		{%- endif -%}
+		{%- endfor -%}
 	</ol>
 </nav>
 <!-- END BREADCRUMB -->

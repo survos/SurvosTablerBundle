@@ -1,35 +1,35 @@
-{# templates/components/ui/range.html.twig v3.9 #}
-{% set min = min | default(0)  %}
-{% set max = max | default(100)  %}
-{% set step = step | default(10)  %}
-{% set value = value | default(50)  %}
-{% set id = id  %}
+{# templates/components/ui/range.html.twig v4.8 #}
+{%- set min = min | default(0) %}
+{%- set max = max | default(100) %}
+{%- set step = step | default(10) %}
+{%- set value = value | default(50) %}
+{%- set id = id %}
 
-{% if id  %}
-	<div class="form-range mb-2{% if class  %} {{ class  }}{% endif  %}" id="range-{{ id  }}"></div>
+{% if id %}
+	<div class="form-range mb-2{% if class %} {{ class }}{% endif %}" id="range-{{ id }}"></div>
 
-	{% capture_script  %}
+	{% capture_script %}
 	<script>
-		{% set value = value | split(',')  %}
+		{%- set value = value | split(',') %}
 
 		document.addEventListener("DOMContentLoaded", function () {
-			 window.noUiSlider && (noUiSlider.create(document.getElementById('range-{{ id  }}'), {
-					  start: {% if value.size > 1  %}[{{ value | join(', ')  }}]{% else  %}{{ value  }}{% endif  %},
-					  {% if value.size > 1 or connect  %}
-					  connect: [{% for i in (2..value.size)  %}{% cycle 'false', 'true'  %}, {% endfor  %}true, false],
-					  {% endif  %}
-					  step: {{ step  }},
+			 window.noUiSlider && (noUiSlider.create(document.getElementById('range-{{ id }}'), {
+					  start: {% if value.size > 1 %}[{{ value | join(', ') }}]{% else %}{{ value }}{% endif %},
+					  {% if value.size > 1 or connect %}
+					  connect: [{% for i in (2..value.size) %}{% cycle 'false', 'true' %}, {% endfor %}true, false],
+					  {% endif %}
+					  step: {{ step }},
 					  range: {
-						  min: {{ min  }},
-						  max: {{ max  }}
+						  min: {{ min }},
+						  max: {{ max }}
 					  }
 			 }));
 		});
 	</script>
-	{% endcapture_script  %}
-{% else  %}
-	<input type="range" class="form-range mb-2{% if class  %} {{ class  }}{% endif  %}" value="{{ value  }}" min="{{ min  }}" max="{{ max  }}" step="{{ step  }}">
-{% endif  %}
+	{% endcapture_script %}
+{% else %}
+	<input type="range" class="form-range mb-2{% if class %} {{ class }}{% endif %}" value="{{ value }}" min="{{ min }}" max="{{ max }}" step="{{ step }}">
+{% endif %}
 
 {#
 === Original Liquid (range.html) ===

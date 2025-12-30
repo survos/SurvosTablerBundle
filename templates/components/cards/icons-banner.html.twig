@@ -1,7 +1,7 @@
-{# templates/components/cards/icons-banner.html.twig v3.9 #}
-{% set iconsCount = iconsInfo.count  %}
+{# templates/components/cards/icons-banner.html.twig v4.8 #}
+{%- set iconsCount = iconsInfo.count %}
 
-<div class="card card-md{% if class  %} {{ class  }}{% endif  %}">
+<div class="card card-md{% if class %} {{ class }}{% endif %}">
 	<div class="card-stamp card-stamp-lg">
 		<div class="card-stamp-icon bg-primary">
 			<twig:ui:icon icon="ghost"/>
@@ -13,11 +13,11 @@
 				<h3 class="h1">Tabler Icons</h3>
 				<div class="markdown">
 					All icons come from the Tabler Icons set and are MIT-licensed. Visit
-					<a href="{{ site.icons.link  }}" target="_blank" rel="noopener">Tabler Icons Website</a>,
-					download any of the {{ iconsCount  }} icons in SVG, PNG or&nbsp;React and use them in your favourite design tools.
+					<a href="{{ site.icons.link }}" target="_blank" rel="noopener">Tabler Icons Website</a>,
+					download any of the {{ iconsCount }} icons in SVG, PNG or&nbsp;React and use them in your favourite design tools.
 				</div>
 				<div class="mt-3">
-					<a href="{{ site.icons.link  }}" class="btn btn-primary" target="_blank" rel="noopener">
+					<a href="{{ site.icons.link }}" class="btn btn-primary" target="_blank" rel="noopener">
 						<twig:ui:icon icon="download"/>
 						Download icons
 					</a>

@@ -1,4 +1,4 @@
-{# templates/components/cards/order-statistics.html.twig v3.9 #}
+{# templates/components/cards/order-statistics.html.twig v4.8 #}
 <div class="card">
 	<div class="card-body">
 
@@ -12,18 +12,18 @@
 		<twig:ui:progress values="40,15,25,15,5" class="mb-4"/>
 
 		<ul class="list-unstyled">
-			{% for item in orders  %}
+			{% for item in orders %}
 			<li class="row g-2 align-items-center mb-2">
-				<div class="col-auto"><span class="legend bg-{{ item.color  }}"></span></div>
+				<div class="col-auto"><span class="legend bg-{{ item.color }}"></span></div>
 				<div class="col">
-					{{ item.title  }}
-					<div class="fs-6 text-secondary">{{ item.subtitle  }}</div>
+					{{ item.title }}
+					<div class="fs-6 text-secondary">{{ item.subtitle }}</div>
 				</div>
 				<div class="col-auto small text-secondary"><strong class="text-body">{{ loop.index | random_number: 500, 2000
-					| intcomma  }}</strong> orders
+					| intcomma }}</strong> orders
 				</div>
 			</li>
-			{% endfor  %}
+			{% endfor %}
 		</ul>
 	</div>
 

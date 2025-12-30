@@ -1,43 +1,43 @@
-{# templates/components/parts/calendar.html.twig v3.9 #}
-{% set dayNames = "Sun,Mon,Tue,Wed,Thu,Fri,Sat" | split(',')  %}
-{% set startDay = startDay | default(-2)  %}
-{% set today = today | default(8)  %}
-{% set days = days | default(30)  %}
-{% set allDays = days | minus: startDay + 1 | divide: 7.0 | round(0, 'ceil') * 7  %}
-{% set endDay = allDays | plus: startDay - 1  %}
-{% set rangeStart = rangeStart | default(14)  %}
-{% set rangeEnd = rangeEnd | default(21)  %}
+{# templates/components/parts/calendar.html.twig v4.8 #}
+{%- set dayNames = "Sun,Mon,Tue,Wed,Thu,Fri,Sat" | split(',') %}
+{%- set startDay = startDay | default(-2) %}
+{%- set today = today | default(8) %}
+{%- set days = days | default(30) %}
+{%- set allDays = days | minus: startDay + 1 | divide: 7.0 | round(0, 'ceil') * 7 %}
+{%- set endDay = allDays | plus: startDay - 1 %}
+{%- set rangeStart = rangeStart | default(14) %}
+{%- set rangeEnd = rangeEnd | default(21) %}
 
-<div class="calendar{% if class  %} {{ class  }}{% endif  %}">
+<div class="calendar{% if class %} {{ class }}{% endif %}">
    <div class="calendar-nav">
       <button class="btn btn-action btn-link btn-lg">
          <twig:ui:icon icon="chevron-left"/>
       </button>
-      <div class="calendar-title">{{ title | default('March 2017')  }}</div>
+      <div class="calendar-title">{{ title | default('March 2017') }}</div>
       <button class="btn btn-action btn-link btn-lg">
          <twig:ui:icon icon="chevron-right"/>
       </button>
    </div>
    <div class="calendar-container">
       <div class="calendar-header">
-         {% for col in (1..7)  %}
-         <div class="calendar-date">{{ dayNames[loop.index0]  }}</div>
-         {% endfor  %}
+         {% for col in (1..7) %}
+         <div class="calendar-date">{{ dayNames[loop.index0] }}</div>
+         {% endfor %}
       </div>
       <div class="calendar-body">
-         {% for day in (startDay..endDay)  %}
-            {% if day <= 0  %}
-            {% set d = 31 | plus: day  %}
-            {% elseif day > days  %}
-            {% set d = day | minus: days  %}
-            {% else  %}
-            {% set d = day  %}
-            {% endif  %}
+         {% for day in (startDay..endDay) %}
+            {% if day <= 0 %}
+            {%- set d = 31 | plus: day %}
+            {%- elseif day > days %}
+            {%- set d = day | minus: days %}
+            {% else %}
+            {%- set d = day %}
+            {% endif %}
 
-            <div class="calendar-date{% if day <= 0  %} prev-month{% elseif day > days  %} next-month{% endif  %}{% if rangeStart and day >= rangeStart and rangeEnd and day <= rangeEnd  %} calendar-range{% if day == rangeStart  %} range-start{% endif  %}{% if day == rangeEnd  %} range-end{% endif  %}{% endif  %}">
-               <a href="#" class="date-item{% if day == today  %} date-today{% endif  %}">{{ d  }}</a>
+            <div class="calendar-date{% if day <= 0 %} prev-month{%- elseif day > days %} next-month{% endif %}{% if rangeStart and day >= rangeStart and rangeEnd and day <= rangeEnd %} calendar-range{% if day == rangeStart %} range-start{% endif %}{% if day == rangeEnd %} range-end{% endif %}{% endif %}">
+               <a href="#" class="date-item{% if day == today %} date-today{% endif %}">{{ d }}</a>
             </div>
-         {% endfor  %}
+         {% endfor %}
       </div>
    </div>
 </div>

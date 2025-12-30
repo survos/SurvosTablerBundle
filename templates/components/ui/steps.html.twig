@@ -1,14 +1,14 @@
-{# templates/components/ui/steps.html.twig v3.9 #}
-{% set count = count | default(4)  %}
-{% set active = active | default(3)  %}
-<div class="steps{% if numbers  %} steps-counter{% endif  %}{% if color  %} steps-{{ color  }}{% endif  %}{% if size  %} steps-{{ size  }}{% endif  %}">
-   {% for i in (1..count)  %}
-   {% set elem = 'a'  %}
-   {% if i > active  %}{% set elem = 'span'  %}{% endif  %}
-   <{{ elem  }} href="#" class="step-item{% if i == active  %} active{% endif  %}"{% if showTooltip  %} data-bs-toggle="tooltip" title="Step {{ i  }} description"{% endif  %}>{% if showTitle  %}
-      Step {{ i  }}
-   {% endif  %}</{{ elem  }}>
-   {% endfor  %}
+{# templates/components/ui/steps.html.twig v4.8 #}
+{%- set count = count | default(4) %}
+{%- set active = active | default(3) %}
+<div class="steps{% if numbers %} steps-counter{% endif %}{% if color %} steps-{{ color }}{% endif %}{% if size %} steps-{{ size }}{% endif %}">
+   {% for i in (1..count) %}
+   {%- set elem = 'a' %}
+   {% if i > active %}{%- set elem = 'span' %}{% endif %}
+   <{{ elem }} href="#" class="step-item{% if i == active %} active{% endif %}"{% if showTooltip %} data-bs-toggle="tooltip" title="Step {{ i }} description"{% endif %}>{% if showTitle %}
+      Step {{ i }}
+   {% endif %}</{{ elem }}>
+   {% endfor %}
 </div>
 
 {#

@@ -1,18 +1,18 @@
-{# templates/components/ui/trending.html.twig v3.9 #}
-{% set value = value | default(25)  %}
-{% if value > 0  %}
-   {% set trendingColor = 'green'  %}
-   {% set trendingIcon = 'arrowUp'  %}
-{% elseif value == 0  %}
-   {% set trendingColor = 'muted'  %}
-   {% set trendingIcon = 'minus'  %}
-{% else  %}
-   {% set trendingColor = 'red'  %}
-   {% set trendingIcon = 'arrowDown'  %}
-{% endif  %}
+{# templates/components/ui/trending.html.twig v4.8 #}
+{%- set value = value | default(25) %}
+{% if value > 0 %}
+   {%- set trendingColor = 'green' %}
+   {%- set trendingIcon = 'arrowUp' %}
+{%- elseif value == 0 %}
+   {%- set trendingColor = 'muted' %}
+   {%- set trendingIcon = 'minus' %}
+{% else %}
+   {%- set trendingColor = 'red' %}
+   {%- set trendingIcon = 'arrowDown' %}
+{% endif %}
 
-<span class="text-{{ trendingColor  }} d-inline-flex align-items-center lh-1{% if class  %} {{ class  }}{% endif  %}">
-   {{ value  }}% <twig:ui:icon :icon="trending-icon" class="ms-0" size="sm"/>
+<span class="text-{{ trendingColor }} d-inline-flex align-items-center lh-1{% if class %} {{ class }}{% endif %}">
+   {{ value }}% <twig:ui:icon :icon="trending-icon" class="ms-0" size="sm"/>
 </span>
 
 {#

@@ -1,37 +1,37 @@
-{# templates/components/layout/navbar.html.twig v3.9 #}
-{% set breakpoint = breakpoint | default('md')  %}
-{% set condensed = condensed | default(false)  %}
-{% set showTheme = showTheme | default(true)  %}
-{% set showNotifications = showNotifications | default(true)  %}
-{% set showApps = showApps | default(true)  %}
-{% set showLanguage = showLanguage | default(true)  %}
-{% set showUser = showUser | default(true)  %}
+{# templates/components/layout/navbar.html.twig v4.8 #}
+{%- set breakpoint = breakpoint | default('md') %}
+{%- set condensed = condensed | default(false) %}
+{%- set showTheme = showTheme | default(true) %}
+{%- set showNotifications = showNotifications | default(true) %}
+{%- set showApps = showApps | default(true) %}
+{%- set showLanguage = showLanguage | default(true) %}
+{%- set showUser = showUser | default(true) %}
 
-{% if sticky  %}
+{% if sticky %}
 <div class="sticky-top">
-{% endif  %}
+{% endif %}
 
-	<header class="navbar navbar-expand-{{ breakpoint  }}{% if transparent  %} navbar-transparent{% else  %}{% if background  %} bg-{{ background  }}{% endif  %}{% endif  %}{% if sticky  %} sticky-top{% endif  %}{% if overlap  %} navbar-overlap{% endif  %}{% if class  %} {{ class  }}{% endif  %} d-print-none"{% if backgroundColor  %} style="background: {{ backgroundColor  }}"{% endif  %} {% if dark  %} data-bs-theme="dark"{% endif  %}>
+	<header class="navbar navbar-expand-{{ breakpoint }}{% if transparent %} navbar-transparent{% else %}{% if background %} bg-{{ background }}{% endif %}{% endif %}{% if sticky %} sticky-top{% endif %}{% if overlap %} navbar-overlap{% endif %}{% if class %} {{ class }}{% endif %} d-print-none"{% if backgroundColor %} style="background: {{ backgroundColor }}"{% endif %} {% if dark %} data-bs-theme="dark"{% endif %}>
 		<div class="container-xl">
 			<twig:layout:navbar-toggler target="navbar-menu"/>
 
-			{% if not (hideBrand)  %}
+			{%- if not (hideBrand) -%}
 				<twig:layout:navbar-logo :smallLogo="small-logo" :hideLogo="hide-logo" class="d-none-navbar-horizontal pe-0 pe-md-3" :breakpoint="breakpoint" :showTitle="show-title" :header="true"/>
-			{% endif  %}
+			{%- endif -%}
 
 			<twig:layout:navbar-side class="order-md-last" :hideUsername="hide-username" :condensed="condensed" :personId="person-id" :breakpoint="breakpoint" :dark="dark" :showThemeToggle="show-theme" :showNotifications="show-notifications" :showApps="show-apps" :showLanguageSelector="show-language" :showUser="show-user"/>
 
-			{% if condensed  %}
+			{% if condensed %}
 			<div class="collapse navbar-collapse" id="navbar-menu">
-				{% if hideSearch  %}
+				{% if hideSearch %}
 					<!-- BEGIN NAVBAR MENU -->
 					<nav aria-label="Primary">
 						<twig:layout:navbar-menu :sample="sample" :hideIcons="hide-icons"/>
 					</nav>
 					<!-- END NAVBAR MENU -->
-				{% elseif hideMenu  %}
+				{%- elseif hideMenu %}
 					<twig:layout:navbar-search :rounded="transparent"/>
-				{% else  %}
+				{% else %}
 					<div class="d-flex flex-column flex-md-row flex-fill align-items-stretch align-items-md-center">
 						<!-- BEGIN NAVBAR MENU -->
 						<nav aria-label="Primary">
@@ -39,27 +39,27 @@
 						</nav>
 						<!-- END NAVBAR MENU -->
 
-						{% if not (condensed)  %}
-							{% set searchClass = "msMdAuto psMd4 py2 pyMd0 meMd4 orderFirst orderMdLast flexGrow1"  %}
-							{% if not (fluidSearch)  %}
-								{% set searchClass = searchClass ~ ' flexMdGrow0'  %}
-							{% endif  %}
+						{%- if not (condensed) -%}
+							{%- set searchClass = "msMdAuto psMd4 py2 pyMd0 meMd4 orderFirst orderMdLast flexGrow1" %}
+							{%- if not (fluidSearch) -%}
+								{%- set searchClass = searchClass ~ " flexMdGrow0" %}
+							{%- endif -%}
 
 							<!-- BEGIN NAVBAR SEARCH -->
 							<twig:layout:navbar-search :breakpoint="breakpoint" :rounded="transparent" :class="search-class"/>
 							<!-- END NAVBAR SEARCH -->
-						{% endif  %}
+						{%- endif -%}
 					</div>
-				{% endif  %}
+				{% endif %}
 			</div>
-			{% endif  %}
+			{% endif %}
 		</div>
 	</header>
 
-	{% if not (condensed)  %}
-	<div class="navbar-expand-{{ breakpoint  }}">
+	{%- if not (condensed) -%}
+	<div class="navbar-expand-{{ breakpoint }}">
 		<div class="collapse navbar-collapse" id="navbar-menu">
-			<div class="navbar"{% if darkSecondary  %} data-bs-theme="dark"{% endif  %}>
+			<div class="navbar"{% if darkSecondary %} data-bs-theme="dark"{% endif %}>
 				<div class="container-xl">
 					<div class="row flex-column flex-md-row flex-fill align-items-center">
 						<div class="col">
@@ -71,11 +71,11 @@
 						</div>
 
 
-						{% if not (hideSearch)  %}
+						{%- if not (hideSearch) -%}
 						<div class="col-2 d-none d-xxl-block">
 							<twig:layout:navbar-search :breakpoint="breakpoint" class="my-2 my-md-0 flex-grow-1 flex-md-grow-0 order-first order-md-last"/>
 						</div>
-						{% endif  %}
+						{%- endif -%}
 
 						<div class="col col-md-auto">
 							<!-- BEGIN NAVBAR NAV -->
@@ -99,11 +99,11 @@
 			</div>
 		</div>
 	</div>
-	{% endif  %}
+	{%- endif -%}
 
-{% if sticky  %}
+{% if sticky %}
 </div>
-{% endif  %}
+{% endif %}
 
 {#
 === Original Liquid (navbar.html) ===

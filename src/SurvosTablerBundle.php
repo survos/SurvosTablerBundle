@@ -3,6 +3,7 @@
 namespace Survos\TablerBundle;
 
 use App\Model\MenuItem;
+use Survos\TablerBundle\Components\CardComponent;
 use Survos\TablerBundle\Components\LocaleSwitcherComponent;
 use Survos\TablerBundle\Components\MenuComponent;
 use Survos\TablerBundle\Components\PageComponent;
@@ -40,7 +41,6 @@ use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
-use Symfony\UX\Icons\Twig\UXIconRuntime;
 
 class SurvosTablerBundle extends AbstractBundle implements CompilerPassInterface, HasAssetMapperInterface
 {
@@ -130,6 +130,12 @@ class SurvosTablerBundle extends AbstractBundle implements CompilerPassInterface
 
         // Load generated component services
         $container->import('../config/component-services.php');
+
+        foreach([CardComponent::class] as $componentClass) {
+            $builder->register($componentClass)
+                ->setAutowired(true)
+                ->setAutoconfigured(true);
+        }
 
 
         // find all the routes and create sensible translations from the route name.  We _could_ provide a hint in options

@@ -1,37 +1,37 @@
-{# templates/components/layout/navbar-side.html.twig v3.9 #}
-{% set personId = personId | default(1)  %}
-{% set person = people[personId]  %}
-<div class="navbar-nav flex-row{% if class  %} {{ class  }}{% endif  %}">
+{# templates/components/layout/navbar-side.html.twig v4.8 #}
+{%- set personId = personId | default(1) %}
+{%- set person = people[personId] %}
+<div class="navbar-nav flex-row{% if class %} {{ class }}{% endif %}">
 
-	{% if not (condensed)  %}
-	<div class="nav-item d-none d-{{ breakpoint  }}-flex me-3">
+	{%- if not (condensed) -%}
+	<div class="nav-item d-none d-{{ breakpoint }}-flex me-3">
 		<div class="btn-list">
 			{% include "ui/button.html" icon="heart" iconColor="pink" outline=true text="Sponsor"
-			href=site.githubSponsorsUrl external=true  %}
+			href=site.githubSponsorsUrl external=true %}
 		</div>
 	</div>
-	{% endif  %}
+	{%- endif -%}
 
-	{% if showThemeToggle or showNotifications or showApps or showLanguageSelector  %}
-	<div class="d-none d-{{ breakpoint  }}-flex me-3">
-		{% if showThemeToggle  %}
+	{% if showThemeToggle or showNotifications or showApps or showLanguageSelector %}
+	<div class="d-none d-{{ breakpoint }}-flex me-3">
+		{% if showThemeToggle %}
 			<twig:layout:navbar-side-theme/>
-		{% endif  %}
-		{% if showNotifications  %}
+		{% endif %}
+		{% if showNotifications %}
 			<twig:layout:navbar-side-notifications/>
-		{% endif  %}
-		{% if showApps  %}
+		{% endif %}
+		{% if showApps %}
 			<twig:layout:navbar-side-apps/>
-		{% endif  %}
-		{% if showLanguageSelector  %}
+		{% endif %}
+		{% if showLanguageSelector %}
 			<twig:layout:navbar-side-language/>
-		{% endif  %}
+		{% endif %}
 	</div>
-	{% endif  %}
+	{% endif %}
 
-	{% if showUser  %}
+	{% if showUser %}
 		<twig:layout:navbar-side-user :personId="person-id" :hideUsername="hide-username" :dark="dark"/>
-	{% endif  %}
+	{% endif %}
 </div>
 
 {#

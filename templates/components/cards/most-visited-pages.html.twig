@@ -1,4 +1,4 @@
-{# templates/components/cards/most-visited-pages.html.twig v3.9 #}
+{# templates/components/cards/most-visited-pages.html.twig v4.8 #}
 <div class="card">
 	<div class="card-header">
 		<h3 class="card-title">Most Visited Pages</h3>
@@ -15,22 +15,22 @@
 			</tr>
 			</thead>
 
-			{% for url in urls|slice(0, 6)  %}
-			{% set data = url.data | join(',')  %}
-			{% set id = "bounceRate-" | append: loop.index  %}
+			{% for url in urls|slice(0, 6) %}
+			{%- set data = url.data | join(',') %}
+			{%- set id = "bounceRate-" ~ loop.index %}
 			<tr>
 				<td>
-					{{ url.uri  }}
+					{{ url.uri }}
 					<a href="#" class="ms-1" aria-label="Open website"><twig:ui:icon icon="link"/></a>
 				</td>
-				<td class="text-secondary">{{ url.visitors | format_number  }}</td>
-				<td class="text-secondary">{{ url.unique | format_number  }}</td>
-				<td class="text-secondary">{{ url.bounce  }}</td>
+				<td class="text-secondary">{{ url.visitors | format_number }}</td>
+				<td class="text-secondary">{{ url.unique | format_number }}</td>
+				<td class="text-secondary">{{ url.bounce }}</td>
 				<td class="text-end w-1">
 					<twig:ui:chart-sparkline type="line" :data="data" :id="id" :small="true" color="primary"/>
 				</td>
 			</tr>
-			{% endfor  %}
+			{% endfor %}
 
 		</table>
 	</div>

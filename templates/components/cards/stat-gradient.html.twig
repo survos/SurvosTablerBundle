@@ -1,16 +1,16 @@
-{# templates/components/cards/stat-gradient.html.twig v3.9 #}
-{% set cardColor = color | default('primary')  %}
-{% set cardIcon = icon | default('trendingUp')  %}
-{% set cardTitle = title | default('Total')  %}
-{% set cardValue = value | default('0')  %}
-{% set cardProgress = progress | default(0)  %}
+{# templates/components/cards/stat-gradient.html.twig v4.8 #}
+{%- set cardColor = color | default('primary') %}
+{%- set cardIcon = icon | default('trendingUp') %}
+{%- set cardTitle = title | default('Total') %}
+{%- set cardValue = value | default('0') %}
+{%- set cardProgress = progress | default(0) %}
 
-<div class="card card-gradient card-gradient-{{ cardColor  }} card-gradient-start">
+<div class="card card-gradient card-gradient-{{ cardColor }} card-gradient-start">
 	<div class="card-body">
 		<div class="row g-3">
 			<div class="col">
-				<h4 class="subheader mb-1">{{ cardTitle  }}</h4>
-				<div class="h3 m-0">{{ cardValue  }}</div>
+				<h4 class="subheader mb-1">{{ cardTitle }}</h4>
+				<div class="h3 m-0">{{ cardValue }}</div>
 			</div>
 			<div class="col-auto">
 				<twig:ui:avatar :icon="card-icon" :color="card-color"/>

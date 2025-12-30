@@ -1,23 +1,23 @@
-{# templates/components/ui/empty.html.twig v3.9 #}
-{% set icon = icon | default('moodSad')  %}
-<div class="empty{% if bordered  %} empty-bordered{% endif  %}{% if class  %} {{ class  }}{% endif  %}">
+{# templates/components/ui/empty.html.twig v4.8 #}
+{%- set icon = icon | default('moodSad') %}
+<div class="empty{% if bordered %} empty-bordered{% endif %}{% if class %} {{ class }}{% endif %}">
 
-	{% if illustration  %}
-		{% set illustration = illustration | default('boyGirl.svg')  %}
+	{% if illustration %}
+		{%- set illustration = illustration | default('boyGirl.svg') %}
 		<div class="empty-img"><twig:ui:illustration :image="illustration" height="256"/></div>
-	{% elseif iconText  %}
-		<div class="empty-header">{{ iconText  }}</div>
-	{% else  %}
+	{%- elseif iconText %}
+		<div class="empty-header">{{ iconText }}</div>
+	{% else %}
 		<div class="empty-icon"><twig:ui:icon :icon="icon"/></div>
-	{% endif  %}
+	{% endif %}
 
-	<p class="empty-title">{{ title | default('No results found')  }}</p>
+	<p class="empty-title">{{ title | default('No results found') }}</p>
 	<p class="empty-subtitle text-secondary">
-		{{ subtitle | default('Try adjusting your search or filter to find what you're looking for.')  }}
+		{{ subtitle | default('Try adjusting your search or filter to find what you're looking for.') }}
 	</p>
 	<div class="empty-action">
-		{% set buttonText = buttonText | default('Search again')  %}
-		{% set buttonIcon = buttonIcon | default('search')  %}
+		{%- set buttonText = buttonText | default('Search again') %}
+		{%- set buttonIcon = buttonIcon | default('search') %}
 		<twig:ui:button :text="button-text" color="primary" :icon="button-icon" href="."/>
 	</div>
 </div>

@@ -1,13 +1,13 @@
-{# templates/components/ui/typed.html.twig v3.9 #}
-{% set strings = strings | split('|')  %}
-{% set id = id | default('typed')  %}
-<span class="text-primary" id="{{ id  }}">{{ strings | first  }}</span>
+{# templates/components/ui/typed.html.twig v4.8 #}
+{%- set strings = strings | split('|') %}
+{%- set id = id | default('typed') %}
+<span class="text-primary" id="{{ id }}">{{ strings | first }}</span>
 
-{% capture_script  %}
+{% capture_script %}
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-	var typed = new Typed('#{{ id  }}', {
-		strings: [{% for string in strings  %}'{{ string  }}'{% if not (loop.last)  %}, {% endif  %}{% endfor  %}],
+	var typed = new Typed('#{{ id }}', {
+		strings: [{% for string in strings %}'{{ string }}'{%- if not (loop.last) -%}, {%- endif -%}{% endfor %}],
 		typeSpeed: 100,
 		backSpeed: 50,
 		backDelay: 1000,
@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	});
 });
 </script>
-{% endcapture_script  %}
+{% endcapture_script %}
 
 {#
 === Original Liquid (typed.html) ===

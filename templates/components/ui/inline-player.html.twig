@@ -1,21 +1,21 @@
-{# templates/components/ui/inline-player.html.twig v3.9 #}
-{% set id = id  %}
+{# templates/components/ui/inline-player.html.twig v4.8 #}
+{%- set id = id %}
 
-{% if id and embedId  %}
-<div id="player-{{ id  }}" data-plyr-provider="{{ type | default('youtube')  }}" data-plyr-embed-id="{{ embedId  }}"></div>
+{% if id and embedId %}
+<div id="player-{{ id }}" data-plyr-provider="{{ type | default('youtube') }}" data-plyr-embed-id="{{ embedId }}"></div>
 
-{% capture_script  %}
+{% capture_script %}
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    {% if environment == 'development'  %}
+    {% if environment == 'development' %}
     window.tabler_player = window.tabler_player || {};
-    {% endif  %}
-    window.Plyr && ({% if environment == 'development'  %}window.tabler_player["player-{{ id  }}"] = {% endif  %}new Plyr('#player-{{ id  }}'));
+    {% endif %}
+    window.Plyr && ({% if environment == 'development' %}window.tabler_player["player-{{ id }}"] = {% endif %}new Plyr('#player-{{ id }}'));
   });
 </script>
-{% endcapture_script  %}
+{% endcapture_script %}
 
-{% endif  %}
+{% endif %}
 
 {#
 === Original Liquid (inline-player.html) ===

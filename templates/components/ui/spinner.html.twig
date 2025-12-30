@@ -1,6 +1,6 @@
-{# templates/components/ui/spinner.html.twig v3.9 #}
-{% set elem = element | default('div')  %}
-<{{ elem  }} class="spinner-{{ type | default('border')  }}{% if color  %} text-{{ color  }}{% endif  %}{% if size  %} spinner-{{ type | default('border')  }}-{{ size  }}{% endif  %}{% if class  %} {{ class  }}{% endif  %}" role="status"></{{ elem  }}>
+{# templates/components/ui/spinner.html.twig v4.8 #}
+{%- set elem = element | default('div') %}
+<{{ elem }} class="spinner-{{ type | default('border') }}{% if color %} text-{{ color }}{% endif %}{% if size %} spinner-{{ type | default('border') }}-{{ size }}{% endif %}{% if class %} {{ class }}{% endif %}" role="status"></{{ elem }}>
 
 {#
 === Original Liquid (spinner.html) ===

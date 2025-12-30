@@ -1,25 +1,25 @@
-{# templates/components/cards/tracks-list.html.twig v3.9 #}
+{# templates/components/cards/tracks-list.html.twig v4.8 #}
 <div class="card">
 	<div class="list-group card-list-group">
-		{% for track in tracks|slice(0, 12)  %}
+		{% for track in tracks|slice(0, 12) %}
 		<div class="list-group-item">
 			<div class="row g-2 align-items-center">
 				<div class="col-auto fs-3">
-					{{ loop.index  }}
+					{{ loop.index }}
 				</div>
 				<div class="col-auto">
-					<img src="{{ page | relative  }}/static/tracks/{{ track.album.images[1].path  }}" class="rounded" alt="{{ track.name | escape  }}" width="40" height="40">
+					<img src="{{ page | relative }}/static/tracks/{{ track.album.images[1].path }}" class="rounded" alt="{{ track.name | escape }}" width="40" height="40">
 				</div>
 				<div class="col">
-					{{ track.name  }}
+					{{ track.name }}
 					<div class="text-secondary">
-						{% for artist in track.artists  %}
-						{{ artist.name  }}{% if not (loop.last)  %},{% endif  %}
-						{% endfor  %}
+						{% for artist in track.artists %}
+						{{ artist.name }}{%- if not (loop.last) -%},{%- endif -%}
+						{% endfor %}
 					</div>
 				</div>
 				<div class="col-auto text-secondary">
-					{{ track.duration_ms | miliseconds_to_minutes  }}
+					{{ track.duration_ms | miliseconds_to_minutes }}
 				</div>
 				<div class="col-auto">
 					<a href="#" class="link-secondary">
@@ -34,7 +34,7 @@
 				</div>
 			</div>
 		</div>
-		{% endfor  %}
+		{% endfor %}
 	</div>
 </div>
 

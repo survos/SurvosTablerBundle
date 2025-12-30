@@ -1,11 +1,11 @@
-{# templates/components/layout/buttons.html.twig v3.9 #}
+{# templates/components/layout/buttons.html.twig v4.8 #}
 <div class="btn-list">
 	<span class="d-none d-sm-inline">
-		{% if layoutNavbarOverlap and layoutNavbarDark  %}
+		{% if layoutNavbarOverlap and layoutNavbarDark %}
 		<twig:ui:button text="New view" color="dark"/>
-		{% else  %}
+		{% else %}
 		<twig:ui:button text="New view"/>
-		{% endif  %}
+		{% endif %}
 	</span>
 	<twig:ui:button icon="plus" text="Create new report" color="primary" class="d-none d-sm-inline-block" modalId="report"/>
 	<twig:ui:button icon="plus" :iconOnly="true" color="primary" class="d-sm-none" text="Create new report" modalId="report"/>

@@ -1,26 +1,26 @@
-{# templates/components/cards/small-stats-2.html.twig v3.9 #}
-{% set icon = icon | default('user')  %}
-{% if growth > 0  %}
-	{% set color = "green"  %}
-	{% set arrow = "arrowUp"  %}
-{% elseif growth < 0  %}
-	{% set color = "red"  %}
-	{% set arrow = "arrowDown"  %}
-{% else  %}
-	{% set color = "grey"  %}
-	{% set arrow = "clock"  %}
-{% endif  %}
+{# templates/components/cards/small-stats-2.html.twig v4.8 #}
+{%- set icon = icon | default('user') %}
+{% if growth > 0 %}
+	{%- set color = "green" %}
+	{%- set arrow = "arrowUp" %}
+{%- elseif growth < 0 %}
+	{%- set color = "red" %}
+	{%- set arrow = "arrowDown" %}
+{% else %}
+	{%- set color = "grey" %}
+	{%- set arrow = "clock" %}
+{% endif %}
 
 <div class="card" data-color={{ color }}>
 	<div class="card-body">
-		<div class="float-end avatar{% if color  %} bg-{{ color  }}{% if light  %}-lt{% else  %} text-white{% endif  %}{% endif  %}">
+		<div class="float-end avatar{% if color %} bg-{{ color }}{% if light %}-lt{% else %} text-white{% endif %}{% endif %}">
 			<twig:ui:icon :icon="icon"/>
 		</div>
-		<div class="text-secondary fw-normal mt-0">{{ title | default('Customers')  }}</div>
-		<h3 class="h2 mt-2 mb-3">{{ count | default('1,850')  }}</h3>
+		<div class="text-secondary fw-normal mt-0">{{ title | default('Customers') }}</div>
+		<h3 class="h2 mt-2 mb-3">{{ count | default('1,850') }}</h3>
 		<p class="mb-0 text-secondary">
 			<twig:ui:trending :value="growth"/>
-			<span class="text-nowrap">{{ description | default('Since last month')  }}</span>
+			<span class="text-nowrap">{{ description | default('Since last month') }}</span>
 		</p>
 	</div>
 </div>

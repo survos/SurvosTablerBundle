@@ -1,20 +1,20 @@
-{# templates/components/ui/switch-icon.html.twig v3.9 #}
-{% set icon = icon | default('heart')  %}
-{% set iconB = iconB | default(icon) | default('heart')  %}
-{% set iconAColor = iconAColor | default('muted')  %}
-{% set iconBColor = iconBColor | default('red')  %}
+{# templates/components/ui/switch-icon.html.twig v4.8 #}
+{%- set icon = icon | default('heart') %}
+{%- set iconB = iconB | default(icon) | default('heart') %}
+{%- set iconAColor = iconAColor | default('muted') %}
+{%- set iconBColor = iconBColor | default('red') %}
 
-{% if icon == 'star' or icon == 'heart'  %}
-	{% set iconBClass = 'iconFilled'  %}
-{% else  %}
-	{% set iconBClass = iconBClass  %}
-{% endif  %}
+{% if icon == 'star' or icon == 'heart' %}
+	{%- set iconBClass = 'iconFilled' %}
+{% else %}
+	{%- set iconBClass = iconBClass %}
+{% endif %}
 
-<button class="switch-icon{% if variant  %} switch-icon-{{ variant  }}{% endif  %}{% if active  %} active{% endif  %}" data-bs-toggle="switch-icon">
-	<span class="switch-icon-a text-{{ iconAColor  }}">
+<button class="switch-icon{% if variant %} switch-icon-{{ variant }}{% endif %}{% if active %} active{% endif %}" data-bs-toggle="switch-icon">
+	<span class="switch-icon-a text-{{ iconAColor }}">
 		<twig:ui:icon :icon="icon"/>
 	</span>
-	<span class="switch-icon-b text-{{ iconBColor  }}">
+	<span class="switch-icon-b text-{{ iconBColor }}">
 		<twig:ui:icon :icon="icon-b" :class="icon-b-class"/>
 	</span>
 </button>

@@ -1,10 +1,10 @@
-{# templates/components/ui/progressbg.html.twig v3.9 #}
-{% set percentage = value | replace({'%': ''}) | default(0) %}
-{% set color = color | default('primaryLt')  %}
-<div class="progressbg{% if class  %} {{ class  }}{% endif  %}">
+{# templates/components/ui/progressbg.html.twig v4.8 #}
+{%- set percentage = value | replace({'%': ''}) | default(0) %}
+{%- set color = color | default('primaryLt') %}
+<div class="progressbg{% if class %} {{ class }}{% endif %}">
 	<twig:ui:progress :value="percentage" class="progressbg-progress" :color="color"/>
-	{% if text  %}<div class="progressbg-text">{{ text  }}</div>{% endif  %}
-	{% if showValue  %}<div class="progressbg-value">{{ percentage  }}%</div>{% endif  %}
+	{% if text %}<div class="progressbg-text">{{ text }}</div>{% endif %}
+	{% if showValue %}<div class="progressbg-value">{{ percentage }}%</div>{% endif %}
 </div>
 
 {#

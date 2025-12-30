@@ -1,32 +1,32 @@
-{# templates/components/cards/pricing-card.html.twig v3.9 #}
-{% set features = "Sharing Tools|Design Tools|Private Messages|Twitter API" | split('|')  %}
-{% set availableFeatures = features | default('1000') | split('')  %}
+{# templates/components/cards/pricing-card.html.twig v4.8 #}
+{%- set features = "Sharing Tools|Design Tools|Private Messages|Twitter API" | split('|') %}
+{%- set availableFeatures = features | default('1000') | split('') %}
 <div class="card card-md">
-	{% if featuredColor  %}
+	{% if featuredColor %}
 		<twig:ui:ribbon :color="featured-color" :bookmark="true" :top="true" :filled="true"/>
-	{% endif  %}
+	{% endif %}
 
 	<div class="card-body text-center">
-		<div class="text-uppercase text-secondary font-weight-medium">{{ category | default('Enterprise')  }}</div>
+		<div class="text-uppercase text-secondary font-weight-medium">{{ category | default('Enterprise') }}</div>
 
-		<div class="display-5 fw-bold my-3">${{ price | default('79')  }}</div>
+		<div class="display-5 fw-bold my-3">${{ price | default('79') }}</div>
 
 		<ul class="list-unstyled lh-lg">
-			<li><strong>{{ users | default(10)  }}</strong> Users</li>
-			{% for feature in features  %}
+			<li><strong>{{ users | default(10) }}</strong> Users</li>
+			{% for feature in features %}
 			<li>
-				{% if availableFeatures[loop.index0] == '1'  %}
+				{% if availableFeatures[loop.index0] == '1' %}
 				<twig:ui:icon icon="check" class="me-1 text-success"/>
-				{% else  %}
+				{% else %}
 				<twig:ui:icon icon="x" class="me-1 text-danger"/>
-				{% endif  %}
-				{{ feature  }}
+				{% endif %}
+				{{ feature }}
 			</li>
-			{% endfor  %}
+			{% endfor %}
 		</ul>
 
 		<div class="text-center mt-4">
-			<a href="#" class="btn{% if featuredColor  %} btn-{{ featuredColor  }}{% endif  %} w-100">Choose plan</a>
+			<a href="#" class="btn{% if featuredColor %} btn-{{ featuredColor }}{% endif %} w-100">Choose plan</a>
 		</div>
 	</div>
 </div>

@@ -1,74 +1,74 @@
-{# templates/components/ui/select.html.twig v3.9 #}
-{% set id = id | default(key)  %}
-{% set value = value  %}
+{# templates/components/ui/select.html.twig v4.8 #}
+{%- set id = id | default(key) %}
+{%- set value = value %}
 
-{% if id  %}
-{% set key = key | default('people')  %}
-{% set data = selects[key]  %}
+{% if id %}
+{%- set key = key | default('people') %}
+{%- set data = selects[key] %}
 
-<select class="form-select{% if class  %} {{ class  }}{% endif  %}{% if state  %} is-{{ state  }}{% endif  %}"{% if placeholder  %} placeholder="{{ placeholder  }}"{% endif  %} id="select-{{ id  }}" value="{{ value  }}"{% if multiple or data.multiple  %} multiple{% endif  %}>
-	{% if values  %}
-		{% set values = values | split(',')  %}
+<select class="form-select{% if class %} {{ class }}{% endif %}{% if state %} is-{{ state }}{% endif %}"{% if placeholder %} placeholder="{{ placeholder }}"{% endif %} id="select-{{ id }}" value="{{ value }}"{% if multiple or data.multiple %} multiple{% endif %}>
+	{% if values %}
+		{%- set values = values | split(',') %}
 
-		{% for value in values  %}
-			<option value="{{ value  }}">{{ value  }}</option>
-		{% endfor  %}
-	{% else  %}
+		{% for value in values %}
+			<option value="{{ value }}">{{ value }}</option>
+		{% endfor %}
+	{% else %}
 
-		{% set options = data.options  %}
+		{%- set options = data.options %}
 
-		{% if data.data == 'people'  %}
-			{% for person in people|slice(0, 20)  %}
-				<option value="{{ person.id  }}"{% if indicator == 'avatar'  %} data-custom-properties="{% set indicator  %}<twig:ui:avatar size="xs" :person="person"/>{% - endcapture  %}{{ indicator | trim | escape  }}"{% endif  %}>{{ person.full_name  }}</option>
-			{% endfor  %}
+		{% if data.data == 'people' %}
+			{% for person in people|slice(0, 20) %}
+				<option value="{{ person.id }}"{% if indicator == 'avatar' %} data-custom-properties="{%- set indicator -%}<twig:ui:avatar size="xs" :person="person"/>{%- endset -%}{{ indicator | trim | escape }}"{% endif %}>{{ person.full_name }}</option>
+			{% endfor %}
 
-		{% elseif data.data == 'optgroup'  %}
-			{% for group in options  %}
-	 			<optgroup label="{{ group.title  }}">
-					{% for option in group.options  %}
-					<option value="{{ option  }}">{{ option  }}</option>
-					{% endfor  %}
+		{%- elseif data.data == 'optgroup' %}
+			{% for group in options %}
+	 			<optgroup label="{{ group.title }}">
+					{% for option in group.options %}
+					<option value="{{ option }}">{{ option }}</option>
+					{% endfor %}
 				</optgroup>
-			{% endfor  %}
+			{% endfor %}
 
-		{% else  %}
-			{% for option in options  %}
-				{% if option.first  %}
-					{% if indicator == 'flag'  %}
-						{% capture indicatorHtml  %}
-							{% set country = option[1].flag  %}
+		{% else %}
+			{% for option in options %}
+				{% if option.first %}
+					{% if indicator == 'flag' %}
+						{% capture indicatorHtml %}
+							{%- set country = option[1].flag %}
 							<twig:ui:flag size="xs" :flag="country"/>
-						{% - endcapture  %}
-					{% elseif indicator == 'label'  %}
-						{% capture indicatorHtml  %}
-							{% set label = option[1].label  %}
-							<span class="badge bg-primary-lt">{{ label  }}</span>
-						{% - endcapture  %}
-					{% endif  %}
-					<option value="{{ option[0]  }}"{% if indicator  %} data-custom-properties="{{ indicatorHtml | trim | escape  }}"{% endif  %}{% if option[1].selected  %} selected{% endif  %}>{{ option[1].name  }}</option>
-				{% else  %}
-					<option value="{{ option  }}">{{ option  }}</option>
-				{% endif  %}
-			{% endfor  %}
-		{% endif  %}
-	{% endif  %}
+						{%- endset -%}
+					{%- elseif indicator == 'label' %}
+						{% capture indicatorHtml %}
+							{%- set label = option[1].label %}
+							<span class="badge bg-primary-lt">{{ label }}</span>
+						{%- endset -%}
+					{% endif %}
+					<option value="{{ option[0] }}"{% if indicator %} data-custom-properties="{{ indicatorHtml | trim | escape }}"{% endif %}{% if option[1].selected %} selected{% endif %}>{{ option[1].name }}</option>
+				{% else %}
+					<option value="{{ option }}">{{ option }}</option>
+				{% endif %}
+			{% endfor %}
+		{% endif %}
+	{% endif %}
 </select>
 
-{% set script  %}
+{%- set script -%}
 <script>
 	document.addEventListener("DOMContentLoaded", function () {
-		{% if environment == 'development'  %}
+		{% if environment == 'development' %}
 		window.tabler_select = window.tabler_select || {};
-		{% endif  %}
+		{% endif %}
 
 		var el;
-		window.TomSelect && ({% if environment == 'development'  %}window.tabler_select["select-{{ id  }}"] = {% endif  %}new TomSelect(el = document.getElementById('select-{{ id  }}'), {
+		window.TomSelect && ({% if environment == 'development' %}window.tabler_select["select-{{ id }}"] = {% endif %}new TomSelect(el = document.getElementById('select-{{ id }}'), {
 			copyClassesToDropdown: false,
 			dropdownParent: 'body',
 
-			{% if not (showSearch)  %}
+			{%- if not (showSearch) -%}
 			controlInput: '<input>',
-			{% endif  %}
+			{%- endif -%}
 
 			render:{
 				item: function(data,escape) {
@@ -88,17 +88,17 @@
 
 	});
 </script>
-{% - endcapture  %}
+{%- endset -%}
 
-{% if showScripts  %}
-{{ script  }}
-{% else  %}
-{% capture_script  %}
-{{ script  }}
-{% endcapture_script  %}
-{% endif  %}
+{% if showScripts %}
+{{ script }}
+{% else %}
+{% capture_script %}
+{{ script }}
+{% endcapture_script %}
+{% endif %}
 
-{% endif  %}
+{% endif %}
 
 {#
 === Original Liquid (select.html) ===

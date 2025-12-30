@@ -1,6 +1,6 @@
-{# templates/components/ui/ribbon.html.twig v3.9 #}
-<div class="ribbon{% if top  %} ribbon-top{% endif  %}{% if left  %} ribbon-start{% endif  %}{% if bottom  %} ribbon-bottom{% endif  %}{% if bookmark  %} ribbon-bookmark{% endif  %}{% if color  %} bg-{{ color  }}{% endif  %}">
-	{% if text  %}{{ text  }}{% else  %}<twig:ui:icon icon="star" :useSvg="true" :filled="filled"/>{% endif  %}
+{# templates/components/ui/ribbon.html.twig v4.8 #}
+<div class="ribbon{% if top %} ribbon-top{% endif %}{% if left %} ribbon-start{% endif %}{% if bottom %} ribbon-bottom{% endif %}{% if bookmark %} ribbon-bookmark{% endif %}{% if color %} bg-{{ color }}{% endif %}">
+	{% if text %}{{ text }}{% else %}<twig:ui:icon icon="star" :useSvg="true" :filled="filled"/>{% endif %}
 </div>
 
 {#

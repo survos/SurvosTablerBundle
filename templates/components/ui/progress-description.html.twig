@@ -1,14 +1,14 @@
-{# templates/components/ui/progress-description.html.twig v3.9 #}
-{% set size = size | default('sm')  %}
-{% set color = color | default('blue')  %}
+{# templates/components/ui/progress-description.html.twig v4.8 #}
+{%- set size = size | default('sm') %}
+{%- set color = color | default('blue') %}
 
-<div{% if class  %} class="{{ class  }}"{% endif  %}>
+<div{% if class %} class="{{ class }}"{% endif %}>
    <div class="d-flex mb-1 align-items-center lh-1">
-      <div class="fs-5 font-weight-semibold m-0">{{ label | default('Label')  }}</div>
-      {% if description  %}
-         <div class="fs-6 text-secondary ms-2">{{ description  }}</div>
-      {% endif  %}
-      <span class="ms-auto fs-6 strong">{{ value  }}%</span>
+      <div class="fs-5 font-weight-semibold m-0">{{ label | default('Label') }}</div>
+      {% if description %}
+         <div class="fs-6 text-secondary ms-2">{{ description }}</div>
+      {% endif %}
+      <span class="ms-auto fs-6 strong">{{ value }}%</span>
    </div>
    <twig:ui:progress :size="size" :value="value" :color="color"/>
 </div>

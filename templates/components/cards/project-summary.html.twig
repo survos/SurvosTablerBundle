@@ -1,11 +1,11 @@
-{# templates/components/cards/project-summary.html.twig v3.9 #}
+{# templates/components/cards/project-summary.html.twig v4.8 #}
 <div class="card">
 	<div class="card-body p-4 py-5 text-center">
 		<twig:ui:avatar size="xl" placeholder="W" class="mb-4" :color="project-color" :rounded="true"/>
-		<h3 class="mb-0">{{ title | default('New website')  }}</h3>
-		<p class="text-secondary">Due to: {{ date | default('28 Aug 2019')  }}</p>
+		<h3 class="mb-0">{{ title | default('New website') }}</h3>
+		<p class="text-secondary">Due to: {{ date | default('28 Aug 2019') }}</p>
 		<p class="mb-3">
-			<span class="badge bg-{{ stageColor | default('green')  }}-lt">{{ stage | default('Waiting')  }}</span>
+			<span class="badge bg-{{ stageColor | default('green') }}-lt">{{ stage | default('Waiting') }}</span>
 		</p>
 		<div>
 			<twig:ui:avatar-list :stacked="true" :offset="avatar-offset" :limit="avatar-limit"/>

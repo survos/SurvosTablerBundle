@@ -1,15 +1,15 @@
-{# templates/components/ui/stars.html.twig v3.9 #}
-{% set count = count | default(5)  %}
-{% set rate = rate | default(4)  %}
-{% set icon = icon | default('star')  %}
-{% set class = color | default('yellow') | prepend: 'text-'  %}
-{% set filled = filled | default(false)  %}
+{# templates/components/ui/stars.html.twig v4.8 #}
+{%- set count = count | default(5) %}
+{%- set rate = rate | default(4) %}
+{%- set icon = icon | default('star') %}
+{%- set class = color | default('yellow') | prepend: 'text-' %}
+{%- set filled = filled | default(false) %}
 <div class="stars">
-	{% for i in (1..5)  %}
-	<span class="star {% if loop.index <= rate  %}{{ class  }}{% endif  %}">
+	{% for i in (1..5) %}
+	<span class="star {% if loop.index <= rate %}{{ class }}{% endif %}">
 		<twig:ui:icon :icon="icon"/>
 	</span>
-	{% endfor  %}
+	{% endfor %}
 </div>
 
 {#

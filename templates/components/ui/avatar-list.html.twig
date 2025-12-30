@@ -1,14 +1,14 @@
-{# templates/components/ui/avatar-list.html.twig v3.9 #}
-{% set limit = limit | default(5)  %}
-{% set offset = offset | default(0)  %}
-{% set size = size | default('sm')  %}
-<div class="avatar-list{% if stacked  %} avatar-list-stacked{% endif  %}{% if class  %} {{ class  }}{% endif  %}">
-    {% for person in people limit: limit offset: offset  %}
+{# templates/components/ui/avatar-list.html.twig v4.8 #}
+{%- set limit = limit | default(5) %}
+{%- set offset = offset | default(0) %}
+{%- set size = size | default('sm') %}
+<div class="avatar-list{% if stacked %} avatar-list-stacked{% endif %}{% if class %} {{ class }}{% endif %}">
+    {% for person in people|slice(offset, limit) %}
         <twig:ui:avatar :person="person" :size="size" :rounded="true"/>
-    {% endfor  %}
-    {% if text  %}
+    {% endfor %}
+    {% if text %}
       <twig:ui:avatar :placeholder="text" :size="size" :rounded="true"/>
-    {% endif  %}
+    {% endif %}
 </div>
 
 {#

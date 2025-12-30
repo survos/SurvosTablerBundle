@@ -1,59 +1,59 @@
-{# templates/components/ui/pagination.html.twig v3.9 #}
-{% set count = count | default(5) - %}
-{% set offset = offset | default(count) - %}
-{% set countOffset = count | minus: offset + 1 - %}
-{% set activeItem = activeItem | default(3) - %}
+{# templates/components/ui/pagination.html.twig v4.8 #}
+{%- set count = count | default(5) -%}
+{%- set offset = offset | default(count) -%}
+{%- set countOffset = count | minus: offset + 1 -%}
+{%- set activeItem = activeItem | default(3) -%}
 <!-- BEGIN PAGINATION -->
-<ul class="pagination{% if class  %} {{ class  }}{% endif  %}">
-	{% if firstLast - %}
+<ul class="pagination{% if class %} {{ class }}{% endif %}">
+	{% if firstLast -%}
 	<li class="page-item disabled">
-		<a class="page-link{% if text  %} page-text{% endif  %}" href="#" tabindex="-1" aria-disabled="true">
-			{% if not (text)  %}<twig:ui:icon icon="chevrons-left"/>{% else  %}Previous{% endunless - %}
+		<a class="page-link{% if text %} page-text{% endif %}" href="#" tabindex="-1" aria-disabled="true">
+			{%- if not (text) -%}<twig:ui:icon icon="chevrons-left"/>{% else %}Previous{%- endif -%}
 		</a>
 	</li>
-	{% endif - %}
-	<li class="page-item{% if prevDescription  %} page-prev{% endif  %} disabled">
-		<a class="page-link{% if text  %} page-text{% endif  %}" href="#" tabindex="-1" aria-disabled="true">
-			{% if prevDescription - %}
+	{% endif -%}
+	<li class="page-item{% if prevDescription %} page-prev{% endif %} disabled">
+		<a class="page-link{% if text %} page-text{% endif %}" href="#" tabindex="-1" aria-disabled="true">
+			{% if prevDescription -%}
 			<div class="page-item-subtitle">previous</div>
-			<div class="page-item-title">{{ prevDescription  }}</div>
-			{% else - %}
-			{% if not (text)  %}<twig:ui:icon icon="chevron-left"/>{% else  %}Previous{% endunless - %}
-			{% endif  %}
+			<div class="page-item-title">{{ prevDescription }}</div>
+			{% else -%}
+			{%- if not (text) -%}<twig:ui:icon icon="chevron-left"/>{% else %}Previous{%- endif -%}
+			{% endif %}
 		</a>
 	</li>
-	{% for i in (1..offset) - %}
-	<li class="page-item{% if i == activeItem  %} active{% endif  %}">
-		<a class="page-link" href="#">{{ i  }}</a>
+	{% for i in (1..offset) -%}
+	<li class="page-item{% if i == activeItem %} active{% endif %}">
+		<a class="page-link" href="#">{{ i }}</a>
 	</li>
-	{% endfor - %}
-	{% if offset < count - %}
+	{% endfor -%}
+	{% if offset < count -%}
 	<li class="page-item">
 		<span class="page-link disabled">&hellip;</span>
 	</li>
-	{% for i in (countOffset..count) - %}
-	<li class="page-item{% if i == activeItem  %} active{% endif  %}">
-		<a class="page-link" href="#">{{ i  }}</a>
+	{% for i in (countOffset..count) -%}
+	<li class="page-item{% if i == activeItem %} active{% endif %}">
+		<a class="page-link" href="#">{{ i }}</a>
 	</li>
-	{% endfor - %}
-	{% endif  %}
-   <li class="page-item{% if prevDescription  %} page-next{% endif  %}">
-      <a class="page-link{% if text  %} page-text{% endif  %}" href="#">
-         {% if nextDescription - %}
+	{% endfor -%}
+	{% endif %}
+   <li class="page-item{% if prevDescription %} page-next{% endif %}">
+      <a class="page-link{% if text %} page-text{% endif %}" href="#">
+         {% if nextDescription -%}
             <div class="page-item-subtitle">next</div>
-            <div class="page-item-title">{{ nextDescription  }}</div>
-         {% else - %}
-            {% if not (text)  %}<twig:ui:icon icon="chevron-right"/>{% else  %}Next{% endif  %}
-         {% endif - %}
+            <div class="page-item-title">{{ nextDescription }}</div>
+         {% else -%}
+            {%- if not (text) -%}<twig:ui:icon icon="chevron-right"/>{% else %}Next{%- endif -%}
+         {% endif -%}
       </a>
    </li>
-	{% if firstLast - %}
+	{% if firstLast -%}
 	<li class="page-item">
-		<a class="page-link{% if text  %} page-text{% endif  %}" href="#">
-			{% if not (text)  %}<twig:ui:icon icon="chevrons-right"/>{% else  %}Next{% endif  %}
+		<a class="page-link{% if text %} page-text{% endif %}" href="#">
+			{%- if not (text) -%}<twig:ui:icon icon="chevrons-right"/>{% else %}Next{%- endif -%}
 		</a>
 	</li>
-	{% endif - %}
+	{% endif -%}
 </ul>
 <!-- END PAGINATION -->
 

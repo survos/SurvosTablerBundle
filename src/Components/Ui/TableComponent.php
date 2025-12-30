@@ -1,5 +1,5 @@
 <?php
-/* src/Components/Ui/TableComponent.php v3.9 - Generated 2025-12-30 */
+/* src/Components/Ui/TableComponent.php v4.8 - Generated 2025-12-30 */
 
 declare(strict_types=1);
 
@@ -21,6 +21,7 @@ final class TableComponent
     public ?string $nowrap = null;
     public ?string $avatars = null;
     public ?string $buttons = null;
+    public ?iterable $people = null;
 
     public function __construct(
         ?FixtureService $fixtureService = null,

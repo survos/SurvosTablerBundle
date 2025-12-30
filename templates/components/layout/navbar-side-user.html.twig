@@ -1,25 +1,25 @@
-{# templates/components/layout/navbar-side-user.html.twig v3.9 #}
+{# templates/components/layout/navbar-side-user.html.twig v4.8 #}
 <!-- BEGIN USER MENU -->
-{% set personId = personId | default(1)  %}
-{% set person = people[personId]  %}
+{%- set personId = personId | default(1) %}
+{%- set person = people[personId] %}
 <div class="nav-item dropdown">
 	<a href="#" class="nav-link d-flex lh-1 p-0 px-2" data-bs-toggle="dropdown" aria-label="Open user menu">
 		<twig:ui:avatar :personId="person-id" size="sm"/>
 
-		{% if not (hideUsername)  %}
+		{%- if not (hideUsername) -%}
 		<div class="d-none d-xl-block ps-2">
-			<div>{{ person.full_name  }}</div>
-			<div class="mt-1 small text-secondary">{{ person.job_title  }}</div>
+			<div>{{ person.full_name }}</div>
+			<div class="mt-1 small text-secondary">{{ person.job_title }}</div>
 		</div>
-		{% endif  %}
+		{%- endif -%}
 	</a>
-	<div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow"{% if dark  %} data-bs-theme="light"{% endif  %}>
-		<a class="dropdown-item" href="{{ page | relative  }}/profile.html"><twig:ui:icon icon="user" class="dropdown-item-icon"/> Profile</a>
+	<div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow"{% if dark %} data-bs-theme="light"{% endif %}>
+		<a class="dropdown-item" href="{{ page | relative }}/profile.html"><twig:ui:icon icon="user" class="dropdown-item-icon"/> Profile</a>
 		<a class="dropdown-item" href="#"><twig:ui:icon icon="chart-pie" class="dropdown-item-icon"/> Analytics</a>
 		<div class="dropdown-divider"></div>
-		<a class="dropdown-item" href="{{ page | relative  }}/settings.html">Settings &amp; Privacy</a>
+		<a class="dropdown-item" href="{{ page | relative }}/settings.html">Settings &amp; Privacy</a>
 		<a class="dropdown-item" href="#">Help</a>
-		<a class="dropdown-item" href="{{ page | relative  }}/sign-in.html">Sign out</a>
+		<a class="dropdown-item" href="{{ page | relative }}/sign-in.html">Sign out</a>
 	</div>
 </div>
 <!-- END USER MENU -->

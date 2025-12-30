@@ -1,42 +1,42 @@
-{# templates/components/ui/chat.html.twig v3.9 #}
+{# templates/components/ui/chat.html.twig v4.8 #}
 <div class="chat">
 	<div class="chat-bubbles">
-		{% for message in chats  %}
-		{% set person = people[message.personId]  %}
-		{% capture chatAvatar  %}
+		{% for message in chats %}
+		{%- set person = people[message.personId] %}
+		{% capture chatAvatar %}
 		<div class="col-auto"><twig:ui:avatar :person="person"/></div>
-		{% - endcapture  %}
-		{% capture chatMessage  %}
-		<div class="{% if message.loading  %}col-auto{% else  %}col{% if wide  %} col-lg-6{% endif  %}{% endif  %}">
-			<div class="chat-bubble{% if message.personId == 0  %} chat-bubble-me{% endif  %}">
-				{% if not (message.loading)  %}
+		{%- endset -%}
+		{% capture chatMessage %}
+		<div class="{% if message.loading %}col-auto{% else %}col{% if wide %} col-lg-6{% endif %}{% endif %}">
+			<div class="chat-bubble{% if message.personId == 0 %} chat-bubble-me{% endif %}">
+				{%- if not (message.loading) -%}
 				<div class="chat-bubble-title">
 					<div class="row">
-						<div class="col chat-bubble-author">{{ person.full_name  }}</div>
-						<div class="col-auto chat-bubble-date">{{ message.timestamp  }}</div>
+						<div class="col chat-bubble-author">{{ person.full_name }}</div>
+						<div class="col-auto chat-bubble-date">{{ message.timestamp }}</div>
 					</div>
 				</div>
-				{% endif  %}
+				{%- endif -%}
 				<div class="chat-bubble-body">
-					{% if message.loading  %}
+					{% if message.loading %}
 					<p class="text-secondary text-italic">typing<span class="animated-dots"></span></p>
-					{% else  %}
-					<p>{{ message.message  }}</p>
-					{% endif  %}
+					{% else %}
+					<p>{{ message.message }}</p>
+					{% endif %}
 
-					{% if message.gif  %}
+					{% if message.gif %}
 					<div class="mt-2">
-						<img src="{{ message.gif  }}" alt="" class="rounded img-fluid" />
+						<img src="{{ message.gif }}" alt="" class="rounded img-fluid" />
 					</div>
-					{% endif  %}
+					{% endif %}
 				</div>
 			</div>
 		</div>
-		{% - endcapture  %}
+		{%- endset -%}
 		<div class="chat-item">
-			<div class="row align-items-end{% if message.personId == 0  %} justify-content-end{% endif  %}">{% if message.personId == 0  %} {{ chatMessage  }} {{ chatAvatar  }} {% else  %} {{ chatAvatar  }} {{ chatMessage  }} {% endif  %}</div>
+			<div class="row align-items-end{% if message.personId == 0 %} justify-content-end{% endif %}">{% if message.personId == 0 %} {{ chatMessage }} {{ chatAvatar }} {% else %} {{ chatAvatar }} {{ chatMessage }} {% endif %}</div>
 		</div>
-		{% endfor  %}
+		{% endfor %}
 	</div>
 </div>
 

@@ -1,11 +1,11 @@
-{# templates/components/cards/small-stats-3.html.twig v3.9 #}
+{# templates/components/cards/small-stats-3.html.twig v4.8 #}
 <div class="card">
 	<div class="card-body p-2 text-center">
-		<div class="text-end {% if percentage > 0  %}text-green{% elseif percentage < 0  %}text-red{% endif  %}">
+		<div class="text-end {% if percentage > 0 %}text-green{%- elseif percentage < 0 %}text-red{% endif %}">
 			<twig:ui:trending :value="percentage"/>
 		</div>
-		<div class="h1 m-0">{{ number  }}</div>
-		<div class="text-secondary mb-3">{{ title  }}</div>
+		<div class="h1 m-0">{{ number }}</div>
+		<div class="text-secondary mb-3">{{ title }}</div>
 	</div>
 </div>
 

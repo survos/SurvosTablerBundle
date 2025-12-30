@@ -1,43 +1,43 @@
-{# templates/components/ui/carousel.html.twig v3.9 #}
-{% set limit = limit | default(5)  %}
-{% set offset = offset | default(0)  %}
-{% set filteredPhotos = photos | where: "horizontal", true  %}
-{% set carouselId = id | default('carousel')  %}
-<div id="carousel-{{ carouselId  }}" class="carousel slide{% if fade  %} carousel-fade{% endif  %}" data-bs-ride="carousel">
-   {% if indicators  %}
-   <div class="carousel-indicators{% if indicatorsVertical  %} carousel-indicators-vertical{% endif  %}{% if indicatorsDot  %} carousel-indicators-dot{% elseif indicatorsThumb  %} carousel-indicators-thumb{% endif  %}">
-	   {% for photo in filteredPhotos limit: limit offset: offset  %}
-      <button type="button" data-bs-target="#carousel-{{ carouselId  }}" data-bs-slide-to="{{ loop.index - 1  }}" class="{% if indicatorsThumbRatio  %} ratio ratio-4x3{% endif  %}{% if loop.first  %} active{% endif  %}"{% if indicatorsThumb  %} style="background-image: url({{ page | relative  }}/static/photos/{{ photo.file  }})"{% endif  %}></button>
-      {% endfor  %}
+{# templates/components/ui/carousel.html.twig v4.8 #}
+{%- set limit = limit | default(5) %}
+{%- set offset = offset | default(0) %}
+{%- set filteredPhotos = photos | where: "horizontal", true %}
+{%- set carouselId = id | default('carousel') %}
+<div id="carousel-{{ carouselId }}" class="carousel slide{% if fade %} carousel-fade{% endif %}" data-bs-ride="carousel">
+   {% if indicators %}
+   <div class="carousel-indicators{% if indicatorsVertical %} carousel-indicators-vertical{% endif %}{% if indicatorsDot %} carousel-indicators-dot{%- elseif indicatorsThumb %} carousel-indicators-thumb{% endif %}">
+	   {% for photo in filteredPhotos|slice(offset, limit) %}
+      <button type="button" data-bs-target="#carousel-{{ carouselId }}" data-bs-slide-to="{{ loop.index - 1 }}" class="{% if indicatorsThumbRatio %} ratio ratio-4x3{% endif %}{% if loop.first %} active{% endif %}"{% if indicatorsThumb %} style="background-image: url({{ page | relative }}/static/photos/{{ photo.file }})"{% endif %}></button>
+      {% endfor %}
    </div>
-   {% endif  %}
+   {% endif %}
 
    <div class="carousel-inner">
-      {% for photo in filteredPhotos limit: limit offset: offset  %}
-      <div class="carousel-item{% if loop.first  %} active{% endif  %}">
-         <img class="d-block w-100" alt="" src="{{ page | relative  }}/static/photos/{{ photo.file  }}">
+      {% for photo in filteredPhotos|slice(offset, limit) %}
+      <div class="carousel-item{% if loop.first %} active{% endif %}">
+         <img class="d-block w-100" alt="" src="{{ page | relative }}/static/photos/{{ photo.file }}">
 
-         {% if captions  %}
+         {% if captions %}
          <div class="carousel-caption-background d-none d-md-block"></div>
          <div class="carousel-caption d-none d-md-block">
             <h3>Slide label</h3>
             <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
          </div>
-         {% endif  %}
+         {% endif %}
       </div>
-      {% endfor  %}
+      {% endfor %}
    </div>
 
-   {% if controls  %}
-   <a class="carousel-control-prev" href="#carousel-{{ carouselId  }}" role="button" data-bs-slide="prev">
+   {% if controls %}
+   <a class="carousel-control-prev" href="#carousel-{{ carouselId }}" role="button" data-bs-slide="prev">
       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Previous</span>
    </a>
-   <a class="carousel-control-next" href="#carousel-{{ carouselId  }}" role="button" data-bs-slide="next">
+   <a class="carousel-control-next" href="#carousel-{{ carouselId }}" role="button" data-bs-slide="next">
       <span class="carousel-control-next-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Next</span>
    </a>
-   {% endif  %}
+   {% endif %}
 </div>
 
 {#

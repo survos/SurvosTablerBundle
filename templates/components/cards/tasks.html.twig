@@ -1,37 +1,37 @@
-{# templates/components/cards/tasks.html.twig v3.9 #}
+{# templates/components/cards/tasks.html.twig v4.8 #}
 <div class="card">
 	<div class="card-header">
 		<h3 class="card-title">Tasks</h3>
 	</div>
 	<div class="table-responsive">
 		<table class="table table-selectable card-table table-vcenter">
-			{% for task in tasksList  %}
+			{% for task in tasksList %}
 			<tr>
 				<td class="w-1 pe-0">
-					<input type="checkbox" class="form-check-input m-0 align-middle table-selectable-check" aria-label="Select task"{% if task.checked  %} checked{% endif  %} >
+					<input type="checkbox" class="form-check-input m-0 align-middle table-selectable-check" aria-label="Select task"{% if task.checked %} checked{% endif %} >
 				</td>
 				<td class="w-100">
-					<a href="#" class="text-reset">{{ task.name  }}</a>
+					<a href="#" class="text-reset">{{ task.name }}</a>
 				</td>
 				<td class="text-nowrap text-secondary">
 					<twig:ui:icon icon="calendar"/>
-					{{ loop.index | random_date | date('F d, Y')  }}
+					{{ loop.index | random_date | date('F d, Y') }}
 				</td>
 				<td class="text-nowrap">
 					<a href="#" class="text-secondary">
 						<twig:ui:icon icon="check"/>
-						{{ loop.index | random_number: 0, 6  }}/{{ loop.index | random_number: 5, 10  }}
+						{{ loop.index | random_number: 0, 6 }}/{{ loop.index | random_number: 5, 10 }}
 					</a>
 				</td>
 				<td class="text-nowrap">
 					<a href="#" class="text-secondary">
-						<twig:ui:icon icon="message"/> {{ loop.index | random_number: 0, 12  }}</a>
+						<twig:ui:icon icon="message"/> {{ loop.index | random_number: 0, 12 }}</a>
 				</td>
 				<td>
 					<twig:ui:avatar size="sm" :personId="loop.index"/>
 				</td>
 			</tr>
-			{% endfor  %}
+			{% endfor %}
 		</table>
 	</div>
 </div>

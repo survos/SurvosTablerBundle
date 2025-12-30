@@ -1,4 +1,4 @@
-{# templates/components/cards/credit-card.html.twig v3.9 #}
+{# templates/components/cards/credit-card.html.twig v4.8 #}
 <div class="card">
 	<div class="card-body">
 		<div class="mb-3">
@@ -18,16 +18,16 @@
 					<div class="row g-2">
 						<div class="col">
 							<select class="form-select">
-								{% for month in (1..12)  %}
-								<option value="{{ month  }}">{{ month  }}</option>
-								{% endfor  %}
+								{% for month in (1..12) %}
+								<option value="{{ month }}">{{ month }}</option>
+								{% endfor %}
 							</select>
 						</div>
 						<div class="col">
 							<select class="form-select">
-								{% for year in (2020..2030)  %}
-								<option value="{{ year  }}">{{ year  }}</option>
-								{% endfor  %}
+								{% for year in (2020..2030) %}
+								<option value="{{ year }}">{{ year }}</option>
+								{% endfor %}
 							</select>
 						</div>
 					</div>

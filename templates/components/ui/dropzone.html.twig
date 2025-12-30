@@ -1,29 +1,29 @@
-{# templates/components/ui/dropzone.html.twig v3.9 #}
-{% set id = id  %}
-{% set text = text  | default('Text') %}
-{% set description = description | default('Description')  %}
+{# templates/components/ui/dropzone.html.twig v4.8 #}
+{%- set id = id %}
+{%- set text = text  | default('Text') %}
+{%- set description = description | default('Description') %}
 
-<form class="dropzone" id="dropzone-{{ id  }}" action="{{ page | relative  }}/" autocomplete="off" novalidate>
+<form class="dropzone" id="dropzone-{{ id }}" action="{{ page | relative }}/" autocomplete="off" novalidate>
 	<div class="fallback">
-		<input name="file" type="file" {% if multiple  %} multiple {% endif  %} />
+		<input name="file" type="file" {% if multiple %} multiple {% endif %} />
 	</div>
-	{% if custom  %}
+	{% if custom %}
 	<div class="dz-message">
 		<h3 class="dropzone-msg-title">{{ text }}</h3>
 		<span class="dropzone-msg-desc">{{ description }}</span>
 	</div>
-	{% endif  %}
+	{% endif %}
 </form>
 
-{% capture_script  %}
+{% capture_script %}
 <script>
-  {% if environment == 'development'  %}window.tabler_dropzone = window.tabler_dropzone || {};{% endif  %}
+  {% if environment == 'development' %}window.tabler_dropzone = window.tabler_dropzone || {};{% endif %}
 
   document.addEventListener("DOMContentLoaded", function() {
-    {% if environment == 'development'  %}window.tabler_dropzone["dropzone-{{ id  }}"] = {% endif  %}new Dropzone("#dropzone-{{ id  }}")
+    {% if environment == 'development' %}window.tabler_dropzone["dropzone-{{ id }}"] = {% endif %}new Dropzone("#dropzone-{{ id }}")
   })
 </script>
-{% endcapture_script  %}
+{% endcapture_script %}
 
 {#
 === Original Liquid (dropzone.html) ===

@@ -1,47 +1,47 @@
-{# templates/components/layout/page-header.html.twig v3.9 #}
+{# templates/components/layout/page-header.html.twig v4.8 #}
 <!-- BEGIN PAGE HEADER -->
-{% set pageHeader = pageHeader | default('layout.pageHeader')  %}
-{% set description = pageHeaderDescription | default('layout.pageHeaderDescription')  %}
-{% set actions = pageHeaderActions | default('layout.pageHeaderActions')  %}
-{% set pretitle = pageHeaderPretitle | default('layout.pageHeaderPretitle')  %}
-{% set class = pageHeaderClass | default('layout.pageHeaderClass')  %}
-{% set pageIcon = pageHeaderIcon | default('layout.pageHeaderIcon')  %}
+{%- set pageHeader = pageHeader | default('layout.pageHeader') %}
+{%- set description = pageHeaderDescription | default('layout.pageHeaderDescription') %}
+{%- set actions = pageHeaderActions | default('layout.pageHeaderActions') %}
+{%- set pretitle = pageHeaderPretitle | default('layout.pageHeaderPretitle') %}
+{%- set class = pageHeaderClass | default('layout.pageHeaderClass') %}
+{%- set pageIcon = pageHeaderIcon | default('layout.pageHeaderIcon') %}
 
-{% if pageHeaderFile  %}
-	<twig:layout:{{ pageHeaderFile  }}/>
-{% elseif pageHeader  %}
-<div class="page-header{% if class  %} {{ class  }}{% endif  %} d-print-none{% if layoutNavbarOverlap and layoutNavbarDark  %} text-white{% endif  %}">
+{% if pageHeaderFile %}
+	<twig:layout:{{ pageHeaderFile }}/>
+{%- elseif pageHeader %}
+<div class="page-header{% if class %} {{ class }}{% endif %} d-print-none{% if layoutNavbarOverlap and layoutNavbarDark %} text-white{% endif %}">
 	<div class="container-xl">
 		<div class="row g-2 align-items-center">
 			<div class="col">
-				{% if pretitle  %}
+				{% if pretitle %}
 				<!-- Page pre-title -->
 				<div class="page-pretitle">
-					{{ pretitle  }}
+					{{ pretitle }}
 				</div>
-				{% endif  %}
+				{% endif %}
 				<h1 class="page-title">
-					{% if pageIcon  %}
+					{% if pageIcon %}
 						<twig:ui:icon :icon="page-icon"/>
-					{% endif  %}
-					{{ pageHeader  }}
+					{% endif %}
+					{{ pageHeader }}
 				</h1>
 
-				{% if description  %}
-					<div class="text-secondary mt-1">{{ description  }}</div>
-				{% endif  %}
+				{% if description %}
+					<div class="text-secondary mt-1">{{ description }}</div>
+				{% endif %}
 			</div>
 
-			{% if actions  %}
+			{% if actions %}
 				<!-- Page title actions -->
 				<div class="col-auto ms-auto d-print-none">
-					<twig:layout:{{ actions  }}/>
+					<twig:layout:{{ actions }}/>
 				</div>
-			{% endif  %}
+			{% endif %}
 		</div>
 	</div>
 </div>
-{% endif  %}
+{% endif %}
 <!-- END PAGE HEADER -->
 
 {#

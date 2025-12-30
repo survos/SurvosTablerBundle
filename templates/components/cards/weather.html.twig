@@ -1,23 +1,23 @@
-{# templates/components/cards/weather.html.twig v3.9 #}
-{% set icon = icon | default('cloudRain')  %}
-<div class="card card-gradient card-gradient-{{ color | default('blue')  }} card-gradient-end">
+{# templates/components/cards/weather.html.twig v4.8 #}
+{%- set icon = icon | default('cloudRain') %}
+<div class="card card-gradient card-gradient-{{ color | default('blue') }} card-gradient-end">
 	<div class="card-body">
 		<div class="row">
 			<div class="col">
 				<div class="row">
                <div class="col-auto">
-                  <h3 class="card-title mb-2">{{ city | default('Warsaw')  }}</h3>
+                  <h3 class="card-title mb-2">{{ city | default('Warsaw') }}</h3>
                </div>
                <div class="col">
                   <twig:ui:icon :icon="icon"/>
                </div>
             </div>
             <div class="text-secondary">
-               {{ description | default('Cloudy morning')  }}
+               {{ description | default('Cloudy morning') }}
             </div>
 			</div>
 			<div class="col-auto">
-            <div class="display-5 lh-1 fw-lighter">{{ temperature | default(20)  }}&deg;</div>
+            <div class="display-5 lh-1 fw-lighter">{{ temperature | default(20) }}&deg;</div>
 			</div>
       </div>
 	</div>

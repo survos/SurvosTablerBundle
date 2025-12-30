@@ -1,24 +1,24 @@
-{# templates/components/cards/store-list.html.twig v3.9 #}
+{# templates/components/cards/store-list.html.twig v4.8 #}
 <div class="card">
 	<table class="table card-table table-vcenter">
-		{% for product in products  %}
+		{% for product in products %}
 		<tr>
-			<td><img src="{{ page | relative  }}/img/products/{{ product.image  }}" alt="" class="h-16"></td>
+			<td><img src="{{ page | relative }}/img/products/{{ product.image }}" alt="" class="h-16"></td>
 			<td>
-				{{ product.name  }}
+				{{ product.name }}
 
-				{% set mod = loop.index % 2 %}
-				{% if mod == 0  %}
+				{%- set mod = loop.index % 2 %}
+				{% if mod == 0 %}
 				<span class="badge badge-secondary-lt">New</span>
-				{% endif  %}
+				{% endif %}
 			</td>
-			<td class="text-end text-secondary d-none d-md-table-cell text-nowrap">{{ loop.index | random_number: 4, 100  }} reviews</td>
-			<td class="text-end text-secondary d-none d-md-table-cell text-nowrap">{{ loop.index | random_number: 4, 50  }} offers</td>
+			<td class="text-end text-secondary d-none d-md-table-cell text-nowrap">{{ loop.index | random_number: 4, 100 }} reviews</td>
+			<td class="text-end text-secondary d-none d-md-table-cell text-nowrap">{{ loop.index | random_number: 4, 50 }} offers</td>
 			<td class="text-end">
-				<strong>{{ product.price  }}</strong>
+				<strong>{{ product.price }}</strong>
 			</td>
 		</tr>
-		{% endfor  %}
+		{% endfor %}
 	</table>
 </div>
 

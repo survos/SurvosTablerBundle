@@ -1,6 +1,6 @@
-{# templates/components/cards/subscribe.html.twig v3.9 #}
-{% set personId = personId | default(0)  %}
-{% set person = people[personId]  %}
+{# templates/components/cards/subscribe.html.twig v4.8 #}
+{%- set personId = personId | default(0) %}
+{%- set person = people[personId] %}
 <div class="card">
 	<div class="card-body">
 		<div class="row g-2 align-items-center">
@@ -9,10 +9,10 @@
 			</div>
 			<div class="col">
 				<h4 class="card-title m-0">
-					<a href="#">{{ person.full_name  }}</a>
+					<a href="#">{{ person.full_name }}</a>
 				</h4>
 				<div class="text-secondary">
-					Working in {{ person.company  }}
+					Working in {{ person.company }}
 				</div>
 				<div class="small mt-1">
 					<span class="badge bg-green"></span> Online

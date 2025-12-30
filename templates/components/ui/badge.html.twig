@@ -1,26 +1,26 @@
-{# templates/components/ui/badge.html.twig v3.9 #}
-{% - assign el = 'span' - %}
-<{{ el  }} class="badge{% if scale  %} badge-{{ scale  }}{% endif  %}{% if color  %} bg-{{ color  }}{% if light  %}-lt{% endif  %} text-{{ color  }}{% if light  %}-lt{% endif  %}-fg{% endif  %}{% if class  %} {{ class  }}{% endif  %}">
-{% - if icon - %}
-	 {% - assign icon = icon - %}
+{# templates/components/ui/badge.html.twig v4.8 #}
+{%- set el = 'span' -%}
+<{{ el }} class="badge{% if scale %} badge-{{ scale }}{% endif %}{% if color %} bg-{{ color }}{% if light %}-lt{% endif %} text-{{ color }}{% if light %}-lt{% endif %}-fg{% endif %}{% if class %} {{ class }}{% endif %}">
+{%- if icon -%}
+	 {%- set icon = icon -%}
 	 <twig:ui:icon :icon="icon"/>
-{% - endif - %}
-{% - if personId - %}
-    {% - assign personId = personId - 1 - %}
-    {% - assign person = people[personId] - %}
-    {% - assign src = person.photo - %}
-    {% - unless src - %}
-        {% - assign placeholder = person.full_name | first_letters - %}
-    {% - endunless - %}
-    <{{ el  }} class="avatar" style="background-image: url({{ page | relative  }}/{{ src  }})">{% if not (src)  %}{{ person.full_name | first_letters  }}{% endif  %}</{{ el  }}>
-{% - endif - %}
-{% - if text - %}
-    {{ text  }}
-{% - else - %}
-    {{ person.full_name  }}
-{% - endif - %}
-{% if addon  %}<{{ el  }} class="badge-addon {% if addonColor %}bg-{{ addonColor  }}{% endif  %}">{{ addon  }}</{{ el  }}>{% endif - %}
-</{{ el  }}>
+{%- endif -%}
+{%- if personId -%}
+    {%- set personId = personId - 1 -%}
+    {%- set person = people[personId] -%}
+    {%- set src = person.photo -%}
+    {%- if not (src) -%}
+        {%- set placeholder = person.full_name | first_letters -%}
+    {%- endif -%}
+    <{{ el }} class="avatar" style="background-image: url({{ page | relative }}/{{ src }})">{%- if not (src) -%}{{ person.full_name | first_letters }}{%- endif -%}</{{ el }}>
+{%- endif -%}
+{%- if text -%}
+    {{ text }}
+{%- else -%}
+    {{ person.full_name }}
+{%- endif -%}
+{% if addon %}<{{ el }} class="badge-addon {% if addonColor %}bg-{{ addonColor }}{% endif %}">{{ addon }}</{{ el }}>{% endif -%}
+</{{ el }}>
 
 {#
 === Original Liquid (badge.html) ===

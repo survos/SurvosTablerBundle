@@ -1,18 +1,18 @@
-{# templates/components/cards/project-progress.html.twig v3.9 #}
-{% set projectId = projectId | default(0)  %}
-{% set project = projects[projectId]  %}
-{% set progress = progress | default(25)  %}
-{% set daysAgo = daysAgo | default(2)  %}
+{# templates/components/cards/project-progress.html.twig v4.8 #}
+{%- set projectId = projectId | default(0) %}
+{%- set project = projects[projectId] %}
+{%- set progress = progress | default(25) %}
+{%- set daysAgo = daysAgo | default(2) %}
 
 <div class="card">
 	<div class="card-body">
 		<div class="row align-items-center">
 			<div class="col-3">
-				<img src="{{ project.image  }}" alt="{{ project.title | escape  }}" class="rounded">
+				<img src="{{ project.image }}" alt="{{ project.title | escape }}" class="rounded">
 			</div>
 			<div class="col">
 				<h3 class="card-title mb-1">
-					<a href="#" class="text-reset">{{ project.title  }}</a>
+					<a href="#" class="text-reset">{{ project.title }}</a>
 				</h3>
 				<div class="text-secondary">
 					Updated 2 hours ago
@@ -21,7 +21,7 @@
 				<div class="mt-3">
 					<div class="row g-2 align-items-center">
 						<div class="col-auto">
-							{{ progress  }}%
+							{{ progress }}%
 						</div>
 						<div class="col">
 							<twig:ui:progress :value="progress" size="sm"/>

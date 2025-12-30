@@ -1,4 +1,4 @@
-{# templates/components/parts/activity.html.twig v3.9 #}
+{# templates/components/parts/activity.html.twig v4.8 #}
 <div class="card">
 	<div class="card-body">
 		<div class="d-flex">
@@ -12,7 +12,7 @@
 			<div class="col">
 				<twig:ui:chart chartId="active-users-2"/>
 			</div>
-			<div class="col{% if not (hideBreakpoint)  %}-md{% endif  %}-auto">
+			<div class="col{%- if not (hideBreakpoint) -%}-md{%- endif -%}-auto">
 				<div class="divide-y divide-y-fill">
 					<div class="px-3">
 						<div class="text-secondary">

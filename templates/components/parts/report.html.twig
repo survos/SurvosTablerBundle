@@ -1,6 +1,6 @@
-{# templates/components/parts/report.html.twig v3.9 #}
+{# templates/components/parts/report.html.twig v4.8 #}
 <twig:ui:header title="New report"/>
-{% set reports = "Simple:Provide only basic data needed for the report,Advanced:Insert charts and additional advanced analyses to be inserted in the report" | split(',')  %}
+{%- set reports = "Simple:Provide only basic data needed for the report,Advanced:Insert charts and additional advanced analyses to be inserted in the report" | split(',') %}
 
 <div class="modal-body">
 	<div class="mb-3">
@@ -10,23 +10,23 @@
 
 	<label class="form-label">Report type</label>
 	<div class="form-selectgroup-boxes row mb-3">
-		{% for report in reports  %}
-		{% set r = report | split(':')  %}
+		{% for report in reports %}
+		{%- set r = report | split(':') %}
 		<div class="col-lg-6">
 			<label class="form-selectgroup-item">
-				<input type="radio" name="report-type" value="1" class="form-selectgroup-input"{% if loop.index == 1  %} checked{% endif  %}>
+				<input type="radio" name="report-type" value="1" class="form-selectgroup-input"{% if loop.index == 1 %} checked{% endif %}>
 				<span class="form-selectgroup-label d-flex align-items-center p-3">
 					<span class="me-3">
 						<span class="form-selectgroup-check"></span>
 					</span>
 					<span class="form-selectgroup-label-content">
-						<span class="form-selectgroup-title strong mb-1">{{ r[0]  }}</span>
-						<span class="d-block text-secondary">{{ r[1]  }}</span>
+						<span class="form-selectgroup-title strong mb-1">{{ r[0] }}</span>
+						<span class="d-block text-secondary">{{ r[1] }}</span>
 					</span>
 				</span>
 			</label>
 		</div>
-		{% endfor  %}
+		{% endfor %}
 	</div>
 
 	<div class="row">
@@ -39,11 +39,11 @@
 		<div class="col-lg-4">
 			<div class="mb-3">
 				<label class="form-label">Visibility</label>
-				{% set options = "Private,Public,Hidden" | split(',')  %}
+				{%- set options = "Private,Public,Hidden" | split(',') %}
 				<select class="form-select">
-					{% for option in options  %}
-					<option value="{{ loop.index  }}"{% if loop.index == 1  %} selected{% endif  %}>{{ option  }}</option>
-					{% endfor  %}
+					{% for option in options %}
+					<option value="{{ loop.index }}"{% if loop.index == 1 %} selected{% endif %}>{{ option }}</option>
+					{% endfor %}
 				</select>
 			</div>
 		</div>

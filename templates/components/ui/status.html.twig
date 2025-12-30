@@ -1,9 +1,9 @@
-{# templates/components/ui/status.html.twig v3.9 #}
-<span class="status{% if color  %} status-{{ color  }}{% endif  %}{% if lite  %} status-lite{% endif  %}">
-	{% if dot  %}
-	<span class="status-dot{% if animated  %} status-dot-animated{% endif  %}"></span>
-	{% endif  %}
-	{{ text | default('Status')  }}
+{# templates/components/ui/status.html.twig v4.8 #}
+<span class="status{% if color %} status-{{ color }}{% endif %}{% if lite %} status-lite{% endif %}">
+	{% if dot %}
+	<span class="status-dot{% if animated %} status-dot-animated{% endif %}"></span>
+	{% endif %}
+	{{ text | default('Status') }}
 </span>
 
 {#

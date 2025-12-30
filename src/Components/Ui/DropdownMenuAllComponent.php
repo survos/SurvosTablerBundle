@@ -1,5 +1,5 @@
 <?php
-/* src/Components/Ui/DropdownMenuAllComponent.php v3.9 - Generated 2025-12-30 */
+/* src/Components/Ui/DropdownMenuAllComponent.php v4.8 - Generated 2025-12-30 */
 
 declare(strict_types=1);
 
@@ -16,6 +16,7 @@ final class DropdownMenuAllComponent
     use DataAwareTrait;
 
     public ?bool $show = null;
+    public ?iterable $people = null;
 
     public function __construct(
         ?FixtureService $fixtureService = null,

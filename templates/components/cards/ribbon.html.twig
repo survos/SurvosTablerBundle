@@ -1,13 +1,13 @@
-{# templates/components/cards/ribbon.html.twig v3.9 #}
-{% set productId = productId | default(0)  %}
-{% set product = products[productId]  %}
+{# templates/components/cards/ribbon.html.twig v4.8 #}
+{%- set productId = productId | default(0) %}
+{%- set product = products[productId] %}
 
 <div class="card">
-	<div class="card-body"{% if not (lorem)  %} style="height: 5rem"{% endif  %}>
-		{% if lorem  %}
+	<div class="card-body"{%- if not (lorem) -%} style="height: 5rem"{%- endif -%}>
+		{% if lorem %}
 			<h3 class="card-title">Card with ribbon</h3>
 			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda consectetur consequuntur culpa cum dolorum eveniet.</p>
-		{% endif  %}
+		{% endif %}
 	</div>
 
 	<twig:ui:ribbon :color="color" :top="top" :left="left" :bottom="bottom" :bookmark="bookmark"/>

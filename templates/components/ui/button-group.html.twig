@@ -1,33 +1,33 @@
-{# templates/components/ui/button-group.html.twig v3.9 #}
-{% set buttonItems = items | split(',')  %}
-{% set buttonIcons = icons | split(',')  %}
+{# templates/components/ui/button-group.html.twig v4.8 #}
+{%- set buttonItems = items | split(',') %}
+{%- set buttonIcons = icons | split(',') %}
 
-{% set id = id  %}
+{%- set id = id %}
 
-<div class="btn-group{% if vertical  %}-vertical{% endif  %}{% if fluid  %} w-100{% endif  %}"role="group">
+<div class="btn-group{% if vertical %}-vertical{% endif %}{% if fluid %} w-100{% endif %}"role="group">
 
-	{% for item in buttonItems  %}
-	{% if radio  %}
-	<input type="radio" class="btn-check" name="btn-radio-{{ id  }}" id="btn-radio-{{ id  }}-{{ loop.index  }}" autocomplete="off"{% if loop.index == 1  %} checked{% endif  %}>
-	{% endif  %}
-	<{% if radio  %}label for="btn-radio-{{ id  }}-{{ loop.index  }}"{% else  %}button{% endif  %} type="button" class="btn{% if loop.index == 1  %}{% if not (radio)  %} active{% endif  %}{% endif  %}">{{ item  }}</{% if radio  %}label{% else  %}button{% endif  %}>
-	{% endfor  %}
+	{% for item in buttonItems %}
+	{% if radio %}
+	<input type="radio" class="btn-check" name="btn-radio-{{ id }}" id="btn-radio-{{ id }}-{{ loop.index }}" autocomplete="off"{% if loop.index == 1 %} checked{% endif %}>
+	{% endif %}
+	<{% if radio %}label for="btn-radio-{{ id }}-{{ loop.index }}"{% else %}button{% endif %} type="button" class="btn{% if loop.index == 1 %}{%- if not (radio) -%} active{%- endif -%}{% endif %}">{{ item }}</{% if radio %}label{% else %}button{% endif %}>
+	{% endfor %}
 
-	{% for icon in buttonIcons  %}
-	{% if radio  %}
-	<input type="radio" class="btn-check" name="btn-radio-{{ id  }}" id="btn-radio-{{ id  }}-{{ loop.index  }}" autocomplete="off"{% if loop.index == 1  %} checked{% endif  %}>
-	{% endif  %}
-	<{% if radio  %}label for="btn-radio-{{ id  }}-{{ loop.index  }}"{% else  %}button{% endif  %} class="btn btn-icon{% if loop.index == 1  %}{% if not (radio)  %} active{% endif  %}{% endif  %}"><twig:ui:icon :icon="icon"/></{% if radio  %}label{% else  %}button{% endif  %}>
-	{% endfor  %}
+	{% for icon in buttonIcons %}
+	{% if radio %}
+	<input type="radio" class="btn-check" name="btn-radio-{{ id }}" id="btn-radio-{{ id }}-{{ loop.index }}" autocomplete="off"{% if loop.index == 1 %} checked{% endif %}>
+	{% endif %}
+	<{% if radio %}label for="btn-radio-{{ id }}-{{ loop.index }}"{% else %}button{% endif %} class="btn btn-icon{% if loop.index == 1 %}{%- if not (radio) -%} active{%- endif -%}{% endif %}"><twig:ui:icon :icon="icon"/></{% if radio %}label{% else %}button{% endif %}>
+	{% endfor %}
 
-	{% if dropdown  %}
+	{% if dropdown %}
 	<div class="btn-group" role="group">
-		{% if radio  %}
-		<input type="radio" class="btn-check" name="btn-radio-{{ id  }}" id="btn-radio-{{ id  }}-dropdown" autocomplete="off"{% if loop.index == 1  %} checked{% endif  %}>
-		{% endif  %}
-		<{% if radio  %}label for="btn-radio-{{ id  }}-dropdown"{% else  %}button{% endif  %} class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		{% if radio %}
+		<input type="radio" class="btn-check" name="btn-radio-{{ id }}" id="btn-radio-{{ id }}-dropdown" autocomplete="off"{% if loop.index == 1 %} checked{% endif %}>
+		{% endif %}
+		<{% if radio %}label for="btn-radio-{{ id }}-dropdown"{% else %}button{% endif %} class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 			Other
-		</{% if radio  %}label{% else  %}button{% endif  %}>
+		</{% if radio %}label{% else %}button{% endif %}>
 		<twig:ui:dropdown-menu/>
 		<div class="dropdown-menu dropdown-menu-end">
 			<a class="dropdown-item" href="#">
@@ -41,7 +41,7 @@
 			</a>
 		</div>
 	</div>
-	{% endif  %}
+	{% endif %}
 </div>
 
 {#

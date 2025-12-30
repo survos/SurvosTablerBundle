@@ -1,7 +1,7 @@
-{# templates/components/cards/carousel.html.twig v3.9 #}
+{# templates/components/cards/carousel.html.twig v4.8 #}
 <div class="card">
    <div class="card-header">
-      <h3 class="card-title">{{ title | default('Carousel')  }}</h3>
+      <h3 class="card-title">{{ title | default('Carousel') }}</h3>
    </div>
    <div class="card-body">
       <twig:ui:carousel :id="id" :indicators="indicators" :indicatorsThumb="indicators-thumb" :indicatorsThumbRatio="indicators-thumb-ratio" :indicatorsDot="indicators-dot" :controls="controls" :offset="offset" :fade="fade" :limit="limit" :indicatorsVertical="indicators-vertical" :captions="captions"/>

@@ -1,29 +1,29 @@
-{# templates/components/cards/gallery-photo.html.twig v3.9 #}
+{# templates/components/cards/gallery-photo.html.twig v4.8 #}
 <div class="card card-sm">
-	<a href="#" class="d-block"><img src="{{ page | relative  }}/static/photos/{{ photo.file  }}" class="card-img-top"></a>
+	<a href="#" class="d-block"><img src="{{ page | relative }}/static/photos/{{ photo.file }}" class="card-img-top"></a>
 	<div class="card-body">
 		<div class="d-flex align-items-center">
 			<twig:ui:avatar :person="person" class="me-3 rounded"/>
 			<div>
-				<div>{{ person.full_name  }}</div>
-				<div class="text-secondary">{{ loop.index | random_date_ago: 10 | timeago  }}</div>
+				<div>{{ person.full_name }}</div>
+				<div class="text-secondary">{{ loop.index | random_date_ago: 10 | timeago }}</div>
 			</div>
-			{% if not (hideLikes)  %}
+			{%- if not (hideLikes) -%}
 			<div class="ms-auto">
 				<a href="#" class="text-secondary">
 					<twig:ui:icon icon="eye"/>
-					{{ loop.index | random_number: 300, 600  }}
+					{{ loop.index | random_number: 300, 600 }}
 				</a>
 				<a href="#" class="ms-3 text-secondary">
-					{% set class = false  %}
-					{% if loop.index > 2 and loop.index < 9 or loop.index == 10  %}
-						{% set class = "iconFilled textRed"  %}
-					{% endif  %}
+					{%- set class = false %}
+					{% if loop.index > 2 and loop.index < 9 or loop.index == 10 %}
+						{%- set class = "iconFilled textRed" %}
+					{% endif %}
 					<twig:ui:icon icon="heart" :class="class"/>
-					{{ loop.index | random_number: 20, 100  }}
+					{{ loop.index | random_number: 20, 100 }}
 				</a>
 			</div>
-			{% endif  %}
+			{%- endif -%}
 		</div>
 	</div>
 </div>

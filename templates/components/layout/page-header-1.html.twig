@@ -1,17 +1,17 @@
-{# templates/components/layout/page-header-1.html.twig v3.9 #}
-{% set person = people[0]  %}
+{# templates/components/layout/page-header-1.html.twig v4.8 #}
+{%- set person = people[0] %}
 <div class="page-header">
 	<div class="row align-items-center">
 		<div class="col-auto">
 			<twig:ui:avatar :person="person" size="md"/>
 		</div>
 		<div class="col">
-			<h2 class="page-title">{{ person.full_name  }}</h2>
+			<h2 class="page-title">{{ person.full_name }}</h2>
 			<div class="page-subtitle">
 				<div class="row">
 					<div class="col-auto">
 						<twig:ui:icon icon="building-skyscraper"/>
-						<a href="#" class="text-reset">{{ person.job_title  }} at {{ person.company  }}</a>
+						<a href="#" class="text-reset">{{ person.job_title }} at {{ person.company }}</a>
 					</div>
 					<div class="col-auto">
 						<twig:ui:icon icon="users"/>

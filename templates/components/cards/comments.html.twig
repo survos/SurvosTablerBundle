@@ -1,27 +1,27 @@
-{# templates/components/cards/comments.html.twig v3.9 #}
+{# templates/components/cards/comments.html.twig v4.8 #}
 <div class="card">
    <div class="card-header">
       <div class="card-title">Comments</div>
    </div>
    <div class="card-body">
 
-      {% for person in people|slice(0, 3)  %}
-      <div class="d-flex{% if not (loop.last)  %} mb-5{% endif  %}">
+      {% for person in people|slice(0, 3) %}
+      <div class="d-flex{%- if not (loop.last) -%} mb-5{%- endif -%}">
          <div class="me-4">
             <twig:ui:avatar :person="person" status="green"/>
          </div>
          <div class="flex-fill">
             <div class="d-flex mt-n1">
                <h5 class="m-0">
-                  {{ person.full_name  }}
+                  {{ person.full_name }}
                </h5>
-               <div class="ms-auto small text-secondary">{{ loop.index | random_date_ago: 23 | timeago  }}</div>
+               <div class="ms-auto small text-secondary">{{ loop.index | random_date_ago: 23 | timeago }}</div>
             </div>
             <p class="mb-2">
-               {{ comments[loop.index]  }}
+               {{ comments[loop.index] }}
             </p>
             <div class="small">
-               <span class="text-success me-1">+{{ loop.index | random_number: 20, 50  }}</span>
+               <span class="text-success me-1">+{{ loop.index | random_number: 20, 50 }}</span>
                <a href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Vote Up"><twig:ui:icon icon="chevron-up"/></a>
                <a href="#" class="me-1" data-bs-toggle="tooltip" data-bs-placement="top" title="Vote Down">
                   <twig:ui:icon icon="chevron-down"/>
@@ -33,7 +33,7 @@
             </div>
          </div>
       </div>
-      {% endfor  %}
+      {% endfor %}
 
    </div>
 </div>

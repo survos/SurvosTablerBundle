@@ -1,22 +1,22 @@
-{# templates/components/ui/signature.html.twig v3.9 #}
-{% set id = id | default('default')  %}
+{# templates/components/ui/signature.html.twig v4.8 #}
+{%- set id = id | default('default') %}
 
-<div class="signature position-relative{% if class  %} {{ class  }}{% endif  %}">
-	{% if clear  %}
+<div class="signature position-relative{% if class %} {{ class }}{% endif %}">
+	{% if clear %}
 	<div class="position-absolute top-0 end-0 p-2">
-		<div class="btn btn-icon" id="signature-{{ id  }}-clear" title="Clear signature" data-bs-toggle="tooltip">
+		<div class="btn btn-icon" id="signature-{{ id }}-clear" title="Clear signature" data-bs-toggle="tooltip">
 			<twig:ui:icon icon="trash"/>
 		</div>
 	</div>
-	{% endif  %}
-  <canvas id="signature-{{ id  }}" width="{{ width | default(400)  }}" height="{{ height | default(400)  }}" class="signature-canvas"></canvas>
+	{% endif %}
+  <canvas id="signature-{{ id }}" width="{{ width | default(400) }}" height="{{ height | default(400) }}" class="signature-canvas"></canvas>
 </div>
 
-{% capture_script  %}
+{% capture_script %}
 <!-- BEGIN SIGNATURE PAD -->
 <script>
-  document.addEventListener("{{ event | default('DOMContentLoaded')  }}", function () {
-    const canvas = document.getElementById("signature-{{ id  }}");
+  document.addEventListener("{{ event | default('DOMContentLoaded') }}", function () {
+    const canvas = document.getElementById("signature-{{ id }}");
 
     if (canvas) {
       const signaturePad = new SignaturePad(canvas, {
@@ -24,11 +24,11 @@
 		  penColor: getComputedStyle(canvas).color
       });
 
-		{% if clear  %}
-		document.querySelector("#signature-{{ id  }}-clear").addEventListener("click", function () {
+		{% if clear %}
+		document.querySelector("#signature-{{ id }}-clear").addEventListener("click", function () {
 		  signaturePad.clear();
 		});
-		{% endif  %}
+		{% endif %}
 
 		function resizeCanvas() {
         const ratio = Math.max(window.devicePixelRatio || 1, 1);
@@ -44,13 +44,13 @@
 		window.addEventListener("resize", resizeCanvas);
 		resizeCanvas();
 
-		{% if extraJs  %}
-		{{ extraJs  }}
-		{% endif  %}
+		{% if extraJs %}
+		{{ extraJs }}
+		{% endif %}
     }
   });
 </script>
-{% endcapture_script  %}
+{% endcapture_script %}
 
 {#
 === Original Liquid (signature.html) ===

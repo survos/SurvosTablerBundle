@@ -1,20 +1,20 @@
-{# templates/components/parts/checkboxes-list.html.twig v3.9 #}
-{% set items = items | default('Push Notifications:1,SMS Notifications,Email Notifications:1') | split(',')  %}
+{# templates/components/parts/checkboxes-list.html.twig v4.8 #}
+{%- set items = items | default('Push Notifications:1,SMS Notifications,Email Notifications:1') | split(',') %}
 
-<div class="divide-y{% if class  %} {{ class  }}{% endif  %}">
-	{% for item in items  %}
-	{% set itemOptions = item | split(':')  %}
+<div class="divide-y{% if class %} {{ class }}{% endif %}">
+	{% for item in items %}
+	{%- set itemOptions = item | split(':') %}
 	<div>
 		<label class="row">
-			<span class="col">{{ itemOptions[0]  }}</span>
+			<span class="col">{{ itemOptions[0] }}</span>
 			<span class="col-auto">
 					<label class="form-check form-check-single form-switch">
-						<input class="form-check-input" type="checkbox"{% if itemOptions[1] == '1'  %} checked{% endif  %}>
+						<input class="form-check-input" type="checkbox"{% if itemOptions[1] == '1' %} checked{% endif %}>
 					</label>
 				</span>
 		</label>
 	</div>
-	{% endfor  %}
+	{% endfor %}
 </div>
 
 {#

@@ -54,7 +54,6 @@ class MenuComponent
 
         // Dispatch event to let listeners add items
         $event = new MenuEvent($menu, $this->factory, $this->options);
-        dd($event);
         $this->eventDispatcher->dispatch($event, $eventName);
 
         // Use helper to navigate path (for breadcrumbs, submenus)

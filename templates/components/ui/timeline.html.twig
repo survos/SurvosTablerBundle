@@ -1,5 +1,5 @@
-{# templates/components/ui/timeline.html.twig v3.9 #}
-<ul class="timeline{% if simple  %} timeline-simple{% endif  %}">
+{# templates/components/ui/timeline.html.twig v4.8 #}
+<ul class="timeline{% if simple %} timeline-simple{% endif %}">
 	<li class="timeline-event">
 		<div class="timeline-event-icon bg-x-lt"><twig:ui:icon icon="brand-x"/></div>
 		<div class="card timeline-event-card">
@@ -47,9 +47,9 @@
 				<div class="text-secondary float-end">2 days ago</div>
 				<h4>+3 Friend Requests</h4>
 				<div class="avatar-list mt-3">
-					{% for person in people|slice(0, 3)  %}
+					{% for person in people|slice(0, 3) %}
 					<twig:ui:avatar :person="person" status="success"/>
-					{% endfor  %}
+					{% endfor %}
 				</div>
 			</div>
 		</div>

@@ -1,51 +1,51 @@
-{# templates/components/ui/alert.html.twig v3.9 #}
-{% - assign icon = icon - %}
-{% - assign type = type | default('success') - %}
-{% - unless icon - %}
-	{% - if type == 'success' - %}
-		{% - assign icon = 'check' - %}
-	{% - elsif type == 'warning' - %}
-		{% - assign icon = 'alertTriangle' - %}
-	{% - elsif type == 'danger' - %}
-		{% - assign icon = 'alertCircle' - %}
-	{% - elsif type == 'info' - %}
-		{% - assign icon = 'infoCircle' - %}
-	{% - endif - %}
-{% - endunless - %}
-<div class="alert{% if important  %} alert-important{% elseif minor  %} alert-minor{% endif  %} alert-{{ type  }}{% if showClose  %} alert-dismissible{% endif  %}{% if avatar  %} alert-avatar{% endif  %}" role="alert">
+{# templates/components/ui/alert.html.twig v4.8 #}
+{%- set icon = icon -%}
+{%- set type = type | default('success') -%}
+{%- if not (icon) -%}
+	{%- if type == 'success' -%}
+		{%- set icon = 'check' -%}
+	{%- elseif type == 'warning' -%}
+		{%- set icon = 'alertTriangle' -%}
+	{%- elseif type == 'danger' -%}
+		{%- set icon = 'alertCircle' -%}
+	{%- elseif type == 'info' -%}
+		{%- set icon = 'infoCircle' -%}
+	{%- endif -%}
+{%- endif -%}
+<div class="alert{% if important %} alert-important{%- elseif minor %} alert-minor{% endif %} alert-{{ type }}{% if showClose %} alert-dismissible{% endif %}{% if avatar %} alert-avatar{% endif %}" role="alert">
 	<div class="alert-icon">
-		{% - include "ui/icon.html" icon=icon class="alertIcon" - %}
+		<twig:ui:icon :icon="icon" class="alert-icon"/>
 	</div>
-	{% if description or list - %}
+	{% if description or list -%}
 		<div>
-			<h4 class="alert-heading">{{ title | default('This is a custom alert box!')  }}</h4>
+			<h4 class="alert-heading">{{ title | default('This is a custom alert box!') }}</h4>
 			<div class="alert-description">
-				{{ description | default(description)  }}
-				{% if list  %}
-				{% set items = list | split(',')  %}
+				{{ description | default(description) }}
+				{% if list %}
+				{%- set items = list | split(',') %}
 				<ul class="alert-list">
-					{% for item in items  %}
-					<li>{{ item  }}</li>
-					{% endfor  %}
+					{% for item in items %}
+					<li>{{ item }}</li>
+					{% endfor %}
 				</ul>
-				{% endif  %}
+				{% endif %}
 			</div>
 		</div>
-	{% - else - %}
-		{{ title | default('This is a custom alert box!')  }}
-		{% if action - %}
-		<a href="#" class="alert-action">{{ action | default('Action')  }}</a>
-		{% - elsif link - %}
-		<a href="#" class="alert-link">{{ link | default('Link')  }}</a>
-		{% - endif  %}
-	{% - endif - %}
-	{% - if buttons - %}
+	{%- else -%}
+		{{ title | default('This is a custom alert box!') }}
+		{% if action -%}
+		<a href="#" class="alert-action">{{ action | default('Action') }}</a>
+		{%- elseif link -%}
+		<a href="#" class="alert-link">{{ link | default('Link') }}</a>
+		{%- endif %}
+	{%- endif -%}
+	{%- if buttons -%}
 	<div class="btn-list">
 		<a href="#" class="btn btn-{{ type | default('primary') }}">Okay</a>
 		<a href="#" class="btn">Cancel</a>
 	</div>
-	{% - endif - %}
-	{% - if showClose  %}<a class="btn-close" data-bs-dismiss="alert" aria-label="close"></a>{% endif - %}
+	{%- endif -%}
+	{%- if showClose %}<a class="btn-close" data-bs-dismiss="alert" aria-label="close"></a>{% endif -%}
 </div>
 
 {#

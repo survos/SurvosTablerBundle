@@ -1,8 +1,8 @@
-{# templates/components/layout/navbar-search.html.twig v3.9 #}
-{% set breakpoint = breakpoint | default('lg')  %}
+{# templates/components/layout/navbar-search.html.twig v4.8 #}
+{%- set breakpoint = breakpoint | default('lg') %}
 
-<div{% if class  %} class="{{ class  }}"{% endif  %}>
-	<form action="{{ page | relative  }}/" method="get" autocomplete="off" novalidate role="search">
+<div{% if class %} class="{{ class }}"{% endif %}>
+	<form action="{{ page | relative }}/" method="get" autocomplete="off" novalidate role="search">
 		<twig:ui:input-icon :prepend="true" :rounded="rounded" ariaLabel="Search in website"/>
 	</form>
 </div>

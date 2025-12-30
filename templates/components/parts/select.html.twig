@@ -1,11 +1,11 @@
-{# templates/components/parts/select.html.twig v3.9 #}
-{% set options = options | default('One,Two,Three') | split(',')  %}
+{# templates/components/parts/select.html.twig v4.8 #}
+{%- set options = options | default('One,Two,Three') | split(',') %}
 <div class="mb-3">
-	<div class="form-label">{{ label | default('Select')  }}</div>
-	<select class="form-select" {% if multiple  %} multiple{% endif  %}>
-		{% for option in options  %}
-		<option value="{{ loop.index  }}">{{ option  }}</option>
-		{% endfor  %}
+	<div class="form-label">{{ label | default('Select') }}</div>
+	<select class="form-select" {% if multiple %} multiple{% endif %}>
+		{% for option in options %}
+		<option value="{{ loop.index }}">{{ option }}</option>
+		{% endfor %}
 	</select>
 </div>
 

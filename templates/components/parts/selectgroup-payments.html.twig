@@ -1,26 +1,26 @@
-{# templates/components/parts/selectgroup-payments.html.twig v3.9 #}
+{# templates/components/parts/selectgroup-payments.html.twig v4.8 #}
 <div class="mb-3">
 	<label class="form-label">Payment method</label>
 
-	{% set items = "visa,mastercard,paypal" | split(',')  %}
+	{%- set items = "visa,mastercard,paypal" | split(',') %}
 	<div class="form-selectgroup form-selectgroup-boxes d-flex flex-column">
-		{% for item in items  %}
+		{% for item in items %}
 		<label class="form-selectgroup-item flex-fill">
-			<input type="radio" name="form-payment" value="{{ item | escape  }}" class="form-selectgroup-input"{% if loop.index == 2  %} checked{% endif  %}>
+			<input type="radio" name="form-payment" value="{{ item | escape }}" class="form-selectgroup-input"{% if loop.index == 2 %} checked{% endif %}>
 			<div class="form-selectgroup-label d-flex align-items-center p-3">
 				<div class="me-3">
 					<span class="form-selectgroup-check"></span>
 				</div>
 				<div>
-					<span class="payment payment-provider-{{ item  }} payment-xs me-2"></span>
+					<span class="payment payment-provider-{{ item }} payment-xs me-2"></span>
 
-					{% if loop.index < 3  %}
-					ending in <strong>{{ loop.index | random_number: 1000, 9999  }}</strong>
-					{% endif  %}
+					{% if loop.index < 3 %}
+					ending in <strong>{{ loop.index | random_number: 1000, 9999 }}</strong>
+					{% endif %}
 				</div>
 			</div>
 		</label>
-		{% endfor  %}
+		{% endfor %}
 	</div>
 </div>
 

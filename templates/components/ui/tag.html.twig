@@ -1,26 +1,26 @@
-{# templates/components/ui/tag.html.twig v3.9 #}
+{# templates/components/ui/tag.html.twig v4.8 #}
 <span class="tag">
-	{% if flag  %}
+	{% if flag %}
 		<twig:ui:flag :flag="flag" size="xxs" class="tag-flag"/>
-	{% elseif icon  %}
+	{%- elseif icon %}
 		<twig:ui:icon :icon="icon" size="xxs" class="tag-icon"/>
-	{% elseif person  %}
+	{%- elseif person %}
 		<twig:ui:avatar :person="person" size="xxs" class="tag-avatar"/>
-	{% elseif personId  %}
+	{%- elseif personId %}
 		<twig:ui:avatar :personId="person-id" size="xxs" class="tag-avatar"/>
-	{% elseif payment  %}
+	{%- elseif payment %}
 		<twig:ui:payment :provider="payment" size="xxs" class="tag-payment"/>
-	{% elseif status  %}
+	{%- elseif status %}
 		<twig:ui:badge :color="status" class="tag-status badge-dot" text=""/>
-	{% elseif legend  %}
-		<span class="legend bg-{{ legend  }}"></span>
-	{% elseif checkbox  %}
-		<input type="checkbox" class="form-check-input tag-check"{% if checked  %} checked{% endif  %}/>
-	{% endif  %}
-	{{ text  }}
-	{% if badge  %}
+	{%- elseif legend %}
+		<span class="legend bg-{{ legend }}"></span>
+	{%- elseif checkbox %}
+		<input type="checkbox" class="form-check-input tag-check"{% if checked %} checked{% endif %}/>
+	{% endif %}
+	{{ text }}
+	{% if badge %}
 		<twig:ui:badge :color="status" class="tag-badge" :text="badge" size="sm"/>
-	{% endif  %}
+	{% endif %}
 
 	<a href="#" class="btn-close"></a>
 </span>

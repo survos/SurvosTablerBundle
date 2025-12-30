@@ -1,4 +1,4 @@
-{# templates/components/parts/datagrid.html.twig v3.9 #}
+{# templates/components/parts/datagrid.html.twig v4.8 #}
 <div class="datagrid">
 	<div class="datagrid-item">
 		<div class="datagrid-title">Registrar</div>
@@ -19,10 +19,10 @@
 	<div class="datagrid-item">
 		<div class="datagrid-title">Creator</div>
 		<div class="datagrid-content">
-			{% set creator = people[0]  %}
+			{%- set creator = people[0] %}
 			<div class="d-flex align-items-center">
 				<twig:ui:avatar :person="creator" :rounded="true" size="xs" class="me-2"/>
-				{{ creator.full_name  }}
+				{{ creator.full_name }}
 			</div>
 		</div>
 	</div>

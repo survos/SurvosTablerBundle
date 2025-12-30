@@ -1,5 +1,5 @@
 <?php
-/* src/Components/Layout/ButtonsComponent.php v3.9 - Generated 2025-12-30 */
+/* src/Components/Layout/ButtonsComponent.php v4.8 - Generated 2025-12-30 */
 
 declare(strict_types=1);
 

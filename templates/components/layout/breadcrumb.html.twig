@@ -1,6 +1,6 @@
-{# templates/components/layout/breadcrumb.html.twig v3.9 #}
-{% set breadcrumbPages = "Tabler,Pages,"  %}
-{% set breadcrumbPages = breadcrumbPages | append: page.pageHeader  %}
+{# templates/components/layout/breadcrumb.html.twig v4.8 #}
+{%- set breadcrumbPages = "Tabler,Pages," %}
+{%- set breadcrumbPages = breadcrumbPages ~ page.pageHeader %}
 
 <div class="d-flex">
 	<twig:ui:breadcrumb :pages="breadcrumb-pages" class="breadcrumb-arrows"/>

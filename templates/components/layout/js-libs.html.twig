@@ -1,22 +1,22 @@
-{# templates/components/layout/js-libs.html.twig v3.9 #}
-{% if pageLibs - %}
-{% capture libsCode - %}
-{% for lib in libs - %}
-{% if lib[0] in pageLibs and lib[1].head == head - %}
-{% for file in lib[1].js - %}
-<script src="{% if 'http://' in file or 'https://' in file  %}{{ file | replace: 'GOOGLE_MAPS_KEY', googleMapsKey  }}{% else  %}{{ page | relative  }}/dist/libs/{{ lib[1].npm  }}/{{ file  }}{% if environment != 'development'  %}?{{ 'now' | date('%s')  }}{% endif  %}{% endif  %}" defer></script>
-{% endfor - %}
-{% endif - %}
-{% endfor - %}
-{% endcapture - %}
+{# templates/components/layout/js-libs.html.twig v4.8 #}
+{% if pageLibs -%}
+{% capture libsCode -%}
+{% for lib in libs -%}
+{% if lib[0] in pageLibs and lib[1].head == head -%}
+{% for file in lib[1].js -%}
+<script src="{% if 'http://' in file or 'https://' in file %}{{ file | replace: 'GOOGLE_MAPS_KEY', googleMapsKey }}{% else %}{{ page | relative }}/dist/libs/{{ lib[1].npm }}/{{ file }}{% if environment != 'development' %}?{{ 'now' | date('%s') }}{% endif %}{% endif %}" defer></script>
+{% endfor -%}
+{% endif -%}
+{% endfor -%}
+{%- endset -%}
 
-{% set libsCode = libsCode | trim - %}
-{% if libsCode != "" - %}
+{%- set libsCode = libsCode | trim -%}
+{% if libsCode != "" -%}
 <!-- BEGIN PAGE LIBRARIES -->
-{{ libsCode  }}
+{{ libsCode }}
 <!-- END PAGE LIBRARIES -->
-{% endif - %}
-{% endif - %}
+{% endif -%}
+{% endif -%}
 
 {#
 === Original Liquid (js-libs.html) ===

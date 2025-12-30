@@ -1,18 +1,18 @@
-{# templates/components/cards/track-info.html.twig v3.9 #}
-{% set trackId = trackId | default(5)  %}
-{% set track = tracks[trackId]  %}
+{# templates/components/cards/track-info.html.twig v4.8 #}
+{%- set trackId = trackId | default(5) %}
+{%- set track = tracks[trackId] %}
 <div class="card">
 	<div class="row row-0">
 		<div class="col-auto">
-			<img src="{{ page | relative  }}/static/tracks/{{ track.album.images[1].path  }}" class="rounded-start" alt="{{ track.name | escape  }}" width="80" height="80">
+			<img src="{{ page | relative }}/static/tracks/{{ track.album.images[1].path }}" class="rounded-start" alt="{{ track.name | escape }}" width="80" height="80">
 		</div>
 		<div class="col">
 			<div class="card-body">
-				{{ track.name  }}
+				{{ track.name }}
 				<div class="text-secondary">
-					{% for artist in track.artists  %}
-					{{ artist.name  }}{% if not (loop.last)  %},{% endif  %}
-					{% endfor  %}
+					{% for artist in track.artists %}
+					{{ artist.name }}{%- if not (loop.last) -%},{%- endif -%}
+					{% endfor %}
 				</div>
 			</div>
 		</div>

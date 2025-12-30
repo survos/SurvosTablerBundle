@@ -1,18 +1,18 @@
-{# templates/components/ui/modal.html.twig v3.9 #}
+{# templates/components/ui/modal.html.twig v4.8 #}
 <!-- BEGIN MODAL -->
-{% set modalId = modalId | default('simple')  %}
-{% set size = size  %}
-{% set inline = inline | default(false)  %}
+{%- set modalId = modalId | default('simple') %}
+{%- set size = size %}
+{%- set inline = inline | default(false) %}
 
-{% capture_modal inline  %}
-<div class="modal modal-blur fade{% if class  %} {{ class  }}{% endif  %}{% if show  %} show{% endif  %}" {% if style  %} style="{{ style  }}"{% endif  %} id="modal-{{ modalId  }}" tabindex="-1" role="dialog"{% if show  %} aria-hidden="false"{% else  %} aria-hidden="true"{% endif  %}>
-	<div class="modal-dialog{% if size %} modal-{{ size  }}{% endif  %}{% if not (top)  %} modal-dialog-centered{% endif  %}{% if scrollable  %} modal-dialog-scrollable{% endif  %}" role="document">
+{% capture_modal inline %}
+<div class="modal modal-blur fade{% if class %} {{ class }}{% endif %}{% if show %} show{% endif %}" {% if style %} style="{{ style }}"{% endif %} id="modal-{{ modalId }}" tabindex="-1" role="dialog"{% if show %} aria-hidden="false"{% else %} aria-hidden="true"{% endif %}>
+	<div class="modal-dialog{% if size %} modal-{{ size }}{% endif %}{%- if not (top) -%} modal-dialog-centered{%- endif -%}{% if scrollable %} modal-dialog-scrollable{% endif %}" role="document">
 		<div class="modal-content">
-			<twig:parts:{{ modalId  }}/>
+			<twig:parts:{{ modalId }}/>
 		</div>
 	</div>
 </div>
-{% endcapture_modal  %}
+{% endcapture_modal %}
 <!-- END MODAL -->
 
 {#

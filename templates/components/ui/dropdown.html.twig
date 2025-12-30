@@ -1,12 +1,12 @@
-{# templates/components/ui/dropdown.html.twig v3.9 #}
-{% set optionsArray = options | split(', ')  %}
+{# templates/components/ui/dropdown.html.twig v4.8 #}
+{%- set optionsArray = options | split(', ') %}
 
 <div class="dropdown">
-	<a href="#" class="btn dropdown-toggle" data-bs-toggle="dropdown">{{ mainBtn  }}</a>
+	<a href="#" class="btn dropdown-toggle" data-bs-toggle="dropdown">{{ mainBtn }}</a>
 	<div class="dropdown-menu">
-		{% for option in optionsArray  %}
-		<a class="dropdown-item" href="#">{{ option  }}</a>
-		{% endfor  %}
+		{% for option in optionsArray %}
+		<a class="dropdown-item" href="#">{{ option }}</a>
+		{% endfor %}
 	</div>
 </div>
 

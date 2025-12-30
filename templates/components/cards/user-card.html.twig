@@ -1,21 +1,21 @@
-{# templates/components/cards/user-card.html.twig v3.9 #}
-{% set personId = personId | default(0)  %}
-{% set person = people[personId]  %}
-{% capture colAvatar  %}
+{# templates/components/cards/user-card.html.twig v4.8 #}
+{%- set personId = personId | default(0) %}
+{%- set person = people[personId] %}
+{% capture colAvatar %}
 	<div class="col-auto">
 		<twig:ui:avatar :person="person" class="rounded"/>
 	</div>
-{% - endcapture  %}
+{%- endset -%}
 
 <a class="card card-link" href="#">
 	<div class="card-body">
 		<div class="row">
-			{% if not (right)  %}{{ colAvatar  }}{% endif  %}
+			{%- if not (right) -%}{{ colAvatar }}{%- endif -%}
 			<div class="col">
-				<div class="font-weight-medium">{{ person.full_name  }}</div>
-				<div class="text-secondary">{{ person.job_title  }}</div>
+				<div class="font-weight-medium">{{ person.full_name }}</div>
+				<div class="text-secondary">{{ person.job_title }}</div>
 			</div>
-			{% if right  %}{{ colAvatar  }}{% endif  %}
+			{% if right %}{{ colAvatar }}{% endif %}
 		</div>
 	</div>
 </a>

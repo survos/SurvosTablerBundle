@@ -1,32 +1,32 @@
-{# templates/components/parts/input.html.twig v3.9 #}
-{% set type = type  %}
+{# templates/components/parts/input.html.twig v4.8 #}
+{%- set type = type %}
 
-{% if type == 'static'  %}
+{% if type == 'static' %}
 	<div class="mb-3">
-		<label class="form-label">{{ label | default('Static')  }}</label>
-		<div class="form-control-plaintext">{{ value | default('Input value')  }}</div>
+		<label class="form-label">{{ label | default('Static') }}</label>
+		<div class="form-control-plaintext">{{ value | default('Input value') }}</div>
 	</div>
 
-{% elseif type == 'password'  %}
+{%- elseif type == 'password' %}
 	<div class="mb-3">
-		<label class="form-label">{{ label | default('Password')  }}</label>
-		<input type="text" class="form-control" name="example-password-input" placeholder="{{ placeholder | default('Input placeholder')  }}">
+		<label class="form-label">{{ label | default('Password') }}</label>
+		<input type="text" class="form-control" name="example-password-input" placeholder="{{ placeholder | default('Input placeholder') }}">
 	</div>
 
-{% elseif type == 'textarea'  %}
+{%- elseif type == 'textarea' %}
 <div class="mb-3">
-	<label class="form-label">{{ label | default('Textarea')  }}</label>
-	<textarea class="form-control" name="example-textarea" placeholder="{{ placeholder | default('Textarea placeholder')  }}">{{ value  }}</textarea>
+	<label class="form-label">{{ label | default('Textarea') }}</label>
+	<textarea class="form-control" name="example-textarea" placeholder="{{ placeholder | default('Textarea placeholder') }}">{{ value }}</textarea>
 </div>
 
-{% else  %}
+{% else %}
 
 <div class="mb-3">
-	<label class="form-label">{{ label | default('Text')  }}</label>
-	<input type="text" class="form-control" name="example-text-input" placeholder="{{ placeholder | default('Input placeholder')  }}">
+	<label class="form-label">{{ label | default('Text') }}</label>
+	<input type="text" class="form-control" name="example-text-input" placeholder="{{ placeholder | default('Input placeholder') }}">
 </div>
 
-{% endif  %}
+{% endif %}
 
 {#
 === Original Liquid (form/input.html) ===

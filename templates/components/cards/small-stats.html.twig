@@ -1,44 +1,44 @@
-{# templates/components/cards/small-stats.html.twig v3.9 #}
-{% set chartType = chartType | default('line')  %}
-{% set chartPosition = chartPosition | default('right')  %}
-<div class="card card-sm{% if class  %} {{ class  }}{% endif  %}">
+{# templates/components/cards/small-stats.html.twig v4.8 #}
+{%- set chartType = chartType | default('line') %}
+{%- set chartPosition = chartPosition | default('right') %}
+<div class="card card-sm{% if class %} {{ class }}{% endif %}">
 	<div class="card-body">
 		<div class="row align-items-center">
-			{% if icon  %}
+			{% if icon %}
 				<div class="col-auto">
-					<span class="{% if color  %}bg-{{ color  }}{% if lt  %}-lt{% else  %} text-white{% endif  %}{% endif  %} avatar"><twig:ui:icon :icon="icon"/></span>
+					<span class="{% if color %}bg-{{ color }}{% if lt %}-lt{% else %} text-white{% endif %}{% endif %} avatar"><twig:ui:icon :icon="icon"/></span>
 				</div>
-			{% elseif personId  %}
+			{%- elseif personId %}
 				<div class="col-auto">
 				<twig:ui:avatar :personId="person-id"/>
 				</div>
-			{% elseif chartData and chartPosition == "left"  %}
+			{%- elseif chartData and chartPosition == "left" %}
 				<div class="col-auto">
 					<twig:ui:chart-sparkline :id="id" :data="chart-data" :type="chart-type" :color="color" :label="chart-label" :labelIcon="chart-label-icon"/>
 				</div>
-			{% endif  %}
+			{% endif %}
 
 			<div class="col">
 				<div class="font-weight-medium">
-					{{ title | default(1700)  }}
-					{% if smallIcon  %}
+					{{ title | default(1700) }}
+					{% if smallIcon %}
 						<twig:ui:icon :icon="small-icon" :color="color" class="icon-sm ms-1"/>
-					{% endif  %}
-					{% if descriptionValue  %}
-					<span class="float-end font-weight-medium text-{{ descriptionValueColor | default('green')  }}">{{ descriptionValue  }}</span>
-					{% endif  %}
+					{% endif %}
+					{% if descriptionValue %}
+					<span class="float-end font-weight-medium text-{{ descriptionValueColor | default('green') }}">{{ descriptionValue }}</span>
+					{% endif %}
 				</div>
 				<div class="text-secondary">
-					{{ description | default('Users')  }}
+					{{ description | default('Users') }}
 
 				</div>
 			</div>
 
-			{% if chartData and chartPosition=="right"  %}
+			{% if chartData and chartPosition=="right" %}
 			<div class="col-auto">
 				<twig:ui:chart-sparkline :id="id" :data="chart-data" :type="chart-type" :color="color" :label="chart-label" :labelIcon="chart-label-icon"/>
 			</div>
-			{% endif  %}
+			{% endif %}
 		</div>
 	</div>
 </div>

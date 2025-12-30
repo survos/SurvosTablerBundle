@@ -1,34 +1,34 @@
-{# templates/components/ui/accordion.html.twig v3.9 #}
-{% set accordionCount = count | default(4)  %}
-{% set accordionId = id | default('default')  %}
-{% set accordionToggleIcon = toggleIcon | default('chevronDown')  %}
-{% set accordionTypes = type | default(null) | split(',')  %}
+{# templates/components/ui/accordion.html.twig v4.8 #}
+{%- set accordionCount = count | default(4) %}
+{%- set accordionId = id | default('default') %}
+{%- set accordionToggleIcon = toggleIcon | default('chevronDown') %}
+{%- set accordionTypes = type | default(null) | split(',') %}
 
-<div class="accordion{% for type in accordionTypes  %} accordion-{{ type  }}{% endfor  %}" id="accordion-{{ accordionId  }}">
-	{% for question in questions limit: accordionCount  %}
+<div class="accordion{% for type in accordionTypes %} accordion-{{ type }}{% endfor %}" id="accordion-{{ accordionId }}">
+	{% for question in questions|slice(0, accordionCount) %}
 	<div class="accordion-item">
 		<div class="accordion-header">
-			<button class="accordion-button{% if not (loop.index == 1)  %} collapsed{% endif  %}" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{ loop.index  }}-{{ accordionId  }}" aria-expanded="{% if loop.index == 1  %}true{% else  %}false{% endif  %}">
-				{% if showIcon  %}
+			<button class="accordion-button{%- if not (loop.index == 1) -%} collapsed{%- endif -%}" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{ loop.index }}-{{ accordionId }}" aria-expanded="{% if loop.index == 1 %}true{% else %}false{% endif %}">
+				{% if showIcon %}
 				<div class="accordion-button-icon">
 					<twig:ui:icon icon="link"/>
 				</div>
-				{% endif  %}
+				{% endif %}
 
-				{{ question.question  }}
+				{{ question.question }}
 
-				<div class="accordion-button-toggle{% if toggleIcon  %} accordion-button-toggle-plus{% endif  %}">
+				<div class="accordion-button-toggle{% if toggleIcon %} accordion-button-toggle-plus{% endif %}">
 					<twig:ui:icon :icon="accordion-toggle-icon"/>
 				</div>
 			</button>
 		</div>
-		<div id="collapse-{{ loop.index  }}-{{ accordionId  }}" class="accordion-collapse collapse{% if loop.index == 1  %} show{% endif  %}" data-bs-parent="#accordion-{{ accordionId  }}">
+		<div id="collapse-{{ loop.index }}-{{ accordionId }}" class="accordion-collapse collapse{% if loop.index == 1 %} show{% endif %}" data-bs-parent="#accordion-{{ accordionId }}">
 			<div class="accordion-body">
-				{{ question.answer  }}
+				{{ question.answer }}
 			</div>
 		</div>
 	</div>
-	{% endfor  %}
+	{% endfor %}
 </div>
 
 {#

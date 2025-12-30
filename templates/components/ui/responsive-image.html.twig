@@ -1,8 +1,8 @@
-{# templates/components/ui/responsive-image.html.twig v3.9 #}
-{% set src = src  %}
-{% set width = width | default(507)  %}
+{# templates/components/ui/responsive-image.html.twig v4.8 #}
+{%- set src = src %}
+{%- set width = width | default(507) %}
 <picture>
-	<img src="{{ page | relative  }}/{{ src  }}" srcset="{{ page | relative  }}/{{ src  }} 1x, {{ page | relative  }}/{{ src | replace({'.png': '@2x.png'}) }} 2x" alt="{{ alt  }}" class="img-fluid {{ class  }}" width="{{ width  }}"{% if height  %} height="{{ height  }}"{% endif  %} loading="lazy">
+	<img src="{{ page | relative }}/{{ src }}" srcset="{{ page | relative }}/{{ src }} 1x, {{ page | relative }}/{{ src | replace({'.png': '@2x.png'}) }} 2x" alt="{{ alt }}" class="img-fluid {{ class }}" width="{{ width }}"{% if height %} height="{{ height }}"{% endif %} loading="lazy">
 </picture>
 
 {#

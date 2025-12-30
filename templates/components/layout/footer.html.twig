@@ -1,4 +1,4 @@
-{# templates/components/layout/footer.html.twig v3.9 #}
+{# templates/components/layout/footer.html.twig v4.8 #}
 <!--  BEGIN FOOTER  -->
 <footer class="footer footer-transparent d-print-none">
 	<div class="container-xl">
@@ -6,11 +6,11 @@
 			<div class="col-lg-auto ms-lg-auto">
 				<nav aria-label="Footer">
 					<ul class="list-inline list-inline-dots mb-0">
-						<li class="list-inline-item"><a href="{{ site.docsUrl  }}" target="_blank" class="link-secondary" rel="noopener">Documentation</a></li>
-						<li class="list-inline-item"><a href="{{ page | relative  }}/license.html" class="link-secondary">License</a></li>
-						<li class="list-inline-item"><a href="{{ site.githubUrl  }}" target="_blank" class="link-secondary" rel="noopener">Source code</a></li>
+						<li class="list-inline-item"><a href="{{ site.docsUrl }}" target="_blank" class="link-secondary" rel="noopener">Documentation</a></li>
+						<li class="list-inline-item"><a href="{{ page | relative }}/license.html" class="link-secondary">License</a></li>
+						<li class="list-inline-item"><a href="{{ site.githubUrl }}" target="_blank" class="link-secondary" rel="noopener">Source code</a></li>
 						<li class="list-inline-item">
-							<a href="{{ site.githubSponsorsUrl  }}" target="_blank" class="link-secondary" rel="noopener">
+							<a href="{{ site.githubSponsorsUrl }}" target="_blank" class="link-secondary" rel="noopener">
 								<twig:ui:icon icon="heart" :inline="true" :filled="true" color="pink"/>
 								Sponsor
 							</a>
@@ -21,18 +21,18 @@
 			<div class="col-12 col-lg-auto mt-3 mt-lg-0">
 				<ul class="list-inline list-inline-dots mb-0">
 					<li class="list-inline-item">
-						Copyright &copy; {{ 'now' | date('Y')  }}
-						<a href="{{ page | relative  }}" class="link-secondary">{{ site.title  }}</a>.
+						Copyright &copy; {{ 'now' | date('Y') }}
+						<a href="{{ page | relative }}" class="link-secondary">{{ site.title }}</a>.
 						All rights reserved.
 					</li>
 					<li class="list-inline-item">
-						{% if environment == 'production' or environment == 'preview'  %}
-						<a href="{{ page | relative  }}/changelog.html" class="link-secondary" rel="noopener">
-							v{{ package.version  }}
+						{% if environment == 'production' or environment == 'preview' %}
+						<a href="{{ page | relative }}/changelog.html" class="link-secondary" rel="noopener">
+							v{{ package.version }}
 						</a>
-						{% else  %}
-							Generated {{ 'now' | date('Y-mD H:i T')  }}
-						{% endif  %}
+						{% else %}
+							Generated {{ 'now' | date('Y-mD H:i T') }}
+						{% endif %}
 					</li>
 				</ul>
 			</div>

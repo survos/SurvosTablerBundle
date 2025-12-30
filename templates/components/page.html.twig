@@ -1,6 +1,6 @@
 {# @SurvosTabler/components/page.html.twig v2.0 - Main page wrapper #}
 {% set _layout = this.layout|default('horizontal') %}
-
+<!-- {{ _self }} {{ _layout }} -->
 <!doctype html>
 <html lang="{{ app.request.locale|default('en') }}"{% if _layout == 'rtl' %} dir="rtl"{% endif %}>
 <head>
@@ -43,7 +43,7 @@
                 </h1>
 
                 <div class="navbar-nav flex-row order-md-last">
-                    {{ component('menu', {type: NAVBAR_MENU}) }}
+{#                    {{ component('tabler:menu', {type: NAVBAR_MENU, caller: _self}) }}#}
 {#                    {{ tabler_menu(SEARCH, {layout: this.layout}) }}#}
 {#                    {{ tabler_menu(NAVBAR_END, {layout: this.layout}) }}#}
 {#                    {{ tabler_menu(AUTH, {layout: this.layout}) }}#}

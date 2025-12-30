@@ -1,5 +1,5 @@
-{# templates/components/ui/dropdown-menu-all.html.twig v3.9 #}
-<div class="dropdown-menu{% if show  %} dropdown-menu-demo{% endif  %}">
+{# templates/components/ui/dropdown-menu-all.html.twig v4.8 #}
+<div class="dropdown-menu{% if show %} dropdown-menu-demo{% endif %}">
 
 	<h6 class="dropdown-header">Dropdown header</h6>
 	<a href="#" class="dropdown-item"><twig:ui:icon icon="activity" class="dropdown-item-icon"/> Item 1</a>
@@ -25,9 +25,9 @@
 
 	<div class="dropdown-divider"></div>
 
-	{% for person in people|slice(0, 3)  %}
-	<a href="#" class="dropdown-item"><twig:ui:avatar :personId="person.id" class="rounded me-2" size="xs"/> {{ person.full_name  }}</a>
-	{% endfor  %}
+	{% for person in people|slice(0, 3) %}
+	<a href="#" class="dropdown-item"><twig:ui:avatar :personId="person.id" class="rounded me-2" size="xs"/> {{ person.full_name }}</a>
+	{% endfor %}
 
 	<div class="dropdown-divider"></div>
 

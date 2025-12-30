@@ -1,5 +1,5 @@
-{# templates/components/ui/nav.html.twig v3.9 #}
-<ul class="nav {% if pills  %}nav-pills{% if header  %} card-header-pills{% endif  %}{% elseif tabs  %}nav-tabs{% if header  %} card-header-tabs{% endif  %}{% endif  %}{% if class  %} {{ class  }}{% endif  %}">
+{# templates/components/ui/nav.html.twig v4.8 #}
+<ul class="nav {% if pills %}nav-pills{% if header %} card-header-pills{% endif %}{%- elseif tabs %}nav-tabs{% if header %} card-header-tabs{% endif %}{% endif %}{% if class %} {{ class }}{% endif %}">
    <li class="nav-item">
       <a class="nav-link active" href="#">
          Active

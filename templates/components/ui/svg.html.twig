@@ -1,10 +1,10 @@
-{# templates/components/ui/svg.html.twig v3.9 #}
-{% set width = width | default(size) | default(20)  %}
-{% set height = height | default(size) | default(20)  %}
-<svg xmlns="http://www.w3.org/2000/svg"{% if class  %} class="{{ class  }}"{% endif  %} preserveAspectRatio="{% if ratio  %}xMidYMid meet{% else  %}none{% endif  %}" width="{{ width  }}" height="{{ height  }}" viewBox="0 0 {{ width  }} {{ height  }}" fill="transparent" stroke="var(--tblr-border-color, #b8cef1)"{% if border  %} style="width: 100%; height: auto"{% endif  %}>
-	{% if border  %}<rect x=".5" y=".5" width="{{ width - 1  }}" height="{{ height - 1  }}" rx="2"></rect>{% endif  %}
-	<line x1="0" y1="0" x2="{{ width  }}" y2="{{ height  }}"></line>
-	<line x1="0" y1="{{ height  }}" x2="{{ width  }}" y2="0"></line>
+{# templates/components/ui/svg.html.twig v4.8 #}
+{%- set width = width | default(size) | default(20) %}
+{%- set height = height | default(size) | default(20) %}
+<svg xmlns="http://www.w3.org/2000/svg"{% if class %} class="{{ class }}"{% endif %} preserveAspectRatio="{% if ratio %}xMidYMid meet{% else %}none{% endif %}" width="{{ width }}" height="{{ height }}" viewBox="0 0 {{ width }} {{ height }}" fill="transparent" stroke="var(--tblr-border-color, #b8cef1)"{% if border %} style="width: 100%; height: auto"{% endif %}>
+	{% if border %}<rect x=".5" y=".5" width="{{ width - 1 }}" height="{{ height - 1 }}" rx="2"></rect>{% endif %}
+	<line x1="0" y1="0" x2="{{ width }}" y2="{{ height }}"></line>
+	<line x1="0" y1="{{ height }}" x2="{{ width }}" y2="0"></line>
 </svg>
 
 {#

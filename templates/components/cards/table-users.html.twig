@@ -1,4 +1,4 @@
-{# templates/components/cards/table-users.html.twig v3.9 #}
+{# templates/components/cards/table-users.html.twig v4.8 #}
 <div class="card">
 	<div class="table-responsive">
 		<table class="table table-hover table-outline table-vcenter text-nowrap card-table">
@@ -13,26 +13,26 @@
 			</thead>
 			<tbody>
 
-			{% for person in people|slice(50, 8)  %}
-			{% set percentage = loop.index | random_number  %}
-			{% set time_offset = loop.index | random_number: 0, 800  %}
-			{% set register_offset = loop.index | random_number: 0, 8000000  %}
-			{% set percentage_color = percentage | number_color  %}
+			{% for person in people|slice(50, 8) %}
+			{%- set percentage = loop.index | random_number %}
+			{%- set time_offset = loop.index | random_number: 0, 800 %}
+			{%- set register_offset = loop.index | random_number: 0, 8000000 %}
+			{%- set percentage_color = percentage | number_color %}
 
 			<tr>
 				<td class="text-center w-1">
 					<twig:ui:avatar :personId="person.id"/>
 				</td>
 				<td>
-					<div>{{ person.full_name  }}</div>
+					<div>{{ person.full_name }}</div>
 					<div class="small text-secondary">
-						Registered: {{ 'now' | date('%s') | minus: register_offset | date('M %-d, Y')  }}
+						Registered: {{ 'now' | date('%s') | minus: register_offset | date('M %-d, Y') }}
 					</div>
 				</td>
 				<td>
 					<div class="clearfix">
 						<div class="float-start">
-							<strong>{{ percentage  }}%</strong>
+							<strong>{{ percentage }}%</strong>
 						</div>
 						<div class="float-end">
 							<small class="text-secondary">Jun 11, 2015 - Jul 10, 2015</small>
@@ -42,25 +42,25 @@
 
 				</td>
 				<td class="text-center">
-					{% set payment  %}
-					{% - cycle 'visa', 'googlewallet', 'mastercard', 'shopify', 'ebay', 'paypal' - %}
-					{% - endcapture  %}
+					{%- set payment -%}
+					{%- cycle 'visa', 'googlewallet', 'mastercard', 'shopify', 'ebay', 'paypal' -%}
+					{%- endset -%}
 					<twig:ui:payment :payment="payment"/>
 				</td>
 				<td>
 					<div class="small text-secondary">Last login</div>
-					<div>{{ 'now' | date('%s') | minus: time_offset | to_pretty_time  }}</div>
+					<div>{{ 'now' | date('%s') | minus: time_offset | to_pretty_time }}</div>
 				</td>
 				<td class="text-center">
-					{% set percentage = loop.index | random_number: 0, 100  %}
-<!--					<div class="mx-auto" data-value="{{ circlePercentage | divide: 100  }}"-->
+					{%- set percentage = loop.index | random_number: 0, 100 %}
+<!--					<div class="mx-auto" data-value="{{ circlePercentage | divide: 100 }}"-->
 <!--					     data-thickness="3" data-color="primary">-->
-<!--						<div class="chart-circle-value">{{ percentage  }}%</div>-->
+<!--						<div class="chart-circle-value">{{ percentage }}%</div>-->
 <!--					</div>-->
 					<twig:ui:chart-sparkline :percentage="percentage" type="donut"/>
 				</td>
 			</tr>
-			{% endfor  %}
+			{% endfor %}
 			</tbody>
 		</table>
 	</div>

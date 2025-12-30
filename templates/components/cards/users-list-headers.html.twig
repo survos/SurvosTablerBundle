@@ -1,19 +1,19 @@
-{# templates/components/cards/users-list-headers.html.twig v3.9 #}
+{# templates/components/cards/users-list-headers.html.twig v4.8 #}
 <div class="card">
 	<div class="card-header">
-		<h3 class="card-title">{{ title | default('People')  }}</h3>
+		<h3 class="card-title">{{ title | default('People') }}</h3>
 	</div>
 
 	<div class="list-group list-group-flush overflow-auto" style="max-height: 35rem">
-		{% set prevLetter = ''  %}
-		{% set people = people | sort: 'last_name'  %}
+		{%- set prevLetter = '' %}
+		{%- set people = people | sort: 'last_name' %}
 
-		{% for person in people  %}
-			{% set firstLetter = person.last_name | slice: 0  %}
-			{% if prevLetter != firstLetter  %}
-				{% set prevLetter = firstLetter  %}
-				<div class="list-group-header sticky-top">{{ prevLetter  }}</div>
-			{% endif  %}
+		{% for person in people %}
+			{%- set firstLetter = person.last_name | slice(0, 1) %}
+			{% if prevLetter != firstLetter %}
+				{%- set prevLetter = firstLetter %}
+				<div class="list-group-header sticky-top">{{ prevLetter }}</div>
+			{% endif %}
 			<div class="list-group-item">
 				<div class="row">
 					<div class="col-auto">
@@ -22,13 +22,13 @@
 						</a>
 					</div>
 					<div class="col text-truncate">
-						<a href="#" class="text-body d-block">{{ person.full_name  }}</a>
-						{% set i = loop.index | plus: offset  %}
-						<div class="text-secondary text-truncate mt-n1">{{ commits[i].description  }}</div>
+						<a href="#" class="text-body d-block">{{ person.full_name }}</a>
+						{%- set i = loop.index | plus: offset %}
+						<div class="text-secondary text-truncate mt-n1">{{ commits[i].description }}</div>
 					</div>
 				</div>
 			</div>
-		{% endfor  %}
+		{% endfor %}
 	</div>
 </div>
 

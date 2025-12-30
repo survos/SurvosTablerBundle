@@ -1,26 +1,26 @@
-{# templates/components/ui/photo.html.twig v3.9 #}
+{# templates/components/ui/photo.html.twig v4.8 #}
 <!-- Photo -->
-{% if id  %}
-{% set id = id | default(1)  %}
-{% if horizontal  %}
-{% set filteredPhotos = photos | where: 'horizontal', true  %}
-{% else  %}
-{% set filteredPhotos = photos  %}
-{% endif  %}
+{% if id %}
+{%- set id = id | default(1) %}
+{% if horizontal %}
+{%- set filteredPhotos = photos | where: 'horizontal', true %}
+{% else %}
+{%- set filteredPhotos = photos %}
+{% endif %}
 
-{% set photo = filteredPhotos[id]  %}
+{%- set photo = filteredPhotos[id] %}
 
-{% if background  %}
-<div{% if class  %} class="{{ class  }}"{% endif  %} style="background-image: url({{ page | relative  }}/static/photos/{{ photo.file  }})"></div>
-{% elseif ratio  %}
-<div class="img-responsive img-responsive-{{ ratio  }}{% if class  %} {{ class  }}{% endif  %}" style="background-image: url({{ page | relative  }}/static/photos/{{ photo.file  }})"></div>
-{% else  %}
-<img src="{{ page | relative  }}/static/photos/{{ photo.file  }}"{% if class  %} class="{{ class  }}"{% endif  %} alt="{{ photo.title  }}" />
-{% endif  %}
+{% if background %}
+<div{% if class %} class="{{ class }}"{% endif %} style="background-image: url({{ page | relative }}/static/photos/{{ photo.file }})"></div>
+{%- elseif ratio %}
+<div class="img-responsive img-responsive-{{ ratio }}{% if class %} {{ class }}{% endif %}" style="background-image: url({{ page | relative }}/static/photos/{{ photo.file }})"></div>
+{% else %}
+<img src="{{ page | relative }}/static/photos/{{ photo.file }}"{% if class %} class="{{ class }}"{% endif %} alt="{{ photo.title }}" />
+{% endif %}
 
-{% else  %}
+{% else %}
 <twig:ui:svg :width="640" :height="480" :border="true" :class="class"/>
-{% endif  %}
+{% endif %}
 
 {#
 === Original Liquid (photo.html) ===

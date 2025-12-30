@@ -1,42 +1,42 @@
-{# templates/components/ui/avatar.html.twig v3.9 #}
-{% - assign src = src - %}
-{% - assign placeholder = placeholder - %}
-{% - if personId - %}
-	{% - assign personId = personId - 1 - %}
-	{% - assign person = people[personId] - %}
-	{% - assign src = person.photo - %}
-	{% - unless src - %}
-		{% - assign placeholder = person.full_name | first_letters - %}
-	{% - endunless - %}
-	{% - elsif person - %}
-	{% - assign person = person - %}
-	{% - assign src = person.photo - %}
-	{% - unless src - %}
-		{% - assign placeholder = person.full_name | first_letters - %}
-	{% - endunless - %}
-{% - endif - %}
-{% - assign link = link | default(false) - %}
-{% - if dropdown - %}
-	{% - assign link = true - %}
-{% - endif - %}
-{% - assign el = 'span' - %}
-{% - if link - %}{% - assign el = 'a' - %}{% - endif - %}
-<{{ el  }} class="avatar{% if size  %} avatar-{{ size  }}{% endif  %}{% if thumb  %} avatar-thumb{% endif  %}{% if class  %} {{ class  }}{% endif  %}{% if shape  %} {{ shape  }}{% endif  %}{% if color  %} bg-{{ color  }}-lt{% endif  %}"{% if src  %} style="background-image: url({{ page | relative  }}/{{ src  }})"{% endif  %}{% if dropdown  %} data-bs-toggle="dropdown"{% endif  %}>
-{% - if status - %}
-<span class="badge bg-{{ status  }}">{% if statusText  %}{{ statusText  }}{% elseif statusIcon  %}<twig:ui:icon :icon="status-icon" class="avatar-status-icon"/>{% endif  %}</span>
-{% - endif - %}
-{% - if brand - %}
-<span class="avatar-brand" style="background-image: url({{ page | relative  }}/static/brands/{{ brand  }}.svg);"></span>
-{% - endif - %}
-{% if src  %}
-{% elseif placeholder  %}
-{{ placeholder  }}
-{% elseif icon  %}
+{# templates/components/ui/avatar.html.twig v4.8 #}
+{%- set src = src -%}
+{%- set placeholder = placeholder -%}
+{%- if personId -%}
+	{%- set personId = personId - 1 -%}
+	{%- set person = people[personId] -%}
+	{%- set src = person.photo -%}
+	{%- if not (src) -%}
+		{%- set placeholder = person.full_name | first_letters -%}
+	{%- endif -%}
+	{%- elseif person -%}
+	{%- set person = person -%}
+	{%- set src = person.photo -%}
+	{%- if not (src) -%}
+		{%- set placeholder = person.full_name | first_letters -%}
+	{%- endif -%}
+{%- endif -%}
+{%- set link = link | default(false) -%}
+{%- if dropdown -%}
+	{%- set link = true -%}
+{%- endif -%}
+{%- set el = 'span' -%}
+{%- if link -%}{%- set el = 'a' -%}{%- endif -%}
+<{{ el }} class="avatar{% if size %} avatar-{{ size }}{% endif %}{% if thumb %} avatar-thumb{% endif %}{% if class %} {{ class }}{% endif %}{% if shape %} {{ shape }}{% endif %}{% if color %} bg-{{ color }}-lt{% endif %}"{% if src %} style="background-image: url({{ page | relative }}/{{ src }})"{% endif %}{% if dropdown %} data-bs-toggle="dropdown"{% endif %}>
+{%- if status -%}
+<span class="badge bg-{{ status }}">{% if statusText %}{{ statusText }}{%- elseif statusIcon %}<twig:ui:icon :icon="status-icon" class="avatar-status-icon"/>{% endif %}</span>
+{%- endif -%}
+{%- if brand -%}
+<span class="avatar-brand" style="background-image: url({{ page | relative }}/static/brands/{{ brand }}.svg);"></span>
+{%- endif -%}
+{% if src %}
+{%- elseif placeholder %}
+{{ placeholder }}
+{%- elseif icon %}
 <twig:ui:icon :icon="icon" class="avatar-icon"/>
-{% else  %}
+{% else %}
 <twig:ui:icon icon="user" class="avatar-icon"/>
-{% endif  %}
-</{{ el  }}>
+{% endif %}
+</{{ el }}>
 
 {#
 === Original Liquid (avatar.html) ===

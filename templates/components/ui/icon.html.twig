@@ -1,35 +1,35 @@
-{# templates/components/ui/icon.html.twig v3.9 #}
-{% - assign iconName = icon - %}
-{% - assign iconType = type | default('outline') - %}
+{# templates/components/ui/icon.html.twig v4.8 #}
+{%- set iconName = icon -%}
+{%- set iconType = type | default('outline') -%}
 
-{% - assign replaceTo = "icon" - %}
+{%- set replaceTo = "icon" -%}
 
-{% - if class - %}
-{% - assign replaceTo = replaceTo ~ ' ' | append: class - %}
-{% - endif - %}
+{%- if class -%}
+{%- set replaceTo = replaceTo ~ ' ' ~ class -%}
+{%- endif -%}
 
-{% - if color - %}
-{% - assign replaceTo = replaceTo ~ ' text-' | append: color - %}
-{% - endif  %}
+{%- if color -%}
+{%- set replaceTo = replaceTo ~ ' text-' ~ color -%}
+{%- endif %}
 
-{% - if inline - %}
-{% - assign replaceTo = replaceTo ~ ' iconInline' - %}
-{% - endif - %}
+{%- if inline -%}
+{%- set replaceTo = replaceTo ~ ' iconInline' -%}
+{%- endif -%}
 
-{% - if size - %}
-{% - assign replaceTo = replaceTo ~ ' icon-' | append: size - %}
-{% - endif - %}
+{%- if size -%}
+{%- set replaceTo = replaceTo ~ ' icon-' ~ size -%}
+{%- endif -%}
 
-{% - assign replaceTo = 'class="' | append: replaceTo ~ ''' - %}
+{%- set replaceTo = 'class="' ~ replaceTo ~ '"' -%}
 
-{% - if site.useIconfont - %}
-	<i class="icon ti ti-{{ iconName  }}{% if color  %} {{ color  }}{% endif  %}{% if class  %} {{ class  }}{% endif  %}"></i>
-{% - elsif icons[iconName] - %}
-	<!-- Download SVG icon from http://tabler.io/icons/icon/{{ iconName  }} -->
-	{% set svgIcon = icons[iconName].svg[iconType] | default(null) - %}
-	{% - assign svgIcon = svgIcon | replace: '<path stroke="none" d="M0 0h24v24H0z" fill="none"/>', '' - %}
-	{{ svgIcon | replace_regex: 'class=\"[^"]+\"', replaceTo | replace: 'class="', 'ariaHidden="true" focusable="false" class="'  }}
-{% - endif - %}
+{%- if site.useIconfont -%}
+	<i class="icon ti ti-{{ iconName }}{% if color %} {{ color }}{% endif %}{% if class %} {{ class }}{% endif %}"></i>
+{%- elseif icons[iconName] -%}
+	<!-- Download SVG icon from http://tabler.io/icons/icon/{{ iconName }} -->
+	{%- set svgIcon = icons[iconName].svg[iconType] | default(null) -%}
+	{%- set svgIcon = svgIcon | replace({'<path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/>': ''}) -%}
+	{{ svgIcon  | replace({'class=\"': 'ariaHidden=\"true\" focusable=\"false\" class=\"'}) }}
+{%- endif -%}
 
 {#
 === Original Liquid (icon.html) ===

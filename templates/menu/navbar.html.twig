@@ -3,6 +3,7 @@
 
 {% block list %}
     {{ _self }}
+    {% import _self as knp_menu %}
 <ul{{ knp_menu.attributes(listAttributes) }}>
     {{ block('children') }}
 </ul>
@@ -55,7 +56,8 @@
     </div>
 {% else %}
     <a class="dropdown-item" href="{{ item.uri }}">
-        {% if icon %}{{ ux_icon('tabler:' ~ icon, {class: 'icon dropdown-item-icon'}) }}{% endif %}
+        {{ icon }}
+{#        {% if icon %}{{ ux_icon('tabler:' ~ icon, {class: 'icon dropdown-item-icon'}) }}{% endif %}#}
         {{ block('label') }}
         {% if badge %}<span class="badge badge-sm bg-green-lt text-uppercase ms-auto">{{ badge }}</span>{% endif %}
     </a>

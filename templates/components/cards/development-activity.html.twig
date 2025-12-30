@@ -1,4 +1,4 @@
-{# templates/components/cards/development-activity.html.twig v3.9 #}
+{# templates/components/cards/development-activity.html.twig v4.8 #}
 <div class="card">
 	<div class="card-header border-0">
 		<div class="card-title">Development activity</div>
@@ -26,19 +26,19 @@
 			</tr>
 			</thead>
 			<tbody>
-			{% for commit in commits|slice(0, 5)  %}
+			{% for commit in commits|slice(0, 5) %}
 			<tr>
 				<td class="w-1">
 					<twig:ui:avatar :personId="loop.index" size="sm"/>
 				</td>
 				<td class="td-truncate">
 					<div class="text-truncate">
-						{{ commit.description  }}
+						{{ commit.description }}
 					</div>
 				</td>
-				<td class="text-nowrap text-secondary">{{ commit.date | date_to_string  }}</td>
+				<td class="text-nowrap text-secondary">{{ commit.date | date_to_string }}</td>
 			</tr>
-			{% endfor  %}
+			{% endfor %}
 			</tbody>
 		</table>
 	</div>

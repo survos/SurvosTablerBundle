@@ -1,5 +1,5 @@
 <?php
-/* src/Components/Cards/CommentsComponent.php v3.9 - Generated 2025-12-30 */
+/* src/Components/Cards/CommentsComponent.php v4.8 - Generated 2025-12-30 */
 
 declare(strict_types=1);
 
@@ -15,6 +15,7 @@ final class CommentsComponent
 {
     use DataAwareTrait;
 
+    public ?iterable $people = null;
 
     public function __construct(
         ?FixtureService $fixtureService = null,

@@ -1,51 +1,51 @@
-{# templates/components/ui/input-group.html.twig v3.9 #}
-<div class="input-group{% if flat  %} input-group-flat{% endif  %}{% if class  %} {{ class  }}{% endif  %}">
-	{% if prepend  %}
+{# templates/components/ui/input-group.html.twig v4.8 #}
+<div class="input-group{% if flat %} input-group-flat{% endif %}{% if class %} {{ class }}{% endif %}">
+	{% if prepend %}
 	<span class="input-group-text">
-		{% if prepend == "checkbox" or prepend == "radio"  %}
-			<input class="form-check-input m-0" type="{{ prepend  }}" checked>
-		{% else  %}
-			{{ prepend  }}
-		{% endif  %}
+		{% if prepend == "checkbox" or prepend == "radio" %}
+			<input class="form-check-input m-0" type="{{ prepend }}" checked>
+		{% else %}
+			{{ prepend }}
+		{% endif %}
 	</span>
-	{% endif  %}
-	{% if prependHtml  %}
+	{% endif %}
+	{% if prependHtml %}
 	<span class="input-group-text">
-		{{ prependHtml  }}
+		{{ prependHtml }}
 	</span>
-	{% endif  %}
-	<input type="{{ type | default('text')  }}" class="form-control{% if inputClass  %} {{ inputClass  }}{% endif  %}" {% if placeholder  %} placeholder="{{ placeholder  }}" {% endif  %}{% if value  %} value="{{ value  }}"{% endif  %} autocomplete="off"{% if id  %} id="{{ id  }}"{% endif  %}>
-	{% if append  %}
+	{% endif %}
+	<input type="{{ type | default('text') }}" class="form-control{% if inputClass %} {{ inputClass }}{% endif %}" {% if placeholder %} placeholder="{{ placeholder }}" {% endif %}{% if value %} value="{{ value }}"{% endif %} autocomplete="off"{% if id %} id="{{ id }}"{% endif %}>
+	{% if append %}
 	<span class="input-group-text">
-		{% if append == "checkbox" or append == "radio"  %}
-			<input class="form-check-input m-0" type="{{ append  }}" checked>
-		{% else  %}
-			{{ append  }}
-		{% endif  %}
+		{% if append == "checkbox" or append == "radio" %}
+			<input class="form-check-input m-0" type="{{ append }}" checked>
+		{% else %}
+			{{ append }}
+		{% endif %}
 	</span>
-	{% endif  %}
-	{% if appendLink  %}
+	{% endif %}
+	{% if appendLink %}
 	<span class="input-group-text">
-		<a href="#" class="input-group-link">{{ appendLink  }}</a>
+		<a href="#" class="input-group-link">{{ appendLink }}</a>
 	</span>
-	{% endif  %}
-	{% if appendHtml  %}
+	{% endif %}
+	{% if appendHtml %}
 	<span class="input-group-text">
-		{{ appendHtml  }}
+		{{ appendHtml }}
 	</span>
-	{% endif  %}
-	{% if appendButton  %}
-	{% set buttons = appendButton | split(',')  %}
+	{% endif %}
+	{% if appendButton %}
+	{%- set buttons = appendButton | split(',') %}
 	<span class="input-group-text">
-		{% for button in buttons  %}
-		{% set b = button | split(':')  %}
-		{% set icon = b[0]  %}
-		{% set description = b[1]  %}
+		{% for button in buttons %}
+		{%- set b = button | split(':') %}
+		{%- set icon = b[0] %}
+		{%- set description = b[1] %}
 
-		<a href="#" class="link-secondary{% if not (loop.first)  %} ms-2{% endif  %}{% if loop.index == 3  %} disabled{% endif  %}" title="{{ description  }}" data-bs-toggle="tooltip"><twig:ui:icon :icon="icon"/></a>
-		{% endfor  %}
+		<a href="#" class="link-secondary{%- if not (loop.first) -%} ms-2{%- endif -%}{% if loop.index == 3 %} disabled{% endif %}" title="{{ description }}" data-bs-toggle="tooltip"><twig:ui:icon :icon="icon"/></a>
+		{% endfor %}
 	</span>
-	{% endif  %}
+	{% endif %}
 </div>
 
 {#

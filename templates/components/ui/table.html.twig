@@ -1,73 +1,73 @@
-{# templates/components/ui/table.html.twig v3.9 #}
-{% set roles = 'User,Admin,Owner' | split(',')  %}
-{% set limit = limit | default(5)  %}
+{# templates/components/ui/table.html.twig v4.8 #}
+{%- set roles = 'User,Admin,Owner' | split(',') %}
+{%- set limit = limit | default(5) %}
 <div class="table-responsive">
 	<table
-		class="table table-vcenter{% if mobile  %} table-mobile-md{% endif  %}{% if card  %} card-table{% endif  %}{% if stripped  %} table-striped{% endif  %}{% if nowrap  %} table-nowrap{% endif  %}">
+		class="table table-vcenter{% if mobile %} table-mobile-md{% endif %}{% if card %} card-table{% endif %}{% if stripped %} table-striped{% endif %}{% if nowrap %} table-nowrap{% endif %}">
 		<thead>
 		<tr>
 			<th>Name</th>
 			<th>Title</th>
 
-			{% if not (avatars)  %}
+			{%- if not (avatars) -%}
 			<th>Email</th>
-			{% endif  %}
+			{%- endif -%}
 
 			<th>Role</th>
 
-			{% if nowrap  %}
+			{% if nowrap %}
 			<th></th>
-			{% endif  %}
+			{% endif %}
 
 			<th class="w-1"></th>
 		</tr>
 		</thead>
 		<tbody>
-		{% for person in people limit: limit offset: offset  %}
+		{% for person in people|slice(offset, limit) %}
 		<tr>
-			{% if avatars  %}
-			<td {% if mobile  %}data-label="Name" {% endif  %}>
+			{% if avatars %}
+			<td {% if mobile %}data-label="Name" {% endif %}>
 				<div class="d-flex py-1 align-items-center">
 					<twig:ui:avatar :personId="person.id" class="me-2"/>
 					<div class="flex-fill">
-						<div class="font-weight-medium">{{ person.full_name  }}</div>
-						<div class="text-secondary"><a href="#" class="text-reset">{{ person.email  }}</a></div>
+						<div class="font-weight-medium">{{ person.full_name }}</div>
+						<div class="text-secondary"><a href="#" class="text-reset">{{ person.email }}</a></div>
 					</div>
 				</div>
 			</td>
-			{% else  %}
-			<td {% if mobile  %}data-label="Name" {% endif  %}>{{ person.full_name  }}</td>
-			{% endif  %}
+			{% else %}
+			<td {% if mobile %}data-label="Name" {% endif %}>{{ person.full_name }}</td>
+			{% endif %}
 
-			{% if avatars  %}
-			<td {% if mobile  %}data-label="Title" {% endif  %}>
-				<div>{{ person.job_title  }}</div>
-				<div class="text-secondary">{{ person.department  }}</div>
+			{% if avatars %}
+			<td {% if mobile %}data-label="Title" {% endif %}>
+				<div>{{ person.job_title }}</div>
+				<div class="text-secondary">{{ person.department }}</div>
 			</td>
-			{% else  %}
-			<td class="text-secondary" {% if mobile  %}data-label="Title" {% endif  %}>
-				{{ person.job_title  }}, {{ person.department  }}
+			{% else %}
+			<td class="text-secondary" {% if mobile %}data-label="Title" {% endif %}>
+				{{ person.job_title }}, {{ person.department }}
 			</td>
-			{% endif  %}
+			{% endif %}
 
-			{% if not (avatars)  %}
-			<td class="text-secondary" {% if mobile  %}data-label="Email" {% endif  %}><a href="#" class="text-reset">{{ person.email  }}</a></td>
-			{% endif  %}
+			{%- if not (avatars) -%}
+			<td class="text-secondary" {% if mobile %}data-label="Email" {% endif %}><a href="#" class="text-reset">{{ person.email }}</a></td>
+			{%- endif -%}
 
-			<td class="text-secondary" {% if mobile  %}data-label="Role" {% endif  %}>
-				{% set roleId = loop.index | random_number: 0, 2  %}
-				{{ roles[roleId]  }}
+			<td class="text-secondary" {% if mobile %}data-label="Role" {% endif %}>
+				{%- set roleId = loop.index | random_number: 0, 2 %}
+				{{ roles[roleId] }}
 			</td>
 
-			{% if nowrap  %}
+			{% if nowrap %}
 			<td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi, commodi cupiditate debitis deserunt
 				expedita hic incidunt iste modi molestiae nesciunt non nostrum perferendis perspiciatis placeat praesentium
 				quaerat quo repellendus, voluptates.
 			</td>
-			{% endif  %}
+			{% endif %}
 
 			<td>
-				{% if buttons  %}
+				{% if buttons %}
 				<div class="btn-list flex-nowrap">
 					<twig:ui:button text="Edit"/>
 					<div class="dropdown">
@@ -77,12 +77,12 @@
 						<twig:ui:dropdown-menu :right="true"/>
 					</div>
 				</div>
-				{% else  %}
+				{% else %}
 				<a href="#">Edit</a>
-				{% endif  %}
+				{% endif %}
 			</td>
 		</tr>
-		{% endfor  %}
+		{% endfor %}
 		</tbody>
 	</table>
 </div>

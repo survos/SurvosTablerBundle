@@ -1,97 +1,97 @@
-{# templates/components/layout/navbar-menu.html.twig v3.9 #}
+{# templates/components/layout/navbar-menu.html.twig v4.8 #}
 <!-- BEGIN NAVBAR MENU -->
-{% set currentPage = pageMenu | default(layout.menu) | split('.')  %}
-{% set hideIcons = hideIcons  %}
-{% set iconsCount = iconsInfo.count  %}
+{%- set currentPage = pageMenu | default(layout.menu) | split('.') %}
+{%- set hideIcons = hideIcons %}
+{%- set iconsCount = iconsInfo.count %}
 
-{% if sample  %}
-	{% set menu = menuSample  %}
-{% endif  %}
+{% if sample %}
+	{%- set menu = menuSample %}
+{% endif %}
 
-<ul class="navbar-nav{% if class  %} {{ class  }}{% endif  %}">
-	{% for level1 in menu  %}
-		{% set icon = level1[1].icon  %}
-		<li class="nav-item{% if level1[0] == currentPage[0] or level1[1].active  %} active{% endif  %}{% if level1[1].children  %} dropdown{% endif  %}">
-			<a class="nav-link{% if level1[1].children  %} dropdown-toggle{% endif  %}{% if level1[1].disabled  %} disabled{% endif  %}" {% if level1[1].children  %}href="#navbar-{{ level1[0]  }}" data-bs-toggle="dropdown" data-bs-auto-close="{% if keepOpen  %}false{% else  %}outside{% endif  %}" role="button" aria-haspopup="true" aria-expanded="{% if autoOpen and level1[0] == currentPage[0]  %}true{% else  %}false{% endif  %}" {% else  %}href="{{ page | relative  }}/{{ level1[1].url  }}" {% endif  %}{% if level1[0] == currentPage[0] or level1[1].active  %} aria-current="page"{% endif  %}>
-				{% if not (hideIcons)  %}
+<ul class="navbar-nav{% if class %} {{ class }}{% endif %}">
+	{% for level1 in menu %}
+		{%- set icon = level1[1].icon %}
+		<li class="nav-item{% if level1[0] == currentPage[0] or level1[1].active %} active{% endif %}{% if level1[1].children %} dropdown{% endif %}">
+			<a class="nav-link{% if level1[1].children %} dropdown-toggle{% endif %}{% if level1[1].disabled %} disabled{% endif %}" {% if level1[1].children %}href="#navbar-{{ level1[0] }}" data-bs-toggle="dropdown" data-bs-auto-close="{% if keepOpen %}false{% else %}outside{% endif %}" role="button" aria-haspopup="true" aria-expanded="{% if autoOpen and level1[0] == currentPage[0] %}true{% else %}false{% endif %}" {% else %}href="{{ page | relative }}/{{ level1[1].url }}" {% endif %}{% if level1[0] == currentPage[0] or level1[1].active %} aria-current="page"{% endif %}>
+				{%- if not (hideIcons) -%}
 				<span class="nav-link-icon d-md-none d-lg-inline-block"><twig:ui:icon :icon="icon"/></span>
-				{% endif  %}
+				{%- endif -%}
 
 				<span class="nav-link-title">
-					{% if longTitles  %}
-					{{ level1[1].titleLong | default('level1[1].title') | replace: '%ICONS_COUNT%', iconsCount  }}
-					{% else  %}
-					{{ level1[1].title | replace: '%ICONS_COUNT%', iconsCount    }}
-					{% endif  %}
+					{% if longTitles %}
+					{{ level1[1].titleLong | default('level1[1].title') | replace: '%ICONS_COUNT%', iconsCount }}
+					{% else %}
+					{{ level1[1].title | replace: '%ICONS_COUNT%', iconsCount }}
+					{% endif %}
 				</span>
 
-				{% if level1[1].badge  %}
-				<span class="badge badge-sm bg-red text-red-fg">{{ level1[1].badge  }}</span>
-				{% endif  %}
+				{% if level1[1].badge %}
+				<span class="badge badge-sm bg-red text-red-fg">{{ level1[1].badge }}</span>
+				{% endif %}
 			</a>
 
-			{% if level1[1].children  %}
-			<div class="dropdown-menu{% if level1[1].right  %} dropdown-menu-end{% endif  %}{% if autoOpen and level1[0] == currentPage[0]  %} show{% endif  %}">
+			{% if level1[1].children %}
+			<div class="dropdown-menu{% if level1[1].right %} dropdown-menu-end{% endif %}{% if autoOpen and level1[0] == currentPage[0] %} show{% endif %}">
 
-				{% if level1[1].columns  %}
+				{% if level1[1].columns %}
 					<div class="dropdown-menu-columns">
-					{% set perColumn = level1[1].children | length * 1.0 | divided_by: level1[1].columns | round(0, 'ceil')  %}
+					{%- set perColumn = level1[1].children | length * 1.0 | divided_by: level1[1].columns | round(0, 'ceil') %}
 					<div class="dropdown-menu-column">
-				{% endif  %}
+				{% endif %}
 
-				{% for level2 in level1[1].children  %}
+				{% for level2 in level1[1].children %}
 
-					{% if level1[1].columns  %}
-						{% set modulo = loop.index0 | modulo: perColumn  %}
-						{% if loop.index > 1 and modulo == 0  %}</div><div class="dropdown-menu-column">{% endif  %}
-					{% endif  %}
+					{% if level1[1].columns %}
+						{%- set modulo = loop.index0 | modulo: perColumn %}
+						{% if loop.index > 1 and modulo == 0 %}</div><div class="dropdown-menu-column">{% endif %}
+					{% endif %}
 
-					{% if level2[1].children  %}<div class="dropend">{% endif  %}
+					{% if level2[1].children %}<div class="dropend">{% endif %}
 
-					<a class="dropdown-item{% if level2[1].children  %} dropdown-toggle{% endif  %}{% if level1[0] == currentPage[0] and level2[0] == currentPage[1] and currentPage.size == 2  %} active{% endif  %}{% if level2[1].color  %} text-{{ level2[1].color  }}{% endif  %}" {% if level2[1].children  %}href="#sidebar-{{ level2[0]  }}" data-bs-toggle="dropdown" data-bs-auto-close="{% if keepOpen  %}false{% else  %}outside{% endif  %}" role="button" aria-haspopup="true" aria-expanded="false" {% else  %}href="{% if 'http://' in level2[1].url or 'https://' %}{{ in level2[1].url level2[1].url  }}{% else  %}{{ page | relative  }}/{{ level2[1].url  }}{% endif  %}"{% endif  %}{% if 'http://' in level2[1].url or 'https://' %} in level-2[1].url target="_blank" rel="noopener"{% endif  %}{% if level1[0] == currentPage[0] and level2[0] == currentPage[1] and currentPage.size == 2  %} aria-current="page"{% endif  %}>
-						{% if level2[1].icon  %}
-							{% set icon = level2[1].icon  %}
+					<a class="dropdown-item{% if level2[1].children %} dropdown-toggle{% endif %}{% if level1[0] == currentPage[0] and level2[0] == currentPage[1] and currentPage.size == 2 %} active{% endif %}{% if level2[1].color %} text-{{ level2[1].color }}{% endif %}" {% if level2[1].children %}href="#sidebar-{{ level2[0] }}" data-bs-toggle="dropdown" data-bs-auto-close="{% if keepOpen %}false{% else %}outside{% endif %}" role="button" aria-haspopup="true" aria-expanded="false" {% else %}href="{% if 'http://' in level2[1].url or 'https://' %}{{ in level2[1].url level2[1].url }}{% else %}{{ page | relative }}/{{ level2[1].url }}{% endif %}"{% endif %}{% if 'http://' in level2[1].url or 'https://' %} in level-2[1].url target="_blank" rel="noopener"{% endif %}{% if level1[0] == currentPage[0] and level2[0] == currentPage[1] and currentPage.size == 2 %} aria-current="page"{% endif %}>
+						{% if level2[1].icon %}
+							{%- set icon = level2[1].icon %}
 							<twig:ui:icon :icon="icon" class="icon-inline me-1"/>
-						{% endif  %}
+						{% endif %}
 
-						{{ level2[1].title  }}
+						{{ level2[1].title }}
 
-						{% if level2[1].badge  %}
-						<span class="badge badge-sm bg-green-lt text-uppercase ms-auto">{{ level2[1].badge  }}</span>
-						{% endif  %}
+						{% if level2[1].badge %}
+						<span class="badge badge-sm bg-green-lt text-uppercase ms-auto">{{ level2[1].badge }}</span>
+						{% endif %}
 					</a>
 
-					{% if level2[1].children  %}
+					{% if level2[1].children %}
 					<div class="dropdown-menu">
-						{% for level3 in level2[1].children  %}
-						<a href="{% if 'http://' in level3[1].url or 'https://' %}{{ in level3[1].url level3[1].url  }}{% else  %}{{ page | relative  }}/{{ level3[1].url  }}{% endif  %}" class="dropdown-item">
-							{{ level3[1].title  }}
+						{% for level3 in level2[1].children %}
+						<a href="{% if 'http://' in level3[1].url or 'https://' %}{{ in level3[1].url level3[1].url }}{% else %}{{ page | relative }}/{{ level3[1].url }}{% endif %}" class="dropdown-item">
+							{{ level3[1].title }}
 
-							{% if level3[1].badge  %}
-							<span class="badge badge-sm bg-green-lt text-uppercase ms-auto">{{ level3[1].badge  }}</span>
-							{% endif  %}
+							{% if level3[1].badge %}
+							<span class="badge badge-sm bg-green-lt text-uppercase ms-auto">{{ level3[1].badge }}</span>
+							{% endif %}
 						</a>
-						{% endfor  %}
+						{% endfor %}
 					</div>
-					{% endif  %}
+					{% endif %}
 
-					{% if level2[1].children  %}</div>{% endif  %}
-				{% endfor  %}
+					{% if level2[1].children %}</div>{% endif %}
+				{% endfor %}
 
-				{% if level1[1].columns  %}</div></div>{% endif  %}
+				{% if level1[1].columns %}</div></div>{% endif %}
 				</div>
-			{% endif  %}
+			{% endif %}
 		</li>
-	{% endfor  %}
+	{% endfor %}
 
-	{% comment  %}
+	{% comment %}
 	<li class="nav-item d-none-navbar-vertical">
 		<a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#modal-customize">
 			<span class="nav-link-icon"><twig:ui:icon icon="adjustments"/></span>
 			<span class="nav-link-title">Customize</span>
 		</a>
 	</li>
-	{% endcomment  %}
+	{% endcomment %}
 </ul>
 <!-- END NAVBAR MENU -->
 

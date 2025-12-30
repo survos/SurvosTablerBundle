@@ -1,7 +1,7 @@
-{# templates/components/parts/days.html.twig v3.9 #}
+{# templates/components/parts/days.html.twig v4.8 #}
 <div class="dropdown">
-   <a class="dropdown-toggle text-secondary"{% if id  %} id="{{ id  }}-dropdown"{% endif  %} href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-label="{{ label | default('Select time range')  }}">{{ value | default('Last 7 days')  }}</a>
-   <div class="dropdown-menu dropdown-menu-end"{% if id  %} aria-labelledby="{{ id  }}-dropdown"{% endif  %}>
+   <a class="dropdown-toggle text-secondary"{% if id %} id="{{ id }}-dropdown"{% endif %} href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-label="{{ label | default('Select time range') }}">{{ value | default('Last 7 days') }}</a>
+   <div class="dropdown-menu dropdown-menu-end"{% if id %} aria-labelledby="{{ id }}-dropdown"{% endif %}>
       <a class="dropdown-item active" href="#" aria-current="true">Last 7 days</a>
       <a class="dropdown-item" href="#">Last 30 days</a>
       <a class="dropdown-item" href="#">Last 3 months</a>

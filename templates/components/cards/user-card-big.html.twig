@@ -1,13 +1,13 @@
-{# templates/components/cards/user-card-big.html.twig v3.9 #}
-{% set personId = personId | default(0)  %}
-{% set person = people[personId]  %}
+{# templates/components/cards/user-card-big.html.twig v4.8 #}
+{%- set personId = personId | default(0) %}
+{%- set person = people[personId] %}
 <div class="card">
 	<div class="card-body text-center">
 		<div class="mb-3">
 			<twig:ui:avatar size="xl" :person="person" :rounded="true"/>
 		</div>
-		<div class="card-title mb-1">{{ person.full_name  }}</div>
-		<div class="text-secondary">{{ person.job_title  }}</div>
+		<div class="card-title mb-1">{{ person.full_name }}</div>
+		<div class="text-secondary">{{ person.job_title }}</div>
 	</div>
 	<a href="#" class="card-btn">View full profile</a>
 </div>

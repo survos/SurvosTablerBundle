@@ -1,103 +1,103 @@
-{# templates/components/parts/tasks.html.twig v3.9 #}
-{% set data = data | default(tasks)  %}
+{# templates/components/parts/tasks.html.twig v4.8 #}
+{%- set data = data | default(tasks) %}
 
-<div class="row{% if class  %} {{ class  }}{% endif  %}">
-	{% for column in data.columns  %}
+<div class="row{% if class %} {{ class }}{% endif %}">
+	{% for column in data.columns %}
 	<div class="col-12 col-md-6 col-lg">
-		<h2 class="mb-3">{{ column.name  }}</h2>
+		<h2 class="mb-3">{{ column.name }}</h2>
 
 		<div class="mb-4">
 			<div class="row row-cards">
-				{% for task in column.tasks  %}
+				{% for task in column.tasks %}
 				<div class="col-12">
 					<div class="card card-sm">
-						{% if task.color  %}
-						<div class="card-status-top bg-{{ task.color  }}"></div>
-						{% endif  %}
+						{% if task.color %}
+						<div class="card-status-top bg-{{ task.color }}"></div>
+						{% endif %}
 
-						{% if task.starred  %}
+						{% if task.starred %}
 						<div class="ribbon ribbon-top ribbon-bookmark bg-yellow">
 							<twig:ui:icon icon="star"/>
 						</div>
-						{% endif  %}
+						{% endif %}
 
 						<div class="card-body">
-							<h3 class="card-title">{{ task.name  }}</h3>
+							<h3 class="card-title">{{ task.name }}</h3>
 
-							{% if task.description  %}
-							<div class="text-secondary">{{ task.description  }}</div>
-							{% endif  %}
+							{% if task.description %}
+							<div class="text-secondary">{{ task.description }}</div>
+							{% endif %}
 
-							{% if task.image  %}
+							{% if task.image %}
 							<div class="ratio ratio-16x9">
-								<img src="{{ page | relative  }}/{{ task.image  }}" class="rounded object-cover" alt="{{ task.name  }}">
+								<img src="{{ page | relative }}/{{ task.image }}" class="rounded object-cover" alt="{{ task.name }}">
 							</div>
-							{% endif  %}
+							{% endif %}
 
 							<div class="mt-4">
 								<div class="row">
 									<div class="col">
-										{% if task.users  %}
+										{% if task.users %}
 										<twig:ui:avatar-list :limit="task.users" :offset="task.users-offset" :stacked="true" size="xs"/>
-										{% endif  %}
+										{% endif %}
 									</div>
 
-									{% if task.dueDate  %}
+									{% if task.dueDate %}
 									<div class="col-auto">
 										<a href="#" class="link-warning">
 											<twig:ui:icon icon="calendar"/>
-											{{ task.dueDate  }}
+											{{ task.dueDate }}
 										</a>
 									</div>
-									{% endif  %}
+									{% endif %}
 
 									<div class="col-auto text-secondary">
 										<twig:ui:switch-icon icon="heart" iconBColor="red" variant="scale" :active="task.favorite"/>
-										{% if task.likes  %}{{ task.likes  }}{% endif  %}
+										{% if task.likes %}{{ task.likes }}{% endif %}
 									</div>
 
-									{% if task.subtasks  %}
+									{% if task.subtasks %}
 									<div class="col-auto">
 										<a href="#" class="link-secondary">
 											<twig:ui:icon icon="activity"/>
-											1/{{ task.subtasks.size  }}
+											1/{{ task.subtasks.size }}
 										</a>
 									</div>
-									{% endif  %}
-									{% if task.comments  %}
+									{% endif %}
+									{% if task.comments %}
 									<div class="col-auto">
-										<a href="#" class="link-secondary"><twig:ui:icon icon="message"/> {{ task.comments  }}</a>
+										<a href="#" class="link-secondary"><twig:ui:icon icon="message"/> {{ task.comments }}</a>
 									</div>
-									{% endif  %}
+									{% endif %}
 									<div class="col-auto">
 										<a href="#" class="link-secondary"><twig:ui:icon icon="share"/></a>
 									</div>
 								</div>
 							</div>
 
-							{% if task.subtasks  %}
+							{% if task.subtasks %}
 							<div class="divide-y-2 mt-4">
-								{% for subtask in task.subtasks  %}
+								{% for subtask in task.subtasks %}
 								<div>
-									{% if subtask.done  %}
+									{% if subtask.done %}
 									<twig:ui:icon icon="check" color="muted"/>
-									<span class="text-secondary text-decoration-line-through">{{ subtask.name  }}</span>
-									{% else  %}
+									<span class="text-secondary text-decoration-line-through">{{ subtask.name }}</span>
+									{% else %}
 									<twig:ui:icon icon="check" color="green"/>
-									{{ subtask.name  }}
-									{% endif  %}
+									{{ subtask.name }}
+									{% endif %}
 								</div>
-								{% endfor  %}
+								{% endfor %}
 							</div>
-							{% endif  %}
+							{% endif %}
 						</div>
 					</div>
 				</div>
-				{% endfor  %}
+				{% endfor %}
 			</div>
 		</div>
 	</div>
-	{% endfor  %}
+	{% endfor %}
 </div>
 
 {#

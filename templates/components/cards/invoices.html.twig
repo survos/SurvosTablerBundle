@@ -1,4 +1,4 @@
-{# templates/components/cards/invoices.html.twig v3.9 #}
+{# templates/components/cards/invoices.html.twig v4.8 #}
 <div class="card">
 	<div class="card-header">
 		<h3 class="card-title">Invoices</h3>
@@ -40,24 +40,24 @@
 			</thead>
 
 			<tbody>
-			{% for invoice in invoices|slice(0, 8)  %}
+			{% for invoice in invoices|slice(0, 8) %}
 			<tr>
 				<td><input class="form-check-input m-0 align-middle table-selectable-check" type="checkbox" aria-label="Select invoice"></td>
-				<td><span class="text-secondary">00{{ loop.index + 1400  }}</span></td>
-				<td><a href="invoice.html" class="text-reset" tabindex="-1">{{ invoice.name  }}</a></td>
+				<td><span class="text-secondary">00{{ loop.index + 1400 }}</span></td>
+				<td><a href="invoice.html" class="text-reset" tabindex="-1">{{ invoice.name }}</a></td>
 				<td>
-					<twig:ui:flag :flag="invoice.country" size="xs" class="me-2"/>{{ invoice.client  }}
+					<twig:ui:flag :flag="invoice.country" size="xs" class="me-2"/>{{ invoice.client }}
 				</td>
 				<td>
-					{{ invoice.vatNo  }}
+					{{ invoice.vatNo }}
 				</td>
 				<td>
-					{{ invoice.date  }}
+					{{ invoice.date }}
 				</td>
 				<td>
-					<span class="badge bg-{{ invoice.status  }} me-1"></span> {{ invoice.statusName  }}
+					<span class="badge bg-{{ invoice.status }} me-1"></span> {{ invoice.statusName }}
 				</td>
-				<td>{{ invoice.price  }}</td>
+				<td>{{ invoice.price }}</td>
 
 				<td class="text-end">
 					<span class="dropdown">
@@ -66,7 +66,7 @@
 					</span>
 				</td>
 			</tr>
-			{% endfor  %}
+			{% endfor %}
 			</tbody>
 		</table>
 	</div>

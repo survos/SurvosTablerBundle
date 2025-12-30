@@ -1,6 +1,6 @@
-{# templates/components/ui/card-dropdown.html.twig v3.9 #}
-{% set icon = icon | default('dotsVertical')  %}
-<div class="dropdown{% if class  %} {{ class  }}{% endif  %}">
+{# templates/components/ui/card-dropdown.html.twig v4.8 #}
+{%- set icon = icon | default('dotsVertical') %}
+<div class="dropdown{% if class %} {{ class }}{% endif %}">
    <a href="#" class="btn btn-action" data-bs-toggle="dropdown" aria-expanded="false">
       <twig:ui:icon :icon="icon"/>
    </a>

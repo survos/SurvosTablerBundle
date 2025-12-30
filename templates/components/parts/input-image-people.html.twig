@@ -1,14 +1,14 @@
-{# templates/components/parts/input-image-people.html.twig v3.9 #}
-{% set limit = limit | default(9)  %}
-{% set offset = offset | default(8)  %}
-{% set avatarSize = avatarSize | default('md')  %}
+{# templates/components/parts/input-image-people.html.twig v4.8 #}
+{%- set limit = limit | default(9) %}
+{%- set offset = offset | default(8) %}
+{%- set avatarSize = avatarSize | default('md') %}
 <div class="mb-3">
 	<label class="form-label">Person Check</label>
 	<div class="row g-2">
-		{% for person in people limit: limit offset: offset  %}
+		{% for person in people|slice(offset, limit) %}
 		<div class="col-auto">
 			<label class="form-imagecheck mb-2">
-				<input name="form-imagecheck" type="checkbox" value="{{ loop.index  }}" class="form-imagecheck-input" {% if loop.index == 2 or loop.index == 4  or loop.index == 7  %} checked{% endif  %}/>
+				<input name="form-imagecheck" type="checkbox" value="{{ loop.index }}" class="form-imagecheck-input" {% if loop.index == 2 or loop.index == 4  or loop.index == 7 %} checked{% endif %}/>
 				<span class="form-imagecheck-figure">
 					<span class="form-imagecheck-image">
 						<twig:ui:avatar :size="avatar-size" :person="person"/>
@@ -16,7 +16,7 @@
 				</span>
 			</label>
 		</div>
-		{% endfor  %}
+		{% endfor %}
 	</div>
 </div>
 
