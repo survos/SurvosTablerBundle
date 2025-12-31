@@ -1,29 +1,36 @@
-{# templates/components/locale-switcher.html.twig v1.0 #}
+{# templates/components/locale-switcher.html.twig v1.1 #}
 {% if this.hasMultipleLocales %}
 <div class="nav-item dropdown">
-    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+    <a href="#"
+       class="nav-link dropdown-toggle d-flex align-items-center lh-1 p-0 px-2"
+       data-bs-toggle="dropdown"
+       aria-expanded="false">
         {% if showFlag %}
             <span class="flag flag-{{ this.locales|filter(l => l.current)|first.flag ?? this.currentLocale }}"></span>
         {% else %}
             {{ ux_icon('tabler:language', {class: 'icon'}) }}
         {% endif %}
+
         {% if showFullName %}
             <span class="nav-link-title ms-1">{{ this.currentLocale|language_name(this.currentLocale)|u.title }}</span>
         {% else %}
             <span class="nav-link-title ms-1">{{ this.currentLocale|upper }}</span>
         {% endif %}
     </a>
-    <div class="dropdown-menu dropdown-menu-end">
+
+    <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
         {% for locale in this.locales %}
-            <a href="{{ locale.url }}" 
+            <a href="{{ locale.url }}"
                class="dropdown-item{{ locale.current ? ' active' : '' }}"
                {% if locale.current %}aria-current="true"{% endif %}>
                 {% if showFlag %}
                     <span class="flag flag-{{ locale.flag }} me-2"></span>
                 {% endif %}
+
                 <span class="{{ locale.current ? 'fw-bold' : '' }}">
                     {{ locale.code|language_name(locale.code)|u.title }}
                 </span>
+
                 {% if not locale.current and this.currentLocale != locale.code %}
                     <span class="text-secondary ms-1">
                         ({{ locale.code|language_name(this.currentLocale) }})

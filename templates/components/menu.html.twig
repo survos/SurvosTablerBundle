@@ -1,89 +1,83 @@
-{# @SurvosTabler/components/menu.html.twig v1.0 #}
+{# @SurvosTabler/components/menu.html.twig v1.2 #}
 {# Renders menu based on type using appropriate KnpMenu template #}
 
-{{ _self }}
-{{ type }}
 {% if menuItem.children|length > 0 %}
 
-{% if type == NAVBAR_MENU or type == NAVBAR_MENU_END %}
-    {{ type }}
-    {{ knp_menu_render(menuItem, {
-        template: '@SurvosTabler/menu/navbar.html.twig',
-        allow_safe_labels: true,
-        currentClass: 'active',
-        rootAttributes: {
-            class: 'navbar-nav'
-        }
-    }) }}
+    {# Secondary navbar menus #}
+    {% if type in [NAVBAR_MENU, NAVBAR_MENU_END] %}
+        {{ knp_menu_render(menuItem, {
+            template: '@SurvosTabler/menu/navbar.html.twig',
+            allow_safe_labels: true,
+            currentClass: 'active',
+            rootAttributes: { class: 'navbar-nav' }
+        }) }}
 
-{% elseif type == 'SIDEBAR' %}
-    {{ knp_menu_render(menuItem, {
-        template: '@SurvosTabler/menu/sidebar.html.twig',
-        allow_safe_labels: true,
-        currentClass: 'active',
-        ancestorClass: 'active',
-        branch_class: 'nav-item dropdown',
-        leaf_class: 'nav-item',
-        rootAttributes: {
-            class: 'navbar-nav pt-lg-3'
-        }
-    }) }}
+    {# Sidebar #}
+    {% elseif type == SIDEBAR %}
+        {{ knp_menu_render(menuItem, {
+            template: '@SurvosTabler/menu/sidebar.html.twig',
+            allow_safe_labels: true,
+            currentClass: 'active',
+            ancestorClass: 'active',
+            rootAttributes: { class: 'navbar-nav pt-lg-3' }
+        }) }}
 
-{% elseif type == 'NAVBAR_END' %}
-    {{ knp_menu_render(menuItem, {
-        template: '@SurvosTabler/menu/navbar_end.html.twig',
-        allow_safe_labels: true,
-        rootAttributes: {
-            class: 'd-flex'
-        }
-    }) }}
+    {# Top navbar right-side tools (and related topbar slots) #}
+    {% elseif type in [NAVBAR_END, NAVBAR_START, NAVBAR_THEME, NAVBAR_NOTIFICATIONS, NAVBAR_APPS, NAVBAR_LANGUAGE] %}
+        {{ knp_menu_render(menuItem, {
+            template: '@SurvosTabler/menu/navbar_end.html.twig',
+            allow_safe_labels: true,
+            rootAttributes: { class: 'd-flex' }
+        }) }}
 
-{% elseif type == 'AUTH' %}
-    {{ knp_menu_render(menuItem, {
-        template: '@SurvosTabler/menu/auth.html.twig',
-        allow_safe_labels: true
-    }) }}
+    {# User dropdown #}
+    {% elseif type == AUTH %}
+        {{ knp_menu_render(menuItem, {
+            template: '@SurvosTabler/menu/auth.html.twig',
+            allow_safe_labels: true
+        }) }}
 
-{% elseif type == 'FOOTER' or type == 'FOOTER_END' %}
-    {{ knp_menu_render(menuItem, {
-        template: '@SurvosTabler/menu/footer.html.twig',
-        allow_safe_labels: true,
-        rootAttributes: {
-            class: 'list-inline list-inline-dots mb-0'
-        }
-    }) }}
+    {# Footer #}
+    {% elseif type in [FOOTER, FOOTER_END] %}
+        {{ knp_menu_render(menuItem, {
+            template: '@SurvosTabler/menu/footer.html.twig',
+            allow_safe_labels: true,
+            rootAttributes: { class: 'list-inline list-inline-dots mb-0' }
+        }) }}
 
-{% elseif type == 'PAGE_ACTIONS' %}
-    {{ knp_menu_render(menuItem, {
-        template: '@SurvosTabler/menu/actions.html.twig',
-        allow_safe_labels: true
-    }) }}
+    {# Page actions #}
+    {% elseif type == PAGE_ACTIONS %}
+        {{ knp_menu_render(menuItem, {
+            template: '@SurvosTabler/menu/actions.html.twig',
+            allow_safe_labels: true
+        }) }}
 
-{% elseif type == 'BREADCRUMB' %}
-    {{ knp_menu_render(menuItem, {
-        template: '@SurvosTabler/menu/breadcrumb.html.twig',
-        allow_safe_labels: true
-    }) }}
+    {# Breadcrumb #}
+    {% elseif type == BREADCRUMB %}
+        {{ knp_menu_render(menuItem, {
+            template: '@SurvosTabler/menu/breadcrumb.html.twig',
+            allow_safe_labels: true
+        }) }}
 
-{% elseif type == 'SEARCH' %}
-    {{ knp_menu_render(menuItem, {
-        template: '@SurvosTabler/menu/search.html.twig',
-        allow_safe_labels: true
-    }) }}
+    {# Search slot #}
+    {% elseif type == SEARCH %}
+        {{ knp_menu_render(menuItem, {
+            template: '@SurvosTabler/menu/search.html.twig',
+            allow_safe_labels: true
+        }) }}
 
-{% elseif type == 'BANNER' %}
-    {{ knp_menu_render(menuItem, {
-        template: '@SurvosTabler/menu/banner.html.twig',
-        allow_safe_labels: true
-    }) }}
+    {# Banner #}
+    {% elseif type == BANNER %}
+        {{ knp_menu_render(menuItem, {
+            template: '@SurvosTabler/menu/banner.html.twig',
+            allow_safe_labels: true
+        }) }}
 
-{% else %}
-    {# Fallback #}
-    {{ knp_menu_render(menuItem, {
-        template: '@SurvosTabler/menu/navbar.html.twig',
-        allow_safe_labels: true
-    }) }}
-
-{% endif %}
+    {% else %}
+        {{ knp_menu_render(menuItem, {
+            template: '@SurvosTabler/menu/navbar.html.twig',
+            allow_safe_labels: true
+        }) }}
+    {% endif %}
 
 {% endif %}

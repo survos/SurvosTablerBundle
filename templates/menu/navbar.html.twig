@@ -2,73 +2,100 @@
 {% extends '@KnpMenu/menu.html.twig' %}
 
 {% block list %}
-    {{ _self }}
     {% import _self as knp_menu %}
-<ul{{ knp_menu.attributes(listAttributes) }}>
-    {{ block('children') }}
-</ul>
+
+    {# Knp provides listAttributes, but your override must ensure rootAttributes make it into the UL #}
+    {% set ra = options.rootAttributes|default({}) %}
+    {% set merged = listAttributes|merge(ra) %}
+
+    {# Ensure navbar classes exist; flex-row forces horizontal even if expand rules don't kick in #}
+    {% set ulClass = (merged.class|default('') ~ ' navbar-nav flex-row')|trim %}
+    {% set merged = merged|merge({ class: ulClass }) %}
+
+    <ul{{ knp_menu.attributes(merged) }}>
+        {{ block('children') }}
+    </ul>
 {% endblock %}
 
+{# keep your existing item/dropdown_item/label blocks below #}
 {% block item %}
-{% import _self as knp_menu %}
-{% if item.displayed %}
-    {%- set attributes = item.attributes %}
-    {%- set is_dropdown = item.hasChildren and options.depth is not same as(0) %}
-    {%- set icon = item.getExtra('icon') %}
-    {%- set badge = item.getExtra('badge') %}
+    {% if item.displayed %}
+        {%- set is_dropdown = item.hasChildren and options.depth is not same as(0) -%}
+        {%- set icon = item.getExtra('icon') -%}
+        {%- set badge = item.getExtra('badge') -%}
 
-    <li class="nav-item{% if is_dropdown %} dropdown{% endif %}{% if item.isCurrent %} active{% endif %}">
-        {% if is_dropdown %}
-            <a class="nav-link dropdown-toggle" href="#navbar-{{ item.name|slug }}" data-bs-toggle="dropdown" data-bs-auto-close="false" role="button" aria-expanded="false">
-                {% if icon %}{{ ux_icon('tabler:' ~ icon, {class: 'icon'}) }}{% endif %}
-                <span class="nav-link-title">{{ block('label') }}</span>
-            </a>
-            <div class="dropdown-menu">
-                {% for child in item.children %}
-                    {{ block('dropdown_item') }}
-                {% endfor %}
-            </div>
-        {% else %}
-            <a class="nav-link" href="{{ item.uri }}">
-                {% if icon %}{{ ux_icon('tabler:' ~ icon, {class: 'icon'}) }}{% endif %}
-                <span class="nav-link-title">{{ block('label') }}</span>
-                {% if badge %}<span class="badge badge-sm bg-green-lt text-uppercase ms-auto">{{ badge }}</span>{% endif %}
-            </a>
-        {% endif %}
-    </li>
-{% endif %}
+        <li class="nav-item{% if is_dropdown %} dropdown{% endif %}{% if item.isCurrent %} active{% endif %}">
+            {% if is_dropdown %}
+                <a class="nav-link dropdown-toggle"
+                   href="#navbar-{{ item.name|slug }}"
+                   data-bs-toggle="dropdown"
+                   data-bs-auto-close="false"
+                   role="button"
+                   aria-expanded="false">
+                    {% if icon %}{{ ux_icon('tabler:' ~ icon, {class: 'icon'}) }}{% endif %}
+                    <span class="nav-link-title">{{ block('label') }}</span>
+                </a>
+
+                <div class="dropdown-menu">
+                    {% for child in item.children %}
+                        {% with { item: child } %}
+                            {{ block('dropdown_item') }}
+                        {% endwith %}
+                    {% endfor %}
+                </div>
+            {% else %}
+                <a class="nav-link" href="{{ item.uri }}">
+                    {% if icon %}{{ ux_icon('tabler:' ~ icon, {class: 'icon'}) }}{% endif %}
+                    <span class="nav-link-title">{{ block('label') }}</span>
+                    {% if badge %}
+                        <span class="badge badge-sm bg-green-lt text-uppercase ms-auto">{{ badge }}</span>
+                    {% endif %}
+                </a>
+            {% endif %}
+        </li>
+    {% endif %}
 {% endblock %}
 
 {% block dropdown_item %}
-{% set icon = item.getExtra('icon') %}
-{% set badge = item.getExtra('badge') %}
-{% if item.hasChildren %}
-    <div class="dropend">
-        <a class="dropdown-item dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="false" role="button" aria-expanded="false">
+    {%- set icon = item.getExtra('icon') -%}
+    {%- set badge = item.getExtra('badge') -%}
+
+    {% if item.hasChildren %}
+        <div class="dropend">
+            <a class="dropdown-item dropdown-toggle"
+               href="#"
+               data-bs-toggle="dropdown"
+               data-bs-auto-close="false"
+               role="button"
+               aria-expanded="false">
+                {% if icon %}{{ ux_icon('tabler:' ~ icon, {class: 'icon dropdown-item-icon'}) }}{% endif %}
+                {{ block('label') }}
+            </a>
+
+            <div class="dropdown-menu">
+                {% for child in item.children %}
+                    {% with { item: child } %}
+                        {{ block('dropdown_item') }}
+                    {% endwith %}
+                {% endfor %}
+            </div>
+        </div>
+    {% else %}
+        <a class="dropdown-item" href="{{ item.uri }}">
             {% if icon %}{{ ux_icon('tabler:' ~ icon, {class: 'icon dropdown-item-icon'}) }}{% endif %}
             {{ block('label') }}
+            {% if badge %}
+                <span class="badge badge-sm bg-green-lt text-uppercase ms-auto">{{ badge }}</span>
+            {% endif %}
         </a>
-        <div class="dropdown-menu">
-            {% for child in item.children %}
-                {% with {item: child} %}{{ block('dropdown_item') }}{% endwith %}
-            {% endfor %}
-        </div>
-    </div>
-{% else %}
-    <a class="dropdown-item" href="{{ item.uri }}">
-        {{ icon }}
-{#        {% if icon %}{{ ux_icon('tabler:' ~ icon, {class: 'icon dropdown-item-icon'}) }}{% endif %}#}
-        {{ block('label') }}
-        {% if badge %}<span class="badge badge-sm bg-green-lt text-uppercase ms-auto">{{ badge }}</span>{% endif %}
-    </a>
-{% endif %}
+    {% endif %}
 {% endblock %}
 
 {% block label %}
-{%- set translation_domain = item.extra('translation_domain', 'messages') -%}
-{%- if translation_domain is not same as(false) -%}
-    {{ item.label|trans({}, translation_domain) }}
-{%- else -%}
-    {{ item.label }}
-{%- endif -%}
+    {%- set translation_domain = item.extra('translation_domain', 'messages') -%}
+    {%- if translation_domain is not same as(false) -%}
+        {{ item.label|trans({}, translation_domain) }}
+    {%- else -%}
+        {{ item.label }}
+    {%- endif -%}
 {% endblock %}
