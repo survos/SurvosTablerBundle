@@ -1,5 +1,6 @@
 {# @SurvosTabler/components/page.html.twig v2.1 - Main page wrapper #}
 {% set _layout = this.layout|default('horizontal') %}
+{% set containerClass = this.containerClass|default('container-xl') %}
 <!doctype html>
 <html lang="{{ app.request.locale|default('en') }}"{% if _layout == 'rtl' %} dir="rtl"{% endif %}>
 <head>
@@ -29,7 +30,7 @@
     {# === TOP NAVBAR (brand + right-side actions) === #}
     {% if this.navbar %}
     <header class="navbar navbar-expand-md{% if _layout == 'navbar-dark' %} navbar-dark{% endif %}{% if _layout == 'navbar-overlap' %} navbar-overlap{% endif %} d-print-none">
-        <div class="{{ this.containerClass }}">
+        <div class="{{ containerClass }}">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -61,7 +62,7 @@
     <header class="navbar-expand-md">
         <div class="collapse navbar-collapse" id="navbar-menu">
             <div class="navbar">
-                <div class="{{ this.containerClass }}">
+                <div class="{{ containerClass }}">
                     <div class="row flex-fill align-items-center">
                         <div class="col">
                             {{ component('tabler:menu', {type: NAVBAR_MENU, caller: _self, options: {layout: this.layout}}) }}
@@ -79,7 +80,7 @@
     {# === SIDEBAR (vertical layout) === #}
     {% if this.sidebar %}
     <aside class="navbar navbar-vertical navbar-expand-lg">
-        <div class="{{ this.containerClass }}">
+        <div class="{{ containerClass }}">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar-menu">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -116,13 +117,13 @@
         {% block breadcrumbs %}
             {% if tabler_menu_has_items(BREADCRUMB) %}
                 <div class="page-header d-print-none">
-                    <div class="{{ this.containerClass }}">
+                    <div class="{{ containerClass }}">
                         {{ component('tabler:menu', {type: BREADCRUMB, caller: _self, options: {layout: this.layout}}) }}
                     </div>
                 </div>
             {% elseif this.breadcrumbs|length > 0 %}
                 <div class="page-header d-print-none">
-                    <div class="{{ this.containerClass }}">
+                    <div class="{{ containerClass }}">
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
                                 {% for crumb in this.breadcrumbs %}
@@ -141,7 +142,7 @@
         {% block page_header %}
         {% if this.resolvedTitle or tabler_menu_has_items(PAGE_ACTIONS) %}
             <div class="page-header d-print-none">
-                <div class="{{ this.containerClass }}">
+                <div class="{{ containerClass }}">
                     <div class="row g-2 align-items-center">
                         <div class="col">
                             {% if this.resolvedPretitle %}<div class="page-pretitle">{{ this.resolvedPretitle }}</div>{% endif %}
@@ -161,7 +162,7 @@
         {% endblock %}
 
         <div class="page-body">
-            <div class="{{ this.containerClass }}">
+            <div class="{{ containerClass }}">
                 {% block content %}{{ block('_content') }}{% endblock %}
             </div>
         </div>
@@ -169,7 +170,7 @@
         {# === FOOTER === #}
         {% if this.footer %}
         <footer class="footer footer-transparent d-print-none">
-            <div class="{{ this.containerClass }}">
+            <div class="{{ containerClass }}">
                 <div class="row text-center align-items-center flex-row-reverse">
                     <div class="col-lg-auto ms-lg-auto">
                         {{ component('tabler:menu', {type: FOOTER_END, caller: _self, options: {layout: this.layout}}) }}

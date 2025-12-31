@@ -3,6 +3,7 @@
 namespace Survos\TablerBundle;
 
 use App\Model\MenuItem;
+use Survos\TablerBundle\Compiler\Configuration;
 use Survos\TablerBundle\Components\CardComponent;
 use Survos\TablerBundle\Components\DividerComponent;
 use Survos\TablerBundle\Components\LocaleSwitcherComponent;
@@ -10,8 +11,6 @@ use Survos\TablerBundle\Components\MenuComponent;
 use Survos\TablerBundle\Components\PageComponent;
 use Survos\TablerBundle\Components\Ui\DropdownComponent;
 use Survos\TablerBundle\Event\MenuEvent;
-use Survos\TablerBundle\Menu\DemoMenu;
-use Survos\TablerBundle\Menu\MenuSlot;
 use Survos\TablerBundle\Service\ContextService;
 use Survos\TablerBundle\Service\IconService;
 use Survos\TablerBundle\Service\MenuDispatcher;
@@ -254,160 +253,7 @@ class SurvosTablerBundle extends AbstractBundle implements CompilerPassInterface
 
     public function configure(DefinitionConfigurator $definition): void
     {
-        $definition->rootNode()
-            ->children()
-                ->append($this->getIconsConfig())
-                ->append($this->getAppConfig())
-                ->append($this->getRoutesConfig())
-                ->append($this->getOptionsConfig())
-                ->arrayNode('menu_options')
-                    ->useAttributeAsKey('name')
-                    ->scalarPrototype()->end()
-                ->end()
-                ->arrayNode('impersonate')
-                    ->useAttributeAsKey('name')
-                    ->scalarPrototype()->end()
-                    ->info('User identifiers that can be impersonated')
-                ->end()
-            ->end();
-    }
-
-    private function getIconsConfig(): ArrayNodeDefinition
-    {
-        $treeBuilder = new TreeBuilder('icons');
-        $rootNode = $treeBuilder->getRootNode();
-
-        $rootNode
-            ->addDefaultsIfNotSet()
-            ->children()
-                ->scalarNode('prefix')
-                    ->defaultValue('tabler')
-                    ->info('Default icon prefix (e.g., tabler, fa6-solid)')
-                ->end()
-                ->arrayNode('aliases')
-                    ->useAttributeAsKey('name')
-                    ->scalarPrototype()->end()
-                    ->info('Icon alias overrides: alias: icon-name')
-                ->end()
-                ->arrayNode('presets')
-                    ->useAttributeAsKey('name')
-                    ->arrayPrototype()
-                        ->children()
-                            ->scalarNode('icon')->isRequired()->end()
-                            ->scalarNode('class')->defaultValue('')->end()
-                        ->end()
-                    ->end()
-                    ->info('Style presets with icon and CSS class')
-                ->end()
-            ->end();
-
-        return $rootNode;
-    }
-
-    private function getAppConfig(): ArrayNodeDefinition
-    {
-        $treeBuilder = new TreeBuilder('app');
-        $rootNode = $treeBuilder->getRootNode();
-
-        $rootNode
-            ->addDefaultsIfNotSet()
-            ->children()
-                ->arrayNode('social')
-                    ->useAttributeAsKey('name')
-                    ->scalarPrototype()->end()
-                    ->info('Social media links (facebook: https://...)')
-                ->end()
-                ->scalarNode('code')
-                    ->defaultValue('my-project')
-                    ->info('Project code for repo, deployment, etc.')
-                ->end()
-                ->scalarNode('abbr')
-                    ->defaultValue('my<b>Project</b>')
-                    ->info('HTML abbreviation for branding')
-                ->end()
-                ->scalarNode('logo')
-                    ->defaultNull()
-                    ->info('Path to main logo')
-                ->end()
-                ->scalarNode('logo_small')
-                    ->defaultNull()
-                    ->info('Path to small/favicon logo')
-                ->end()
-            ->end();
-
-        return $rootNode;
-    }
-
-    private function getRoutesConfig(): ArrayNodeDefinition
-    {
-        $treeBuilder = new TreeBuilder('routes');
-        $rootNode = $treeBuilder->getRootNode();
-
-        $rootNode
-            ->addDefaultsIfNotSet()
-            ->info('Route aliases - use null/~ for routes that do not exist')
-            ->children()
-                ->scalarNode('home')
-                    ->defaultValue('app_homepage')
-                    ->info('Homepage route')
-                ->end()
-                ->scalarNode('login')
-                    ->defaultNull()
-                    ->info('Login route')
-                ->end()
-                ->scalarNode('logout')
-                    ->defaultNull()
-                    ->info('Logout route')
-                ->end()
-                ->scalarNode('register')
-                    ->defaultNull()
-                    ->info('Registration route')
-                ->end()
-                ->scalarNode('profile')
-                    ->defaultNull()
-                    ->info('User profile route')
-                ->end()
-                ->scalarNode('settings')
-                    ->defaultNull()
-                    ->info('User settings route')
-                ->end()
-                ->scalarNode('search')
-                    ->defaultNull()
-                    ->info('Global search route')
-                ->end()
-            ->end();
-
-        return $rootNode;
-    }
-
-    private function getOptionsConfig(): ArrayNodeDefinition
-    {
-        $treeBuilder = new TreeBuilder('options');
-        $rootNode = $treeBuilder->getRootNode();
-
-        $rootNode
-            ->addDefaultsIfNotSet()
-            ->children()
-                ->scalarNode('theme')
-                    ->defaultValue('tabler')
-                    ->info('Theme name')
-                ->end()
-                ->enumNode('layout')
-                    ->values(['horizontal', 'dashboard', 'vertical', 'condensed'])
-                    ->defaultValue('horizontal')
-                    ->info('Layout direction')
-                ->end()
-                ->booleanNode('dark_mode')
-                    ->defaultFalse()
-                    ->info('Enable dark mode by default')
-                ->end()
-                ->booleanNode('show_locale_dropdown')
-                    ->defaultTrue()
-                    ->info('Show locale switcher in navbar')
-                ->end()
-            ->end();
-
-        return $rootNode;
+        (new Configuration())->configure($definition);
     }
 
     public function getPaths(): array
