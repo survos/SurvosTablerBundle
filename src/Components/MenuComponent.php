@@ -31,6 +31,8 @@ class MenuComponent
         private readonly EventDispatcherInterface $eventDispatcher,
     ) {}
 
+    public bool $kids { get => $this->menuItem->hasChildren();}
+
     public function mount(
         string $type,
         ?string $caller = null,

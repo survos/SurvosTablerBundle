@@ -27,6 +27,7 @@ class PageComponent
     public bool $boxed = false;
     public bool $fluid = false;
     public bool $flashes = true;
+    public array $slotOptions = [];
 
     public ?string $pageClass = null;
     public ?string $containerClass = null;
@@ -37,7 +38,6 @@ class PageComponent
     public function __construct(
         private readonly string $defaultLayout = 'horizontal',
         private readonly ?TranslatorInterface $translator = null,
-        private readonly ?TablerService $tablerService = null,
     ) {}
 
     #[PreMount]

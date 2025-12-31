@@ -4,6 +4,7 @@ namespace Survos\TablerBundle;
 
 use App\Model\MenuItem;
 use Survos\TablerBundle\Components\CardComponent;
+use Survos\TablerBundle\Components\DividerComponent;
 use Survos\TablerBundle\Components\LocaleSwitcherComponent;
 use Survos\TablerBundle\Components\MenuComponent;
 use Survos\TablerBundle\Components\PageComponent;
@@ -112,6 +113,7 @@ class SurvosTablerBundle extends AbstractBundle implements CompilerPassInterface
         foreach (MenuEvent::getConstants() as $name => $value) {
             $twigDef->addMethodCall('addGlobal', [$name, $value]);
         }
+        $twigDef->addMethodCall('addGlobal', ['menuSlots', array_keys(MenuEvent::getConstants())]);
 
 //        $menuSlotReflection = new \ReflectionClass(MenuEvent::class);
 //        foreach ($menuSlotReflection->getConstants() as $name => $value) {
@@ -131,7 +133,7 @@ class SurvosTablerBundle extends AbstractBundle implements CompilerPassInterface
         // Load generated component services
         $container->import('../config/component-services.php');
 
-        foreach([CardComponent::class] as $componentClass) {
+        foreach([CardComponent::class, DividerComponent::class] as $componentClass) {
             $builder->register($componentClass)
                 ->setAutowired(true)
                 ->setAutoconfigured(true);

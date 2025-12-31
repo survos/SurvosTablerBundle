@@ -76,8 +76,13 @@
                 <div class="navbar">
                     <div class="{{ this.containerClass }}">
                         <div class="row flex-fill align-items-center">
+                            {% set options = slotOptions[NAVBAR_MENU] ?? {} %}
+                            {% set options = options|merge({layout: this.layout}) %}
                             <div class="col">
-                                {{ tabler_menu(NAVBAR_MENU, {layout: this.layout}) }}
+                                {{ component('tabler:menu', {type: NAVBAR_MENU, caller: _self}) }}
+
+{#                                {{ tabler_menu(NAVBAR_MENU,#}
+{#                                    {layout: this.layout}|merge(slotOptions[NAVBAR_MENU]??{})) }}#}
                             </div>
                             <div class="col-auto">
                                 {{ tabler_menu(NAVBAR_MENU_END, {layout: this.layout}) }}
