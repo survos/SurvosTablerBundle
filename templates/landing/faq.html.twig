@@ -1,0 +1,63 @@
+{# @SurvosTabler/landing/faq.html.twig v2.0 #}
+{# PHP class: landing:faq - uses ui:accordion component #}
+
+{% set _title = (prefix ~ '.title')|trans({}, domain) %}
+{% set _description = (prefix ~ '.description')|trans({}, domain) %}
+{% set sections = content.components|default([]) %}
+
+<section class="section bg-white" id="faq">
+    <div class="container">
+        {% if _title %}
+            <div class="section-header text-center mb-5">
+                <h2 class="section-title section-title-lg">{{ _title }}</h2>
+                {% if _description %}
+                    <p class="section-description text-muted">{{ _description }}</p>
+                {% endif %}
+            </div>
+        {% endif %}
+        
+        <div class="card bg-white p-4 p-lg-5">
+            {% for section in sections %}
+                {% set sectionCode = section.code %}
+                {% set sectionId = 'faq-' ~ sectionCode %}
+                
+                <div class="row mb-5 {{ not loop.last ? 'border-bottom pb-5' : '' }}">
+                    {# Section header #}
+                    <div class="col-12 {{ layout == 'side-by-side' ? 'col-md-4' : '' }} mb-4 mb-md-0">
+                        <div class="{{ layout == 'side-by-side' ? 'sticky-top pt-3' : 'text-center mb-4' }}">
+                            {% if showIcons and section.icon is defined %}
+                                <div class="mb-2">
+                                    {{ ux_icon(section.icon, {class: 'icon icon-lg text-primary'}) }}
+                                </div>
+                            {% endif %}
+                            <h3 class="h5 fw-semibold mb-1">
+                                {{ (prefix ~ '.components.' ~ sectionCode ~ '.title')|trans({}, domain) }}
+                            </h3>
+                            <p class="text-muted small mb-0">
+                                {{ (prefix ~ '.components.' ~ sectionCode ~ '.tagline')|trans({}, domain) }}
+                            </p>
+                        </div>
+                    </div>
+                    
+                    {# Questions using ui:accordion #}
+                    <div class="col-12 {{ layout == 'side-by-side' ? 'col-md-8' : '' }}">
+                        {% set accordionQuestions = [] %}
+                        {% for question in section.questions|default([]) %}
+                            {% set questionCode = question.code %}
+                            {% set accordionQuestions = accordionQuestions|merge([{
+                                question: (prefix ~ '.components.' ~ sectionCode ~ '.questions.' ~ questionCode ~ '.q')|trans({}, domain),
+                                answer: (prefix ~ '.components.' ~ sectionCode ~ '.questions.' ~ questionCode ~ '.a')|trans({}, domain)|markdown_to_html
+                            }]) %}
+                        {% endfor %}
+                        
+                        <twig:ui:accordion 
+                            :id="sectionId" 
+                            :questions="accordionQuestions"
+                            :count="accordionQuestions|length"
+                        />
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>

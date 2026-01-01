@@ -4,20 +4,21 @@
 {% block list %}
     {% import _self as knp_menu %}
 
-    {# Knp provides listAttributes, but your override must ensure rootAttributes make it into the UL #}
     {% set ra = options.rootAttributes|default({}) %}
     {% set merged = listAttributes|merge(ra) %}
 
-    {# Ensure navbar classes exist; flex-row forces horizontal even if expand rules don't kick in #}
-    {% set ulClass = (merged.class|default('') ~ ' navbar-nav flex-row')|trim %}
-    {% set merged = merged|merge({ class: ulClass }) %}
+    {# Tabler reference: ul.navbar-nav (do NOT force flex-row here) #}
+    {% set cls = merged.class|default('') %}
+    {% if 'navbar-nav' not in cls %}
+        {% set cls = (cls ~ ' navbar-nav')|trim %}
+    {% endif %}
+    {% set merged = merged|merge({ class: cls }) %}
 
     <ul{{ knp_menu.attributes(merged) }}>
         {{ block('children') }}
     </ul>
 {% endblock %}
 
-{# keep your existing item/dropdown_item/label blocks below #}
 {% block item %}
     {% if item.displayed %}
         {%- set is_dropdown = item.hasChildren and options.depth is not same as(0) -%}
@@ -29,10 +30,10 @@
                 <a class="nav-link dropdown-toggle"
                    href="#navbar-{{ item.name|slug }}"
                    data-bs-toggle="dropdown"
-                   data-bs-auto-close="false"
+                   data-bs-auto-close="outside"
                    role="button"
                    aria-expanded="false">
-                    {% if icon %}{{ ux_icon('tabler:' ~ icon, {class: 'icon'}) }}{% endif %}
+                    {% if icon %}{{ ux_icon(icon, {class: 'icon icon-1'}) }}{% endif %}
                     <span class="nav-link-title">{{ block('label') }}</span>
                 </a>
 
@@ -45,7 +46,7 @@
                 </div>
             {% else %}
                 <a class="nav-link" href="{{ item.uri }}">
-                    {% if icon %}{{ ux_icon('tabler:' ~ icon, {class: 'icon'}) }}{% endif %}
+                    {% if icon %}{{ ux_icon(icon, {class: 'icon icon-1'}) }}{% endif %}
                     <span class="nav-link-title">{{ block('label') }}</span>
                     {% if badge %}
                         <span class="badge badge-sm bg-green-lt text-uppercase ms-auto">{{ badge }}</span>
@@ -65,10 +66,10 @@
             <a class="dropdown-item dropdown-toggle"
                href="#"
                data-bs-toggle="dropdown"
-               data-bs-auto-close="false"
+               data-bs-auto-close="outside"
                role="button"
                aria-expanded="false">
-                {% if icon %}{{ ux_icon('tabler:' ~ icon, {class: 'icon dropdown-item-icon'}) }}{% endif %}
+                {% if icon %}{{ ux_icon(icon, {class: 'icon dropdown-item-icon'}) }}{% endif %}
                 {{ block('label') }}
             </a>
 
@@ -82,7 +83,7 @@
         </div>
     {% else %}
         <a class="dropdown-item" href="{{ item.uri }}">
-            {% if icon %}{{ ux_icon('tabler:' ~ icon, {class: 'icon dropdown-item-icon'}) }}{% endif %}
+            {% if icon %}{{ ux_icon(icon, {class: 'icon dropdown-item-icon'}) }}{% endif %}
             {{ block('label') }}
             {% if badge %}
                 <span class="badge badge-sm bg-green-lt text-uppercase ms-auto">{{ badge }}</span>

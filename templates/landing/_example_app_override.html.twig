@@ -1,0 +1,45 @@
+{# Example: templates/landing/home.html.twig in YOUR APP #}
+{# This shows how to use the components directly in your app #}
+{% extends "@SurvosTabler/layout/base.html.twig" %}
+
+{% block content %}
+<main class="main">
+    {# Hero with custom buttons #}
+    <twig:landing:hero 
+        :content="landing.hero"
+        prefix="hero"
+        highlightClass="text-success"
+        :buttons="[
+            {route: 'owner_browse', variant: 'success', icon: 'tabler:building'},
+            {route: 'project_index', variant: 'primary', icon: 'tabler:folder'}
+        ]"
+    />
+    
+    {# Features in 2 columns #}
+    <twig:landing:features 
+        :content="landing.feature" 
+        prefix="feature"
+        :columns="2"
+    />
+    
+    {# Sources with dark theme #}
+    <twig:landing:sources 
+        :content="landing.sources"
+        prefix="sources"
+        :darkTheme="true"
+    />
+    
+    {# Process/benefits #}
+    <twig:landing:benefits 
+        :content="landing.process"
+        prefix="process"
+    />
+    
+    {# FAQ stacked layout #}
+    <twig:landing:faq 
+        :content="landing.faq"
+        prefix="faq"
+        layout="side-by-side"
+    />
+</main>
+{% endblock %}

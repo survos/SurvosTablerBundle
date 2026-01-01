@@ -1,0 +1,40 @@
+{# @SurvosTabler/landing/benefits.html.twig v2.0 #}
+{# PHP class: landing:benefits - all props have defaults #}
+
+{% set _title = (prefix ~ '.title')|trans({}, domain) %}
+{% set _tagline = (prefix ~ '.tagline')|trans({}, domain) %}
+{% set items = content.components|default([]) %}
+
+<section class="section bg-light" id="{{ prefix }}">
+    <div class="container">
+        <div class="section-header text-center mb-5">
+            <h2 class="section-title section-title-lg">{{ _title }}</h2>
+            {% if _tagline %}
+                <p class="section-description text-muted">{{ _tagline }}</p>
+            {% endif %}
+        </div>
+        
+        <div class="row g-4 justify-content-center">
+            {% for item in items %}
+                {% set itemCode = item.code %}
+                <div class="col-12 col-md-6 col-lg-{{ 12 // columns }}">
+                    <div class="card h-100 text-center p-4">
+                        {% if item.icon is defined %}
+                            <div class="mb-3">
+                                <div class="shape shape-primary shape-lg mx-auto">
+                                    {{ ux_icon(item.icon, {class: 'icon'}) }}
+                                </div>
+                            </div>
+                        {% endif %}
+                        <h3 class="h5 fw-semibold mb-2">
+                            {{ (prefix ~ '.components.' ~ itemCode ~ '.title')|trans({}, domain) }}
+                        </h3>
+                        <p class="text-muted mb-0">
+                            {{ (prefix ~ '.components.' ~ itemCode ~ '.description')|trans({}, domain)|markdown_to_html }}
+                        </p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>

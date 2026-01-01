@@ -1,0 +1,46 @@
+{# @SurvosTabler/landing/sources.html.twig v2.0 #}
+{# PHP class: landing:sources - all props have defaults #}
+
+{% set _title = (prefix ~ '.title')|trans({}, domain) %}
+{% set _description = (prefix ~ '.description')|trans({}, domain) %}
+{% set items = content.components|default([]) %}
+
+<section class="section{{ darkTheme ? '' : ' bg-light' }}" id="{{ prefix }}">
+    <div class="container">
+        <div class="section-header text-center mb-5">
+            <h2 class="section-title section-title-lg">{{ _title }}</h2>
+            {% if _description %}
+                <p class="section-description">{{ _description|markdown_to_html }}</p>
+            {% endif %}
+        </div>
+        
+        <div class="row g-4 align-items-start">
+            <div class="col-12 col-lg-6">
+                {% for item in items %}
+                    {% set itemCode = item.code %}
+                    <div class="row mb-4">
+                        <div class="col-auto">
+                            <div class="shape {{ darkTheme ? 'shape-white' : 'shape-primary' }} shape-md">
+                                {{ ux_icon(item.icon, {class: 'icon'}) }}
+                            </div>
+                        </div>
+                        <div class="col">
+                            <h3 class="fs-5 fw-semibold">
+                                {{ (prefix ~ '.components.' ~ itemCode ~ '.title')|trans({}, domain) }}
+                            </h3>
+                            <p class="text-secondary m-0 fs-6">
+                                {{ (prefix ~ '.components.' ~ itemCode ~ '.description')|trans({}, domain)|markdown_to_html }}
+                            </p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            
+            {% if content.image is defined %}
+                <div class="col-12 col-lg-6">
+                    <img class="d-flex m-auto img-fluid rounded" src="{{ content.image }}" alt="{{ _title }}"/>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>

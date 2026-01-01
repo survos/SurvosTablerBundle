@@ -15,5 +15,6 @@ final class IconComponent
     public ?string $class = null;
     public ?string $color = null;
     public ?string $inline = null;
+    public ?string $size = null;
 
 }

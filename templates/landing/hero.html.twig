@@ -1,0 +1,59 @@
+{# @SurvosTabler/landing/hero.html.twig v2.0 #}
+{# PHP class: landing:hero - all props have defaults #}
+
+{% set _title = (prefix ~ '.title')|trans({}, domain) %}
+{% set _highlight = content.highlight|default('') %}
+{% set _tagline = (prefix ~ '.tagline')|trans({}, domain) %}
+
+<header class="hero text-center pb-0" id="hero">
+    <div class="container">
+        <div class="hero-gradient py-5">
+            <h1 class="hero-title fw-bold display-5">
+                {{ _title }}
+                {% if _highlight %}
+                    <span class="{{ highlightClass }}">{{ _highlight }}</span>
+                {% endif %}
+            </h1>
+            
+            {% if _tagline %}
+                <p class="hero-description mt-4 fs-5">{{ _tagline }}</p>
+            {% endif %}
+            
+            {% set _buttons = buttons|length ? buttons : content.buttons|default([]) %}
+            {% if _buttons|length > 0 %}
+                <div class="mt-5">
+                    <div class="row g-3 justify-content-center">
+                        {% for btnCode, btn in _buttons %}
+                            <div class="col-auto">
+                                <a href="{{ btn.route is defined ? path(btn.route) : '#' }}" 
+                                   class="btn btn-{{ btn.variant|default('primary') }} btn-lg">
+                                    {% if btn.icon is defined %}
+                                        {{ ux_icon(btn.icon, {class: 'icon me-2'}) }}
+                                    {% endif %}
+                                    <span>{{ (prefix ~ '.buttons.' ~ btnCode)|trans({}, domain) }}</span>
+                                </a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+        
+        {% if backgroundImage %}
+            <div class="hero-img mb-n8">
+                <div class="browser">
+                    <div class="browser-header">
+                        <div class="browser-dots d-flex align-items-center">
+                            <div class="browser-dot"></div>
+                            <div class="browser-dot"></div>
+                            <div class="browser-dot"></div>
+                        </div>
+                    </div>
+                    <div class="browser-image">
+                        <img alt="" src="{{ backgroundImage }}" class="w-100"/>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</header>

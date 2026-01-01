@@ -1,0 +1,15 @@
+{# @SurvosTabler/landing/page.html.twig v1.0 - Main landing page template #}
+{% extends "@SurvosTabler/layout/base.html.twig" %}
+
+{% block content %}
+<main class="main">
+    {% for sectionCode, config in sections %}
+        {% if config.enabled and landing[sectionCode] is defined %}
+            {{ component(config.component, {
+                content: landing[sectionCode],
+                prefix: sectionCode
+            }) }}
+        {% endif %}
+    {% endfor %}
+</main>
+{% endblock %}

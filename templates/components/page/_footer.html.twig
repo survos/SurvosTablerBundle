@@ -1,0 +1,47 @@
+{# @SurvosTabler/components/page/_footer.html.twig v1.0 #}
+{% if this.footer %}
+<footer class="footer footer-transparent d-print-none">
+    <div class="{{ containerClass }}">
+        <div class="row text-center align-items-center flex-row-reverse">
+            <div class="col-lg-auto ms-lg-auto">
+                {{ component('tabler:menu', {type: FOOTER_END, caller: _self, options: {layout: this.layout}}) }}
+            </div>
+
+            <div class="col-12 col-lg-auto mt-3 mt-lg-0">
+                {% if tabler_menu_has_items(FOOTER) %}
+                    {{ component('tabler:menu', {type: FOOTER, caller: _self, options: {layout: this.layout}}) }}
+                {% else %}
+                    {% set id = tabler_identity ?? {} %}
+                    <ul class="list-inline list-inline-dots mb-0">
+                        {% if id.links is defined and id.links.github is defined and id.links.github %}
+                            <li class="list-inline-item">
+                                <a class="link-secondary" href="{{ id.links.github }}" target="_blank">
+                                    {{ ux_icon('tabler:brand-github', {class: 'icon'}) }} GitHub
+                                </a>
+                            </li>
+                        {% endif %}
+
+                        {% if id.links is defined and id.links.site is defined and id.links.site %}
+                            <li class="list-inline-item">
+                                <a class="link-secondary" href="{{ id.links.site }}" target="_blank">
+                                    {{ ux_icon('tabler:external-link', {class: 'icon'}) }} Site
+                                </a>
+                            </li>
+                        {% endif %}
+
+                        {% for name, url in (id.social ?? {}) %}
+                            {% if url %}
+                                <li class="list-inline-item">
+                                    <a class="link-secondary" href="{{ url }}" target="_blank">
+                                        {{ ux_icon('tabler:brand-' ~ name, {class: 'icon'}) }} {{ name|upper }}
+                                    </a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</footer>
+{% endif %}

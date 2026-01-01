@@ -26,23 +26,13 @@ final readonly class SiteIdentity
         public array $social = [],
         public array $meta = [],
         public array $header = [],
-    ) {
-    }
-
-    public function hasLogo(): bool
-    {
-        return (bool) $this->logo;
-    }
+    ) {}
 
     public function brandHtml(): string
     {
-        // When no logo, we render abbrHtml as safe HTML; fall back to title.
         return $this->abbrHtml ?: htmlspecialchars($this->title, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
     }
 
-    /**
-     * Convenience accessors used by Twig.
-     */
     public function link(string $key): ?string
     {
         return $this->links[$key] ?? null;
@@ -51,20 +41,5 @@ final readonly class SiteIdentity
     public function social(string $key): ?string
     {
         return $this->social[$key] ?? null;
-    }
-
-    public function headerBool(string $key, bool $default = false): bool
-    {
-        $v = $this->header[$key] ?? $default;
-        return is_bool($v) ? $v : $default;
-    }
-
-    /**
-     * @return array<string,mixed>
-     */
-    public function authConfig(): array
-    {
-        $auth = $this->header['auth'] ?? [];
-        return is_array($auth) ? $auth : [];
     }
 }

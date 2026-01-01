@@ -1,0 +1,21 @@
+/* assets/styles/layout.css */
+
+/* Ensure footer sticks to bottom when page content is short */
+html, body {
+  height: 100%;
+}
+
+.page {
+  min-height: 100vh;
+}
+
+.page-wrapper {
+  min-height: 0; /* allow flex children to shrink */
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+}
+
+.page-body {
+  flex: 1 1 auto; /* pushes footer down */
+}

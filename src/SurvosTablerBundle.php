@@ -13,11 +13,17 @@ use Survos\TablerBundle\Components\Ui\DropdownComponent;
 use Survos\TablerBundle\Event\MenuEvent;
 use Survos\TablerBundle\Service\ContextService;
 use Survos\TablerBundle\Service\IconService;
+use Survos\TablerBundle\Service\LandingService;
 use Survos\TablerBundle\Service\MenuDispatcher;
 use Survos\TablerBundle\Service\MenuRenderer;
 use Survos\TablerBundle\Service\MenuService;
 use Survos\TablerBundle\Service\RouteAliasService;
 use Survos\TablerBundle\Translation\RoutesTranslationLoader;
+use Survos\TablerBundle\Twig\Components\Landing\Benefits;
+use Survos\TablerBundle\Twig\Components\Landing\Faq;
+use Survos\TablerBundle\Twig\Components\Landing\Features;
+use Survos\TablerBundle\Twig\Components\Landing\Hero;
+use Survos\TablerBundle\Twig\Components\Landing\Sources;
 use Survos\TablerBundle\Twig\Components\MiniCard;
 use Survos\TablerBundle\Twig\Components\TablerHead;
 use Survos\TablerBundle\Twig\Components\TablerHeader;
@@ -108,26 +114,26 @@ class SurvosTablerBundle extends AbstractBundle implements CompilerPassInterface
 
         $twigDef = $container->getDefinition('twig');
 
-        $menuSlots = [];
         foreach (MenuEvent::getConstants() as $name => $value) {
             $twigDef->addMethodCall('addGlobal', [$name, $value]);
         }
         $twigDef->addMethodCall('addGlobal', ['menuSlots', array_keys(MenuEvent::getConstants())]);
 
-//        $menuSlotReflection = new \ReflectionClass(MenuEvent::class);
-//        foreach ($menuSlotReflection->getConstants() as $name => $value) {
-//            if (is_string($value)) {
-//                $twigDef->addMethodCall('addGlobal', ['MenuEvent.' . $name, $value]);
-//            }
-//        }
         // Theme from config
         if ($container->hasParameter('survos_tabler.theme')) {
             $twigDef->addMethodCall('addGlobal', ['theme', $container->getParameter('survos_tabler.theme')]);
         }
+
+        if ($container->hasParameter('survos_tabler.app')) {
+            $twigDef->addMethodCall('addGlobal', ['tabler_identity', $container->getParameter('survos_tabler.app')]);
+        }
+
     }
 
     public function loadExtension(array $config, ContainerConfigurator $container, ContainerBuilder $builder): void
     {
+
+        $builder->setParameter('survos_tabler.app', $config['app'] ?? []);
 
         // Load generated component services
         $container->import('../config/component-services.php');
@@ -170,6 +176,13 @@ class SurvosTablerBundle extends AbstractBundle implements CompilerPassInterface
             ->setArgument('$configuredAliases', $iconConfig['aliases'] ?? [])
             ->setArgument('$configuredPresets', $iconConfig['presets'] ?? [])
             ->setArgument('$defaultPrefix', $iconConfig['prefix'] ?? 'tabler');
+
+        $builder->register(LandingService::class)
+            ->setAutowired(true)
+            ->setAutoconfigured(true)
+            ->setPublic(true)
+//            ->setArgument('$projectDir', $iconConfig['aliases'] ?? [])
+        ;
 
         $builder->register(RouteAliasService::class)
             ->setArgument('$configuredAliases', $config['routes'])
@@ -221,6 +234,13 @@ class SurvosTablerBundle extends AbstractBundle implements CompilerPassInterface
             PageComponent::class,
             TablerPageHeader::class,
             LocaleSwitcherComponent::class,
+
+            // landing
+            Benefits::class,
+            Hero::class,
+            Sources::class,
+            Faq::class,
+            Features::class
         ];
 
         foreach ($simpleComponents as $componentClass) {

@@ -83,6 +83,8 @@ trait MenuBuilderTrait
         ?string $label = null,
         ?string $uri = null,
         ?string $icon = null,
+        ?string $id = null, // this was used in to set an element id, e.g. dropdowns
+        ?string $style = null, // from bootstrap, not sure it's the best approach
         string|int|null $badge = null,
         bool $external = false,
         bool $dividerBefore = false,

@@ -1,0 +1,102 @@
+{# @SurvosTabler/layout/landing.html.twig v1.5 - Landing page layout with locale switcher #}
+{% extends "@SurvosTabler/layout/base.html.twig" %}
+
+{% set layout = 'landing' %}
+{% set showFooter = true %}
+
+{# Landing navbar with locale switcher #}
+{% block navbar %}
+<nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+        {# Brand #}
+        <a class="navbar-brand" href="{{ path('app_homepage') }}">
+            {% block brand %}
+                {{ ux_icon('tabler:brand-tabler', {height: 32, class: 'navbar-brand-image'}) }}
+                <span class="ms-2">{% block brand_text %}Tabler{% endblock %}</span>
+            {% endblock %}
+        </a>
+        
+        {# Mobile toggle #}
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#landing-navbar" aria-controls="landing-navbar" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        {# Collapsible nav #}
+        <div class="collapse navbar-collapse" id="landing-navbar">
+            {# Main nav links - center aligned #}
+            <ul class="navbar-nav mx-auto">
+                {% block landing_nav_items %}
+                <li class="nav-item">
+                    <a class="nav-link" href="#features">Features</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#faq">FAQ</a>
+                </li>
+                {% endblock %}
+            </ul>
+            
+            {# Right side: locale switcher + auth #}
+            <div class="d-flex align-items-center gap-2">
+                {% block navbar_locale %}
+                    <twig:tabler:locale-switcher />
+                {% endblock %}
+                
+                {% block navbar_cta %}
+                    {% if app.user %}
+                        <a href="{{ path('app_admin') }}" class="btn btn-primary">
+                            {{ ux_icon('tabler:dashboard', {class: 'icon me-1'}) }}
+                            Dashboard
+                        </a>
+                    {% else %}
+                        <a href="{{ path('app_login') }}" class="btn btn-outline-primary">
+                            Login
+                        </a>
+                    {% endif %}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+</nav>
+{% endblock %}
+
+{# No page header on landing #}
+{% block page_header %}{% endblock %}
+
+{# Landing footer #}
+{% block footer %}
+<footer class="footer py-5 bg-dark text-white">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-lg-4">
+                {% block footer_brand %}
+                <div class="mb-3">
+                    {{ ux_icon('tabler:brand-tabler', {height: 32, class: 'text-white'}) }}
+                    <span class="ms-2 h4 text-white">{{ block('brand_text') }}</span>
+                </div>
+                <p class="text-muted">{% block footer_description %}{% endblock %}</p>
+                {% endblock %}
+            </div>
+            
+            <div class="col-6 col-lg-2">{% block footer_col_1 %}{% endblock %}</div>
+            <div class="col-6 col-lg-2">{% block footer_col_2 %}{% endblock %}</div>
+            <div class="col-6 col-lg-2">{% block footer_col_3 %}{% endblock %}</div>
+            <div class="col-6 col-lg-2">{% block footer_col_4 %}{% endblock %}</div>
+        </div>
+        
+        <hr class="my-4 border-secondary">
+        
+        <div class="row align-items-center">
+            <div class="col-md-6 text-center text-md-start">
+                {% block footer_copyright %}
+                <span class="text-muted">
+                    Copyright &copy; {{ 'now'|date('Y') }} {{ block('brand_text') }}. All rights reserved.
+                </span>
+                {% endblock %}
+            </div>
+            <div class="col-md-6 text-center text-md-end">
+                {% block footer_locale_switcher %}{% endblock %}
+            </div>
+        </div>
+    </div>
+</footer>
+{% endblock %}

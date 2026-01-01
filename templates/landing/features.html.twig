@@ -1,0 +1,44 @@
+{# @SurvosTabler/landing/features.html.twig v2.0 #}
+{# PHP class: landing:features - all props have defaults #}
+
+{% set _title = (prefix ~ '.title')|trans({}, domain) %}
+{% set _description = (prefix ~ '.description')|trans({}, domain) %}
+{% set items = content.components|default(content.items|default([])) %}
+
+<section class="section bg-white" id="features">
+    <div class="container">
+        {% if _title %}
+            <div class="section-header text-center mb-5">
+                <h2 class="section-title section-title-lg">{{ _title }}</h2>
+                {% if _description %}
+                    <p class="section-description text-muted">{{ _description|markdown_to_html }}</p>
+                {% endif %}
+            </div>
+        {% endif %}
+        
+        <div class="row g-4">
+            {% for item in items %}
+                {% set itemCode = item.code|default(loop.index0) %}
+                <div class="col-12 col-md-6 col-lg-{{ 12 // columns }}">
+                    <div class="d-flex gap-3">
+                        {% if showIcons and item.icon is defined %}
+                            <div class="flex-shrink-0">
+                                <div class="shape shape-primary shape-md rounded-circle">
+                                    {{ ux_icon(item.icon, {class: 'icon'}) }}
+                                </div>
+                            </div>
+                        {% endif %}
+                        <div class="flex-grow-1">
+                            <h3 class="h5 fw-semibold mb-2">
+                                {{ (prefix ~ '.components.' ~ itemCode ~ '.title')|trans({}, domain) }}
+                            </h3>
+                            <p class="text-muted mb-0">
+                                {{ (prefix ~ '.components.' ~ itemCode ~ '.description')|trans({}, domain)|markdown_to_html }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>

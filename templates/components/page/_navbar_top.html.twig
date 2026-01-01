@@ -1,0 +1,63 @@
+{# @SurvosTabler/components/page/_navbar_top.html.twig v1.0 #}
+{% if this.navbar %}
+    {% set id = tabler_identity ?? {} %}
+    {% set containerClass = containerClass|default('container-xl') %}
+
+    {% set brandHref %}
+        {% if id.homepage_route is defined and id.homepage_route %}
+            {{ path(id.homepage_route) }}
+        {% elseif id.homepage_url is defined and id.homepage_url %}
+            {{ id.homepage_url }}
+        {% else %}
+            {{ path('app_homepage') }}
+        {% endif %}
+    {% endset %}
+
+    <header class="navbar navbar-expand-md d-print-none">
+        <div class="{{ containerClass }}">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <h1 class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
+                <a href="{{ brandHref|trim }}">
+                    {% if id.logo is defined and id.logo %}
+                        <img src="{{ id.logo }}" height="32" alt="{{ id.title|default('') }}">
+                    {% else %}
+                        {# If you want to match preview.tabler.io branding, use the full SVG logo component later #}
+                        <span class="ms-2">
+                            {% if id.abbr is defined and id.abbr %}
+                                {{ id.abbr|raw }}
+                            {% elseif id.title is defined and id.title %}
+                                {{ id.title }}
+                            {% else %}
+                                Tabler
+                            {% endif %}
+                        </span>
+                    {% endif %}
+                </a>
+            </h1>
+
+            <div class="navbar-nav flex-row order-md-last ms-auto">
+                {{ component('tabler:menu', {type: NAVBAR_END, caller: _self, options: {layout: this.layout}}) }}
+                {{ component('tabler:menu', {type: SEARCH, caller: _self, options: {layout: this.layout}}) }}
+
+                {% set authEnabled = true %}
+                {% if id.header is defined and id.header.auth is defined and id.header.auth.enabled is defined %}
+                    {% set authEnabled = id.header.auth.enabled %}
+                {% endif %}
+                {% if authEnabled %}
+                    {{ component('tabler:menu', {type: AUTH, caller: _self, options: {layout: this.layout}}) }}
+                {% endif %}
+
+                {% set showLocale = true %}
+                {% if id.header is defined and id.header.locale_switcher is defined %}
+                    {% set showLocale = id.header.locale_switcher %}
+                {% endif %}
+                {% if showLocale %}
+                    <twig:tabler:locale-switcher/>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+{% endif %}
